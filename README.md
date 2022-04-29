@@ -3,20 +3,20 @@
 ![firstscreen](https://user-images.githubusercontent.com/45253067/162468129-7567fc2e-e392-49ba-a2b6-acc5b7034036.gif)
 
 Admin:
-- Đăng ký tài khoản admin: post --> http://localhost:5000/api/auth/admin/register
-- Xác thực email đăng ký: get --> http://localhost:5000/api/auth/admin/verify/:userId/:uniqueString
-- Đăng nhập tài khoản admin: post --> http://localhost:5000/api/auth/admin/login
-- Đăng xuất tài khoản: get --> http://localhost:5000/api/auth/admin/logout
-- Xem profile: get --> http://localhost:5000/api/auth/admin/profile
-- Chỉnh sửa profile: patch --> http://localhost:5000/api/auth/admin/profile/update
-- Refresh token : get --> http://localhost:5000/api/auth/admin/refresh_token
-- Thay đổi mật khẩu : patch --> http://localhost:5000/api/auth/admin/changePassword
-- Quên mật khẩu tài khoản admin: post --> http://localhost:5000/api/auth/admin/forget
-- Link reset mật khẩu khi quên: put --> http://localhost:5000/api/auth/admin/password/reset/:token
-- Đăng nhập google tài khoản admin: post --> http://localhost:5000/api/auth/admin/loginGoogle
-- Danh sách tài khoản admin: get --> http://localhost:5000/api/auth/admin/getAllAdmin
-- Danh sách tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getAllCustomer
-- Xem chi tiết tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getDetailCustomer/:id
+- Đăng ký tài khoản admin: post --> http://localhost:5000/api/auth/admin/register ✔
+- Xác thực email đăng ký: get --> http://localhost:5000/api/auth/admin/verify/:userId/:uniqueString ✔
+- Đăng nhập tài khoản admin: post --> http://localhost:5000/api/auth/admin/login ✔
+- Đăng xuất tài khoản: get --> http://localhost:5000/api/auth/admin/logout ✔
+- Xem profile: get --> http://localhost:5000/api/auth/admin/profile ✔
+- Chỉnh sửa profile: patch --> http://localhost:5000/api/auth/admin/profile/update ✔
+- Refresh token : get --> http://localhost:5000/api/auth/admin/refresh_token ✔
+- Thay đổi mật khẩu : patch --> http://localhost:5000/api/auth/admin/changePassword ✔
+- Quên mật khẩu tài khoản admin: post --> http://localhost:5000/api/auth/admin/forget ✔
+- Link reset mật khẩu khi quên: put --> http://localhost:5000/api/auth/admin/password/reset/:token ✔
+- Đăng nhập google tài khoản admin: post --> http://localhost:5000/api/auth/admin/loginGoogle 
+- Danh sách tài khoản admin: get --> http://localhost:5000/api/auth/admin/getAllAdmin ✔
+- Danh sách tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getAllCustomer ✔
+- Xem chi tiết tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getDetailCustomer/:id ✔
 - Chỉnh sửa thông tin tài khoản khách hàng: patch --> http://localhost:5000/api/auth/admin/customerAccount/:id/update/info
 - Danh sách khách hàng chưa check email đăng ký: get --> http://localhost:5000/api/auth/admin/getAllCustomerUncheck
 
@@ -46,8 +46,8 @@ Category
 - Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id
 
 Film
-- Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all
-- Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add
+- Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all ✔
+- Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add ✔
 - Chỉnh sửa thông tin bộ phim: patch --> http://localhost:5000/api/film/update/:id
 - Xóa bộ phim : delete --> http://localhost:5000/api/film/delete/:id
 - Thông tin chi tiết của bộ phim và thông tin đánh giá của bộ phim: get --> http://localhost:5000/api/film/detail/:id
@@ -61,7 +61,7 @@ Favourite
 - Xem danh sách yêu thích của toàn bộ người dùng: get --> http://localhost:5000/api/favourite/all
 
 Rating
-- Xem đánh giá của toàn bộ người dùng: get --> http://localhost:5000/api/rating/all
+- Xem đánh giá của toàn bộ người dùng: get --> http://localhost:5000/api/rating/all ✔
 
 Comment
 - Xem tất cả bình luận: get --> http://localhost:5000/api/comment/all
@@ -71,15 +71,15 @@ Comment
 - Xóa hẳn comment nếu ở trong thùng rác quá 7 ngày: delete --> http://localhost:5000/api/comment/bin/delete
 - 
 Payment
-- Xem tất cả hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/all
-- Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id
+- Xem tất cả hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/all ✔
+- Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id 
 - Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add
 - Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id
-- Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id
+- Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id ✔
 
 Feedback
-- Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all
-- Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id
+- Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all ✔
+- Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id 
 
 Bill
 - Lấy ra toàn bộ hóa đơn: get -> http://localhost:5000/api/bill/all
