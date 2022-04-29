@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
     <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="16dp"
-                    app:itemTextColor="@color/red"
+                    app:itemTextColor="@color/black"
                     android:background="@android:color/transparent"
                     app:itemIconTint="@drawable/bottom_navigation_selector"
                     app:menu="@menu/navigation" />
@@ -41,9 +42,9 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/dashboard"
+                app:srcCompat="@drawable/ic_add"
                 app:tint="@android:color/white"
-                app:backgroundTint="@color/red"
+                app:backgroundTint="@color/black"
                 app:layout_anchor="@id/bottomappbar"
                 app:rippleColor="#ECD6D6" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

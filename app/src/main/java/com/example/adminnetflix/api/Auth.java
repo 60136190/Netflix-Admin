@@ -8,6 +8,7 @@ import com.example.adminnetflix.models.request.LoginRequest;
 import com.example.adminnetflix.models.request.RefreshTokenResponse;
 import com.example.adminnetflix.models.request.RegisterRequest;
 import com.example.adminnetflix.models.request.UpdateAdminRequest;
+import com.example.adminnetflix.models.response.DetailUserResponse;
 import com.example.adminnetflix.models.response.ListAdminResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.LoginGoogleResponse;
@@ -29,6 +30,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface Auth {
     // register
@@ -83,4 +85,14 @@ public interface Auth {
     // get list admin
     @GET("api/auth/admin/getAllAdmin")
     Call<ListAdminResponse> getListAdmin(@Header("Authorization") String authorization);
+
+    // get detail user
+    @GET("api/auth/admin/getDetailCustomer/{id_user}")
+    Call<DetailUserResponse> getDetailUser(@Header("Authorization") String authorization,@Path("id_user") String idUser);
+
+    // update information user
+    @POST("api/auth/admin/customerAccount/{id_user}/update/info")
+    Call<ResponseDTO> updateInformationUser(@Header("Authorization") String authorization, @Path("id") String idFilm, @Body UpdateAdminRequest updateUserRequest);
+
+
 }

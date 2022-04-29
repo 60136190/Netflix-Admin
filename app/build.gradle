@@ -50,6 +50,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
 
+    // chart
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
+
     //picaso fit anh
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
@@ -80,5 +84,8 @@ dependencies {
 
     //swiperefreshlayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // delete item recyclerview
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
 }

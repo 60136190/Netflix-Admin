@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.adminnetflix.R;
 
-public class RevenueActivity extends AppCompatActivity {
+public class AddFilmActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_revenue);
+        setContentView(R.layout.activity_add_film);
     }
 }

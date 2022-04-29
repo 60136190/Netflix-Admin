@@ -15,13 +15,19 @@
         android:theme="@style/Theme.AdminNetflix"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.ListAdminActivity"
+            android:name=".activities.AddFilmActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ListUserActivity"
+            android:name=".activities.ListDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.RevenueActivity"
+            android:name=".activities.DetailFilmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DetailUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"

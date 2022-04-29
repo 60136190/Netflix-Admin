@@ -1,10 +1,12 @@
 package com.example.adminnetflix.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.DetailUserActivity;
 import com.example.adminnetflix.models.response.DataListUserReponse;
 import com.squareup.picasso.Picasso;
 
@@ -40,21 +43,22 @@ public class ListUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         DataListUserReponse user = mUserList.get(position);
         String fullName = user.getFullname();
         String imgUser = user.getImage().getUrl();
+        String idUser = user.getId();
 
         ((ItemViewHolder) holder).itemFullname.setText(fullName);
         Picasso.with(mContext)
                 .load(imgUser).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemUrl);
 
-//        ((ItemViewHolder) holder).imgPlay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(mContext, DetailFilmActivity.class);
-//                String strName = favorite.getFilm().getId();
-//                i.putExtra("Id_film", strName);
-//                mContext.startActivity(i);
-//
-//            }
-//        });
+        ((ItemViewHolder) holder).ctListUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, DetailUserActivity.class);
+                i.putExtra("Id_user", idUser);
+                mContext.startActivity(i);
+
+            }
+        });
+
 
     }
 
@@ -69,9 +73,11 @@ public class ListUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        public ImageView itemUrl;
-        public TextView itemFullname;
-        public ConstraintLayout ctListUser;
+        private ImageView itemUrl;
+        private TextView itemFullname;
+        private ConstraintLayout ctListUser;
+        private LinearLayout lnDeleteUser;
+
 
         public ItemViewHolder( View itemView) {
             super(itemView);

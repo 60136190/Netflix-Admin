@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ct_list_user"
+<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipereveallayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_50sdp"
+    android:layout_height="wrap_content"
+    app:mode="same_level"
+    app:dragEdge="right"
     android:layout_margin="@dimen/_5sdp"
+    android:backgroundTint="@color/second_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/border_all">
+
+    <LinearLayout
+        android:id="@+id/ln_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/border_right_item"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:src="@drawable/delete"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ct_list_user"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp">
 
     <TextView
         android:id="@+id/tv_no"
@@ -39,14 +62,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_user"
         app:layout_constraintLeft_toRightOf="@+id/img_user"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintLeft_toRightOf="@+id/tv_name_of_user"
-        app:layout_constraintTop_toTopOf="@+id/tv_name_of_user"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_name_of_user"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

@@ -4,7 +4,7 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/home"
-        android:iconTint="@color/red"
+        android:iconTint="@color/black"
         android:title="Home" />
     <item
         android:id="@+id/movie"
@@ -18,8 +18,8 @@
     <item
         android:id="@+id/user"
         android:enabled="true"
-        android:icon="@drawable/user"
-        android:title="User" />
+        android:icon="@drawable/people"
+        android:title="Staff" />
     <item
         android:id="@+id/more"
         android:enabled="true"

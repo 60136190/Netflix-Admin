@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnRevenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RevenueActivity.class);
+                Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                 startActivity(intent);
             }
         });
