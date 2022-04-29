@@ -33,11 +33,11 @@ Upload:
 - Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment
 
 Director:
-- Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all
-- Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id
+- Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all ✔
+- Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id 
 - Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add
 - Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id
-- Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id
+- Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id ✔
 
 Category
 - Xem tất cả thể loại phim : get --> http://localhost:5000/api/category/all
