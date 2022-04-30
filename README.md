@@ -1,7 +1,5 @@
 - This is Admin Netflix Application
 
-![alt text](https://f24-zpc.zdn.vn/4626187962483090879/0ae70e8a991c56420f0d.jpg)
-
 Admin:
 - Đăng ký tài khoản admin: post --> http://localhost:5000/api/auth/admin/register ✔
 - Xác thực email đăng ký: get --> http://localhost:5000/api/auth/admin/verify/:userId/:uniqueString ✔
