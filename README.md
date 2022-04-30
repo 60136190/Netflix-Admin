@@ -1,131 +1,134 @@
 - This is Admin Netflix Application
 
 ![alt text](https://f24-zpc.zdn.vn/4626187962483090879/0ae70e8a991c56420f0d.jpg)
-Admin:
-Đăng ký tài khoản admin: post --> http://localhost:5000/api/auth/admin/register
 
-Xác thực email đăng ký: get --> http://localhost:5000/api/auth/admin/verify/:userId/:uniqueString
+- Admin:
+  Đăng ký tài khoản admin: post --> http://localhost:5000/api/auth/admin/register
 
-Đăng nhập tài khoản admin: post --> http://localhost:5000/api/auth/admin/login
+  Xác thực email đăng ký: get --> http://localhost:5000/api/auth/admin/verify/:userId/:uniqueString
 
-Đăng xuất tài khoản: get --> http://localhost:5000/api/auth/admin/logout
+  Đăng nhập tài khoản admin: post --> http://localhost:5000/api/auth/admin/login
 
-Xem profile: get --> http://localhost:5000/api/auth/admin/profile
+  Đăng xuất tài khoản: get --> http://localhost:5000/api/auth/admin/logout
 
-Chỉnh sửa profile: patch --> http://localhost:5000/api/auth/admin/profile/update
+  Xem profile: get --> http://localhost:5000/api/auth/admin/profile
 
-Refresh token : get --> http://localhost:5000/api/auth/admin/refresh_token
+  Chỉnh sửa profile: patch --> http://localhost:5000/api/auth/admin/profile/update
 
-Thay đổi mật khẩu : patch --> http://localhost:5000/api/auth/admin/changePassword
+  Refresh token : get --> http://localhost:5000/api/auth/admin/refresh_token
 
-Quên mật khẩu tài khoản admin: post --> http://localhost:5000/api/auth/admin/forget
+  Thay đổi mật khẩu : patch --> http://localhost:5000/api/auth/admin/changePassword
 
-Link reset mật khẩu khi quên: put --> http://localhost:5000/api/auth/admin/password/reset/:token
+  Quên mật khẩu tài khoản admin: post --> http://localhost:5000/api/auth/admin/forget
 
-Đăng nhập google tài khoản admin: post --> http://localhost:5000/api/auth/admin/loginGoogle
+  Link reset mật khẩu khi quên: put --> http://localhost:5000/api/auth/admin/password/reset/:token
 
-Danh sách tài khoản admin: get --> http://localhost:5000/api/auth/admin/getAllAdmin
+  Đăng nhập google tài khoản admin: post --> http://localhost:5000/api/auth/admin/loginGoogle
 
-Danh sách tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getAllCustomer
+  Danh sách tài khoản admin: get --> http://localhost:5000/api/auth/admin/getAllAdmin
 
-Xem chi tiết tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getDetailCustomer/:id
+  Danh sách tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getAllCustomer
 
-Chỉnh sửa thông tin tài khoản khách hàng: patch --> http://localhost:5000/api/auth/admin/customerAccount/:id/update/info
+  Xem chi tiết tài khoản khách hàng: get --> http://localhost:5000/api/auth/admin/getDetailCustomer/:id
 
-Danh sách khách hàng chưa check email đăng ký: get --> http://localhost:5000/api/auth/admin/getAllCustomerUncheck
+  Chỉnh sửa thông tin tài khoản khách hàng: patch --> http://localhost:5000/api/auth/admin/customerAccount/:id/update/info
 
-Upload:
-Upload ảnh người dùng : post --> http://localhost:5000/api/uploadImageUser
+  Danh sách khách hàng chưa check email đăng ký: get --> http://localhost:5000/api/auth/admin/getAllCustomerUncheck
 
-Xóa ảnh người dùng trên cloud : post --> http://localhost:5000/api/destroyImageUser
+- Upload:
+  Upload ảnh người dùng : post --> http://localhost:5000/api/uploadImageUser
 
-Upload video phim : post --> http://localhost:5000/api/uploadVideoFilm
+  Xóa ảnh người dùng trên cloud : post --> http://localhost:5000/api/destroyImageUser
 
-Xóa video phim trên cloud : post --> http://localhost:5000/api/destroyVideoFilm
+  Upload video phim : post --> http://localhost:5000/api/uploadVideoFilm
 
-Upload ảnh đạo diễn : post --> http://localhost:5000/api/uploadImageDirector
+  Xóa video phim trên cloud : post --> http://localhost:5000/api/destroyVideoFilm
 
-Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector
+  Upload ảnh đạo diễn : post --> http://localhost:5000/api/uploadImageDirector
 
-Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFilm
+  Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector
 
-Xóa ảnh phim : post --> http://localhost:5000/api/destroyImageFilm
+  Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFilm
 
-Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment
+  Xóa ảnh phim : post --> http://localhost:5000/api/destroyImageFilm
 
-Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment
+  Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment
 
-Director:
-Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all
+  Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment
 
-Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id
+- Director:
+  Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all
 
-Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add
+  Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id
 
-Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id
+  Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add
 
-Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id
+  Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id
 
-Category
-Xem tất cả thể loại phim : get --> http://localhost:5000/api/category/all
+  Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id
 
-Tạo thêm 1 thể loại phim: post --> http://localhost:5000/api/category/add
+- Category
+  Xem tất cả thể loại phim : get --> http://localhost:5000/api/category/all
 
-Cập nhập thể loại phim: put --> http://localhost:5000/api/category/update/:id
+  Tạo thêm 1 thể loại phim: post --> http://localhost:5000/api/category/add
 
-Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id
+  Cập nhập thể loại phim: put --> http://localhost:5000/api/category/update/:id
 
-Film
-Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all
+  Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id
 
-Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add
+- Film
+  Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all
 
-Chỉnh sửa thông tin bộ phim: patch --> http://localhost:5000/api/film/update/:id
+  Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add
 
-Xóa bộ phim : delete --> http://localhost:5000/api/film/delete/:id
+  Chỉnh sửa thông tin bộ phim: patch --> http://localhost:5000/api/film/update/:id
 
-Thông tin chi tiết của bộ phim và thông tin đánh giá của bộ phim: get --> http://localhost:5000/api/film/detail/:id
+  Xóa bộ phim : delete --> http://localhost:5000/api/film/delete/:id
 
-Tìm bộ phim theo thể loại: get --> http://localhost:5000/api/film/find/category/:id
+  Thông tin chi tiết của bộ phim và thông tin đánh giá của bộ phim: get --> http://localhost:5000/api/film/detail/:id
 
-Tìm bộ phim theo đạo diễn: get --> http://localhost:5000/api/film/find/director/:id
+  Tìm bộ phim theo thể loại: get --> http://localhost:5000/api/film/find/category/:id
 
-Thêm một tập phim: post --> http://localhost:5000/api/film/:id/addEpisode
+  Tìm bộ phim theo đạo diễn: get --> http://localhost:5000/api/film/find/director/:id
 
-Cập nhập tập phim: patch --> http://localhost:5000/api/film/update/:filmId/updateEpisode/:episodeId
+  Thêm một tập phim: post --> http://localhost:5000/api/film/:id/addEpisode
+  
+  Cập nhập tập phim: patch --> http://localhost:5000/api/film/update/:filmId/updateEpisode/:episodeId
 
-Xóa 1 tập phim: delete --> http://localhost:5000/api/film/delete/:filmId/deleteEpisode/:episodeId
+  Xóa 1 tập phim: delete --> http://localhost:5000/api/film/delete/:filmId/deleteEpisode/:episodeId
 
-Favourite
-Xem danh sách yêu thích của toàn bộ người dùng: get --> http://localhost:5000/api/favourite/all
-Rating
-Xem đánh giá của toàn bộ người dùng: get --> http://localhost:5000/api/rating/all
-Comment
-Xem tất cả bình luận: get --> http://localhost:5000/api/comment/all
+- Favourite
+  Xem danh sách yêu thích của toàn bộ người dùng: get --> http://localhost:5000/api/favourite/all
+  
+- Rating
+  Xem đánh giá của toàn bộ người dùng: get --> http://localhost:5000/api/rating/all
+  
+- Comment
+  Xem tất cả bình luận: get --> http://localhost:5000/api/comment/all
 
-Xem bình luận của bộ phim: get --> http://localhost:5000/api/comment/get/:filmId
+  Xem bình luận của bộ phim: get --> http://localhost:5000/api/comment/get/:filmId
 
-Lấy thùng rác chứa những bình luận đã bị xóa: get --> http//localhost:5000/api/comment/bin
+  Lấy thùng rác chứa những bình luận đã bị xóa: get --> http//localhost:5000/api/comment/bin
 
-Khôi phục lại comment đã bị xóa: patch --> http://localhost:5000/api/comment/:id/restore
+  Khôi phục lại comment đã bị xóa: patch --> http://localhost:5000/api/comment/:id/restore
 
-Xóa hẳn comment nếu ở trong thùng rác quá 7 ngày: delete --> http://localhost:5000/api/comment/bin/delete
+  Xóa hẳn comment nếu ở trong thùng rác quá 7 ngày: delete --> http://localhost:5000/api/comment/bin/delete
 
-Payment
-Xem tất cả hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/all
+- Payment
+  Xem tất cả hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/all
 
-Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id
+  Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id
 
-Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add
+  Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add
 
-Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id
+  Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id
 
-Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id
+  Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id
 
-Feedback
-Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all
+- Feedback
+  Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all
 
-Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id
+  Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id
 
-Bill
-Lấy ra toàn bộ hóa đơn: get -> http://localhost:5000/api/bill/all
+- Bill
+  Lấy ra toàn bộ hóa đơn: get -> http://localhost:5000/api/bill/all
