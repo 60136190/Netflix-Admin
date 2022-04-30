@@ -39,9 +39,9 @@ Director:
 
 Category
 - Xem tất cả thể loại phim : get --> http://localhost:5000/api/category/all ✔
-- Tạo thêm 1 thể loại phim: post --> http://localhost:5000/api/category/add 
-- Cập nhập thể loại phim: put --> http://localhost:5000/api/category/update/:id
-- Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id 
+- Tạo thêm 1 thể loại phim: post --> http://localhost:5000/api/category/add ✔
+- Cập nhập thể loại phim: put --> http://localhost:5000/api/category/update/:id ✔
+- Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id ✔
 
 Film
 - Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all
