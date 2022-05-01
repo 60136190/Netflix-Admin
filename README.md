@@ -23,8 +23,8 @@ Upload:
 - Xóa ảnh người dùng trên cloud : post --> http://localhost:5000/api/destroyImageUser
 - Upload video phim : post --> http://localhost:5000/api/uploadVideoFilm
 - Xóa video phim trên cloud : post --> http://localhost:5000/api/destroyVideoFilm
-- Upload ảnh đạo diễn : post --> http://localhost:5000/api/uploadImageDirector
-- Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector
+- Upload ảnh đạo diễn : post --> http://localhost:5000/api/uploadImageDirector ✔
+- Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector ✔
 - Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFil
 - Xóa ảnh phim : post --> http://localhost:5000/api/destroyImageFilm
 - Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment
@@ -33,8 +33,8 @@ Upload:
 Director:
 - Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all ✔
 - Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id ✔
-- Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add
-- Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id
+- Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add 
+- Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id ✔
 - Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id ✔
 
 Category
