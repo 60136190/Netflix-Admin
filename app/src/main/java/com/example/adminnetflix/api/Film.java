@@ -1,6 +1,13 @@
 package com.example.adminnetflix.api;
 
+import com.example.adminnetflix.models.request.CategoryRequest;
+import com.example.adminnetflix.models.request.DeleteImageRequest;
+import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
+import com.example.adminnetflix.models.request.ModeOfPaymentWithoutImage;
+import com.example.adminnetflix.models.request.UpdateDirectorRequest;
+import com.example.adminnetflix.models.request.UpdateDirectorWithoutImage;
 import com.example.adminnetflix.models.response.Category;
+import com.example.adminnetflix.models.response.DetailDirectorResponse;
 import com.example.adminnetflix.models.response.DetailFilmResponse;
 import com.example.adminnetflix.models.response.FeedbackResponse;
 import com.example.adminnetflix.models.response.FilmResponse;
@@ -9,14 +16,19 @@ import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.RatingResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
+import com.example.adminnetflix.models.response.UploadImageResponse;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface Film {
@@ -37,6 +49,28 @@ public interface Film {
     @GET("api/rating/all")
     Call<RatingResponse> getAllRating(@Header("Authorization") String authorization);
 
+
+    // create director
+    @POST("api/modeOfPayment/add")
+    Call<ResponseDTO> createModeOfPayment(@Header("Authorization") String authorization, @Body ModeOfPaymentRequest modeOfPaymentRequest);
+
+    // upload image mode of payment
+    @Multipart
+    @POST("api/uploadImagePayment")
+    Call<UploadImageResponse> uploadImageModeOfPayment(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
+
+    // delete mode of payment image
+    @POST("api/destroyImagePayment")
+    Call<ResponseDTO> deleteImageModeOfPayment(@Header("Authorization") String authorization, @Body DeleteImageRequest deleteImageRequest);
+
+    // update mode of payment
+    @PATCH("api/modeOfPayment/update/{id}")
+    Call<ResponseDTO> updateModeOfPayment(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body ModeOfPaymentRequest modeOfPaymentRequest);
+
+    // update mode of payment withou image
+    @PATCH("api/modeOfPayment/update/{id}")
+    Call<ResponseDTO> updateModeOfPaymentWithoutImage(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body ModeOfPaymentWithoutImage modeOfPaymentWithoutImage);
+
     // get mode of payment
     @GET("api/modeOfPayment/all")
     Call<ModeOfPaymentResponse> getModeOfPayment(@Header("Authorization") String authorization);
@@ -49,15 +83,52 @@ public interface Film {
     @GET("api/feedback/all")
     Call<FeedbackResponse> getAllFeedback(@Header("Authorization") String authorization);
 
+    // create category film
+    @POST("api/category/add")
+    Call<ResponseDTO> createCategory(@Header("Authorization") String authorization, @Body CategoryRequest nameCategory);
+
     // get list categories film
     @GET("api/category/all")
     Call<ListCategories> getListCategoriesFilm(@Header("Authorization") String authorization);
+
+    // delete category
+    @DELETE("api/category/delete/{id}")
+    Call<ResponseDTO> deleteCategory(@Header("Authorization") String authorization, @Path("id") String idCategory);
+
+    // update category
+    @PUT("api/category/update/{id}")
+    Call<ResponseDTO> updateCategory(@Header("Authorization") String authorization, @Path("id") String idCategory, @Body CategoryRequest categoryRequest );
+
+    // create director
+    @POST("api/director/add")
+    Call<ResponseDTO> createDirector(@Header("Authorization") String authorization, @Body UpdateDirectorRequest updateDirectorRequest);
+
+    // upload image director
+    @Multipart
+    @POST("api/uploadImageDirector")
+    Call<UploadImageResponse> uploadImageDirector(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
 
     // get list director
     @GET("api/director/all")
     Call<ListDirectorResponse> getListDirector(@Header("Authorization") String authorization);
 
+    // get detail director
+    @GET("api/director/{id}")
+    Call<DetailDirectorResponse> getDetailDirector(@Header("Authorization") String authorization, @Path("id") String idDirector);
+
+    // delete director image
+    @POST("api/destroyImageDirector")
+    Call<ResponseDTO> deleteImageDirector(@Header("Authorization") String authorization, @Body DeleteImageRequest deleteImageRequest);
+
+    // update director
+    @PATCH("api/director/update/{id}")
+    Call<ResponseDTO> updateDirector(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body UpdateDirectorRequest updateDirectorRequest);
+
+    // update director withou image
+    @PATCH("api/director/update/{id}")
+    Call<ResponseDTO> updateDirectorWithoutImage(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body UpdateDirectorWithoutImage updateDirectorWithoutImage);
+
     // delete director
     @DELETE("api/director/delete/{id}")
-    Call<ResponseDTO> deleteDirector (@Header("Authorization") String authorization, @Path("id") String idDirector);
+    Call<ResponseDTO> deleteDirector(@Header("Authorization") String authorization, @Path("id") String idDirector);
 }

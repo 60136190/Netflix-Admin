@@ -2,6 +2,7 @@ package com.example.adminnetflix.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.ModeOfPayment;
 import com.example.adminnetflix.models.response.ResponseDTO;
@@ -114,8 +117,19 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
 
             }
         });
+        ((ItemViewHolder) holder).ctModeOfPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UpdateActivity.class);
+                intent.putExtra("update","Update Mode of Payment");
+                intent.putExtra("id_mode_of_payment",modeOfPayment.getId());
+                intent.putExtra("name_mode_of_payment",modeOfPayment.getName());
+                intent.putExtra("public_Id_mode_of_payment",modeOfPayment.getImage().getPublicId());
+                intent.putExtra("url_mode_of_payment",modeOfPayment.getImage().getUrl());
+                mContext.startActivity(intent);
+            }
+        });
     }
-
 
     @Override
     public int getItemCount() {
@@ -131,6 +145,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
         private TextView itemModeOfPayment;
         private ImageView itemImgModeOfPayment;
         private LinearLayout itemLnDelete;
+        private ConstraintLayout ctModeOfPayment;
 
 
         public ItemViewHolder(View itemView) {
@@ -138,6 +153,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
             itemModeOfPayment = itemView.findViewById(R.id.tv_mode_of_payment);
             itemImgModeOfPayment = itemView.findViewById(R.id.img_mode_of_payment);
             itemLnDelete = itemView.findViewById(R.id.ln_delete);
+            ctModeOfPayment = itemView.findViewById(R.id.ct_mode_of_paymeny);
         }
     }
 

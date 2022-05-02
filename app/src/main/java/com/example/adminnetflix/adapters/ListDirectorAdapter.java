@@ -1,6 +1,7 @@
 package com.example.adminnetflix.adapters;
 
 import android.app.Dialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
 import com.example.adminnetflix.activities.DetailUserActivity;
+import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.Category;
 import com.example.adminnetflix.models.response.Director;
@@ -39,11 +41,11 @@ import retrofit2.Response;
 
 public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private Context mContext;
+    private Context mContext1;
     List<Director> mDirectorList;
 
     public ListDirectorAdapter(Context mContext, List<Director> mDirectorList) {
-        this.mContext = mContext;
+        this.mContext1 = mContext;
         this.mDirectorList = mDirectorList;
     }
 
@@ -62,7 +64,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String imgDirector = director.getImage().getUrl();
 
         ((ItemViewHolder) holder).itemNameOfDirector.setText(title);
-        Picasso.with(mContext)
+        Picasso.with(mContext1)
                 .load(imgDirector).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemUrl);
 
         ((ItemViewHolder) holder).lnDeleteDirector.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +119,19 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 });
             }
         });
+
+        ((ItemViewHolder) holder).ctListDirector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext1, UpdateActivity.class);
+                intent.putExtra("update","Update Director");
+                intent.putExtra("id_director",director.getId());
+                intent.putExtra("name_director",director.getName());
+                intent.putExtra("public_Id_director",director.getImage().getPublicId());
+                intent.putExtra("url_director",director.getImage().getUrl());
+                mContext1.startActivity(intent);
+            }
+        });
     }
 
 
@@ -133,6 +148,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private ImageView itemUrl;
         private TextView itemNameOfDirector;
         private LinearLayout lnDeleteDirector;
+        private ConstraintLayout ctListDirector;
 
 
         public ItemViewHolder( View itemView) {
@@ -140,6 +156,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemUrl = itemView.findViewById(R.id.img_director);
             itemNameOfDirector = itemView.findViewById(R.id.tv_name_of_director);
             lnDeleteDirector = itemView.findViewById(R.id.ln_delete);
+            ctListDirector = itemView.findViewById(R.id.ct_list_director);
         }
     }
 

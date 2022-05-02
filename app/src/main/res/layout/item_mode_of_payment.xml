@@ -25,6 +25,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ct_mode_of_paymeny"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/item_rating">

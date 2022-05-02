@@ -15,6 +15,12 @@
         android:theme="@style/Theme.AdminNetflix"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.UpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CreateActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddFilmActivity"
             android:exported="false" />
         <activity

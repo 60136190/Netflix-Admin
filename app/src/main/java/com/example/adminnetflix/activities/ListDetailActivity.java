@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 public class ListDetailActivity extends AppCompatActivity {
     private ImageView imgBack;
     private TextView tvTitle;
+    private Button btnAdd;
 
     private RecyclerView rcvListDetail;
     private ListDirectorAdapter listDirectorAdapter;
@@ -72,6 +74,7 @@ public class ListDetailActivity extends AppCompatActivity {
         }
 
         if(b.get("list").equals("List Feedback")){
+            btnAdd.setVisibility(View.GONE);
             tvTitle.setText("List Feedback");
             getListFeedback();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
@@ -111,18 +114,30 @@ public class ListDetailActivity extends AppCompatActivity {
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 
+        String value = b.get("list").toString();
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListDetailActivity.this, CreateActivity.class);
+                intent.putExtra("btn",value);
+                startActivity(intent);
+            }
+        });
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+
     }
 
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
         tvTitle = findViewById(R.id.tv_name_list);
         rcvListDetail = findViewById(R.id.rcv_list_detail);
+        btnAdd = findViewById(R.id.btn_add);
     }
 
     private void getListDirector() {
