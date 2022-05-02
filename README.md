@@ -27,8 +27,8 @@ Upload:
 - Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector ✔
 - Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFil
 - Xóa ảnh phim : post --> http://localhost:5000/api/destroyImageFilm
-- Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment
-- Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment
+- Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment ✔
+- Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment ✔
 
 Director:
 - Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all ✔
@@ -71,8 +71,8 @@ Comment
 Payment
 - Xem tất cả hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/all ✔
 - Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id ✔ 
-- Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add
-- Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id
+- Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add ✔
+- Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id ✔
 - Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id ✔
 
 Feedback
