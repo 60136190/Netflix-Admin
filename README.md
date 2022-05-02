@@ -33,7 +33,7 @@ Upload:
 Director:
 - Xem thông tin tất cả đạo diễn: get --> http://localhost:5000/api/director/all ✔
 - Xem thông tin chi tiết đạo diễn: get --> http://localhost:5000/api/director/:id ✔
-- Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add 
+- Thêm mới thông tin đạo diễn : post --> http://localhost:5000/api/director/add ✔
 - Chỉnh sửa thông tin đạo diễn : patch --> http://localhost:5000/api/director/update/:id ✔
 - Xóa thông tin đạo diễn : delete --> http://localhost:5000/api/director/delete/:id ✔
 
@@ -73,7 +73,7 @@ Payment
 - Xem chi tiết hình thức thanh toán: get --> http://localhost:5000/api/modeOfPayment/:id ✔ 
 - Thêm hình thức thanh toán mới: post --> http://localhost:5000/api/modeOfPayment/add
 - Chỉnh sửa hình thức thanh toán: patch --> http://localhost:5000/api/modeOfPayment/update/:id
-  Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id ✔
+- Xóa hình thức thanh toán: delete --> http://localhost:5000/api/modeOfPayment/delete/:id ✔
 
 Feedback
 - Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all ✔
