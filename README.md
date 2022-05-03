@@ -81,7 +81,7 @@ Payment
 
 Feedback
 - Xem tất cả feedback: get --> http://localhost:5000/api/feedback/all ✔
-- Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id
+- Trả lời feedback của khách hàng: post --> http://localhost:5000/api/feedback/response/:id ✔
 
 Bill
 - Lấy ra toàn bộ hóa đơn: get -> http://localhost:5000/api/bill/all ✔
