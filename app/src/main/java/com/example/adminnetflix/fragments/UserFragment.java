@@ -5,6 +5,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,15 @@ import com.example.adminnetflix.R;
 //import com.example.adminnetflix.activities.ListCategoriesActivity;
 import com.example.adminnetflix.activities.ListDetailActivity;
 import com.example.adminnetflix.adapters.ListImageUserAdapter;
+import com.example.adminnetflix.adapters.ListManagerAdapter;
 import com.example.adminnetflix.api.ApiClient;
+import com.example.adminnetflix.models.ItemManagerModel;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +42,9 @@ public class UserFragment extends Fragment {
     private ConstraintLayout ctListAdmin;
     private ConstraintLayout ctListDirector;
     private RecyclerView rcvListUser;
+    private RecyclerView rcvManager;
+    ListManagerAdapter listManagerAdapter;
+    List<ItemManagerModel> itemManagerModel;
     private ListImageUserAdapter listImageUserAdapter;
     private View view;
 
@@ -48,6 +58,8 @@ public class UserFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rcvListUser.setLayoutManager(linearLayoutManager);
+
+        setDataRcvManager();
 
         ctListUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +136,7 @@ public class UserFragment extends Fragment {
         tvFeedback = view.findViewById(R.id.tv_feedback);
         tvModeOfpayment = view.findViewById(R.id.tv_mode_of_payment);
         tvCategories = view.findViewById(R.id.tv_category);
+        rcvManager = view.findViewById(R.id.rcv_manager);
     }
     private void getListUser() {
         Call<ListUserResponse> listFavoriteFilmResponseCall = ApiClient.getUserService().getListUser(
@@ -141,5 +154,18 @@ public class UserFragment extends Fragment {
                 Toast.makeText(getContext(), "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void setDataRcvManager(){
+        itemManagerModel = new ArrayList<>();
+        itemManagerModel.add(new ItemManagerModel("User","12",R.drawable.backgroundslider,R.color.dark_green));
+        itemManagerModel.add(new ItemManagerModel("Admin","12",R.drawable.backgroundslider,R.color.yellow));
+        itemManagerModel.add(new ItemManagerModel("Director","12",R.drawable.backgroundslider,R.color.black));
+        itemManagerModel.add(new ItemManagerModel("Rating","12",R.drawable.backgroundslider,R.color.blue));
+        itemManagerModel.add(new ItemManagerModel("Feedback","12",R.drawable.backgroundslider,R.color.dark_pink));
+        itemManagerModel.add(new ItemManagerModel("Mode of payment","12",R.drawable.backgroundslider,R.color.purple_500));
+        itemManagerModel.add(new ItemManagerModel("Category","12",R.drawable.backgroundslider,R.color.gray));
+        listManagerAdapter = new ListManagerAdapter(getContext(),itemManagerModel);
+        rcvManager.setAdapter(listManagerAdapter);
+        rcvManager.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 }

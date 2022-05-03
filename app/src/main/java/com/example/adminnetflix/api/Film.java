@@ -2,6 +2,7 @@ package com.example.adminnetflix.api;
 
 import com.example.adminnetflix.models.request.CategoryRequest;
 import com.example.adminnetflix.models.request.DeleteImageRequest;
+import com.example.adminnetflix.models.request.FeedbackRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentWithoutImage;
 import com.example.adminnetflix.models.request.UpdateDirectorRequest;
@@ -82,6 +83,12 @@ public interface Film {
     // get list feedback
     @GET("api/feedback/all")
     Call<FeedbackResponse> getAllFeedback(@Header("Authorization") String authorization);
+
+    // reply to  feedback
+    @POST("api/feedback/response/{id}")
+    Call<ResponseDTO> responseFeedback(@Header("Authorization") String authorization,
+                                       @Path("id") String idFeedback,
+                                       @Body FeedbackRequest feedbackRequest);
 
     // create category film
     @POST("api/category/add")

@@ -1,6 +1,8 @@
 package com.example.adminnetflix.adapters;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.models.response.Feedback;
 import com.example.adminnetflix.models.response.Rating;
 import com.squareup.picasso.Picasso;
@@ -43,6 +46,19 @@ public class ListFeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((ItemViewHolder) holder).itemSubject.setText(feedback.getSubject());
         ((ItemViewHolder) holder).itemContent.setText(feedback.getContent());
         ((ItemViewHolder) holder).itemEmail.setText(feedback.getEmail());
+        ((ItemViewHolder) holder).imgSendFeedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UpdateActivity.class);
+                intent.putExtra("update","Reply to Feedback");
+                intent.putExtra("id_feedback",feedback.getId());
+                intent.putExtra("content_feedback",feedback.getContent());
+                intent.putExtra("fullname_feedback",feedback.getFullname());
+                intent.putExtra("subject_feedback",feedback.getSubject());
+                intent.putExtra("email_feedback",feedback.getEmail());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 
@@ -61,6 +77,7 @@ public class ListFeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private TextView itemSubject;
         private TextView itemContent;
         private TextView itemEmail;
+        private ImageView imgSendFeedBack;
 
         public ItemViewHolder( View itemView) {
             super(itemView);
@@ -68,6 +85,7 @@ public class ListFeedbackAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemNameOfUser = itemView.findViewById(R.id.tv_name_of_user);
             itemContent = itemView.findViewById(R.id.tv_content);
             itemEmail = itemView.findViewById(R.id.tv_email_user);
+            imgSendFeedBack = itemView.findViewById(R.id.img_send_feedback);
         }
     }
 

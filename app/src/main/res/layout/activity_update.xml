@@ -155,6 +155,134 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_mode_of_payment"/>
 
+    <TextView
+        android:id="@+id/fullname_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Fullname"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_mode_of_payment"/>
+
+
+    <TextView
+        android:id="@+id/tv_fullname_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:visibility="gone"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/fullname_feedback"
+        app:layout_constraintBottom_toBottomOf="@+id/fullname_feedback"
+        app:layout_constraintLeft_toRightOf="@+id/fullname_feedback"/>
+
+    <TextView
+        android:id="@+id/email_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Email"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullname_feedback"/>
+
+
+    <TextView
+        android:id="@+id/tv_email_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:visibility="gone"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/email_feedback"
+        app:layout_constraintBottom_toBottomOf="@+id/email_feedback"
+        app:layout_constraintLeft_toRightOf="@+id/email_feedback"/>
+
+    <TextView
+        android:id="@+id/subject_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Subject"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_feedback"/>
+
+
+    <TextView
+        android:id="@+id/tv_subject_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:visibility="gone"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/subject_feedback"
+        app:layout_constraintBottom_toBottomOf="@+id/subject_feedback"
+        app:layout_constraintLeft_toRightOf="@+id/subject_feedback"/>
+
+    <TextView
+        android:id="@+id/content_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Content"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subject_feedback"/>
+
+
+    <TextView
+        android:id="@+id/tv_content_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:visibility="gone"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/content_feedback"
+        app:layout_constraintBottom_toBottomOf="@+id/content_feedback"
+        app:layout_constraintLeft_toRightOf="@+id/content_feedback"/>
+
+    <TextView
+        android:id="@+id/tv_send_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Reply to feedback"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_feedback"/>
+
+    <EditText
+        android:id="@+id/edt_send_feedback"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_5sdp"
+        app:layout_constraintTop_toTopOf="@+id/tv_send_feedback"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_send_feedback"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tv_send_feedback"/>
+
     <Button
         android:id="@+id/btn_update"
         android:layout_width="match_parent"

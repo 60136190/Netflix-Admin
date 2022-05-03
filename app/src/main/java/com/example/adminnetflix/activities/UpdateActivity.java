@@ -29,6 +29,7 @@ import com.example.adminnetflix.adapters.ListDirectorAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.request.CategoryRequest;
 import com.example.adminnetflix.models.request.DeleteImageRequest;
+import com.example.adminnetflix.models.request.FeedbackRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentWithoutImage;
 import com.example.adminnetflix.models.request.UpdateAdminRequest;
@@ -77,6 +78,18 @@ public class UpdateActivity extends AppCompatActivity {
     private TextView tvModeOfPayment;
     private EditText edtModeOfPayment;
     private ImageView imgModeOfPayment;
+
+    // feedback
+    private TextView fullName;
+    private TextView tvFullname;
+    private TextView email;
+    private TextView tvEmail;
+    private TextView subject;
+    private TextView tvSubject;
+    private TextView content;
+    private TextView tvContent;
+    private TextView tvSendFeedback;
+    private EditText edtSendFeedback;
 
     private Button btnUpdate;
     private TextView tvTitleUpdate;
@@ -203,6 +216,34 @@ public class UpdateActivity extends AppCompatActivity {
             });
         }
 
+        if (b.get("update").equals("Reply to Feedback")) {
+            edtSendFeedback.setVisibility(View.VISIBLE);
+            tvSendFeedback.setVisibility(View.VISIBLE);
+            fullName.setVisibility(View.VISIBLE);
+            tvFullname.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+            tvEmail.setVisibility(View.VISIBLE);
+            subject.setVisibility(View.VISIBLE);
+            tvSubject.setVisibility(View.VISIBLE);
+            content.setVisibility(View.VISIBLE);
+            tvContent.setVisibility(View.VISIBLE);
+
+            String id = b.get("id_feedback").toString();
+            tvFullname.setText(b.get("fullname_feedback").toString());
+            tvEmail.setText(b.get("email_feedback").toString());
+            tvSubject.setText(b.get("subject_feedback").toString());
+            tvContent.setText(b.get("content_feedback").toString());
+
+            tvTitleUpdate.setText("Reply to Feedback");
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    replyToFeedback(id);
+                }
+            });
+        }
+
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,6 +288,18 @@ public class UpdateActivity extends AppCompatActivity {
         tvModeOfPayment = findViewById(R.id.tv_mode_of_payment);
         edtModeOfPayment = findViewById(R.id.edt_mode_of_payment);
         imgModeOfPayment = findViewById(R.id.img_mode_of_payment);
+
+        // feedback
+        fullName = findViewById(R.id.fullname_feedback);
+        tvFullname = findViewById(R.id.tv_fullname_feedback);
+        email = findViewById(R.id.email_feedback);
+        tvEmail = findViewById(R.id.tv_email_feedback);
+        subject = findViewById(R.id.subject_feedback);
+        tvSubject = findViewById(R.id.tv_subject_feedback);
+        content = findViewById(R.id.content_feedback);
+        tvContent = findViewById(R.id.tv_content_feedback);
+        tvSendFeedback = findViewById(R.id.tv_send_feedback);
+        edtSendFeedback = findViewById(R.id.edt_send_feedback);
 
         btnUpdate = findViewById(R.id.btn_update);
         tvTitleUpdate = findViewById(R.id.tv_title_update);
@@ -434,6 +487,23 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseDTO> call, Throwable t) {
                 Toast.makeText(UpdateActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void replyToFeedback(String idFeedback){
+        FeedbackRequest feedbackRequest = new FeedbackRequest(edtSendFeedback.getText().toString());
+        Call<ResponseDTO> listDirectorResponseCall = ApiClient.getFilmService().responseFeedback(
+                StoreUtil.get(UpdateActivity.this, Contants.accessToken), idFeedback, feedbackRequest);
+        listDirectorResponseCall.enqueue(new Callback<ResponseDTO>() {
+            @Override
+            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                Toast.makeText(UpdateActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
