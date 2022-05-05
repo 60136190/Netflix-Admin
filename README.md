@@ -25,11 +25,11 @@ Admin:
 Upload:
 - Upload ảnh người dùng : post --> http://localhost:5000/api/uploadImageUser
 - Xóa ảnh người dùng trên cloud : post --> http://localhost:5000/api/destroyImageUser
-- Upload video phim : post --> http://localhost:5000/api/uploadVideoFilm
+- Upload video phim : post --> http://localhost:5000/api/uploadVideoFilm ✔
 - Xóa video phim trên cloud : post --> http://localhost:5000/api/destroyVideoFilm
 - Upload ảnh đạo diễn : post --> http://localhost:5000/api/uploadImageDirector ✔
 - Xóa ảnh đạo diễn trên cloud : post --> http://localhost:5000/api/destroyImageDirector ✔
-- Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFil
+- Upload ảnh phim : post --> http://localhost:5000/api/uploadImageFil ✔
 - Xóa ảnh phim : post --> http://localhost:5000/api/destroyImageFilm
 - Upload ảnh hình thức thanh toán : post --> http://localhost:5000/api/uploadImagePayment ✔
 - Xóa ảnh hình thức thanh toán : post --> http://localhost:5000/api/destroyImagePayment ✔
@@ -48,10 +48,10 @@ Category
 - Xóa thể loại phim: delete --> http://localhost:5000/api/category/delete/:id ✔
 
 Film
-- Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all
-- Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add
+- Xem thông tin tất cả bộ phim: get --> http://localhost:5000/api/film/all ✔
+- Thêm thông tin bộ phim: post --> http://localhost:5000/api/film/add ✔
 - Chỉnh sửa thông tin bộ phim: patch --> http://localhost:5000/api/film/update/:id
-- Xóa bộ phim : delete --> http://localhost:5000/api/film/delete/:id
+- Xóa bộ phim : delete --> http://localhost:5000/api/film/delete/:id ✔
 - Thông tin chi tiết của bộ phim và thông tin đánh giá của bộ phim: get --> http://localhost:5000/api/film/detail/:id
 - Tìm bộ phim theo thể loại: get --> http://localhost:5000/api/film/find/category/:id
 - Tìm bộ phim theo đạo diễn: get --> http://localhost:5000/api/film/find/director/:id
