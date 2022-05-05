@@ -1,6 +1,8 @@
 package com.example.adminnetflix.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.ListDetailActivity;
 import com.example.adminnetflix.models.ItemManagerModel;
 
 import java.util.List;
@@ -35,11 +38,21 @@ public class ListManagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,  int position) {
         ItemManagerModel itemManagerModel = managerModelList.get(position);
         ((ItemViewHolder)holder).itemTitle.setText(itemManagerModel.getTitle());
         ((ItemViewHolder)holder).itemAmount.setText(itemManagerModel.getAmount());
-        ((ItemViewHolder)holder).ctManager.setBackgroundColor(itemManagerModel.getColor());
+        ((ItemViewHolder)holder).itemImg.setImageResource(itemManagerModel.getImage());
+        ((ItemViewHolder)holder).ctManager.setBackgroundResource(itemManagerModel.getColor());
+
+        ((ItemViewHolder)holder).ctManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ListDetailActivity.class);
+                intent.putExtra("manager",String.valueOf(holder.getAdapterPosition()));
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 

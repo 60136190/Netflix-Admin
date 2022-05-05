@@ -92,7 +92,7 @@ public class DetailFilmActivity extends AppCompatActivity {
             });
 
 
-//            // get series film
+            // get series film
 //            Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
 //                    StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
 //            serieslFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {

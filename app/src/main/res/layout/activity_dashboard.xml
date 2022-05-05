@@ -35,8 +35,8 @@
             android:layout_gravity="center"
             android:layout_weight="8"
             android:gravity="center"
-            android:text="Dashboard"
-            android:textColor="@color/white"
+            android:text="Create film"
+            android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,67 +58,330 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <org.eazegraph.lib.charts.ValueLineChart
-                    android:id="@+id/chart_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:padding="@dimen/_10sdp"
-                    app:egCurveSmoothness="0.4"
-                    app:egIndicatorTextSize="@dimen/_8ssp"
-                    app:egLegendHeight="40dp"
-                    app:egShowStandardValue="true"
-                    app:egShowValueIndicator="false"
-                    app:egUseCubic="true"
-                    app:egUseOverlapFill="true"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_20sdp">
                 <TextView
-                    android:id="@+id/listcategories"
+                    android:id="@+id/title_film"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="List categories"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp"
+                    android:text="Title film"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/chart_line"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                <LinearLayout
-                    android:id="@+id/ln_list_categories"
+                <EditText
+                    android:id="@+id/edt_title_film"
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/title_film"/>
+                <TextView
+                    android:id="@+id/description_film"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/rcv_list_categories"
-                    app:layout_constraintTop_toBottomOf="@+id/listcategories"
-                    android:weightSum="10">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.3"
-                        android:gravity="center"
-                        android:text="No"
-                        android:textSize="@dimen/_13ssp"
-                        android:textColor="@color/white" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:text="Category name"
-                        android:textSize="@dimen/_13ssp"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    tools:listitem="@layout/item_list_categories_film"
-                    android:id="@+id/rcv_list_categories"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Country production"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_title_film"/>
+                <EditText
+                    android:id="@+id/edt_country_production"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/description_film"/>
+
+                <TextView
+                    android:id="@+id/year_production"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Year production"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_country_production"/>
+                <EditText
+                    android:id="@+id/edt_year_production"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/year_production"/>
+
+                <TextView
+                    android:id="@+id/country_production"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Description"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_year_production"/>
+
+                <EditText
+                    android:id="@+id/edt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:background="@drawable/background_input"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/country_production"/>
+
+                <TextView
+                    android:id="@+id/tv_choose_img_film"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Choose image film"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_description"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_film"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/addimg"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_choose_img_film"/>
+
+                <TextView
+                    android:id="@+id/choose_director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Choose director"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_film"/>
+
+                <Spinner
+                    android:id="@+id/spn_sort_director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_director"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_director"
+                    app:layout_constraintTop_toTopOf="@+id/choose_director"/>
+
+                <TextView
+                    android:id="@+id/choose_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Choose category"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/choose_director"/>
+
+
+                <Spinner
+                    android:id="@+id/spn_sort_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_category"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_category"
+                    app:layout_constraintTop_toTopOf="@+id/choose_category"/>
+
+                <TextView
+                    android:id="@+id/series_film"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Series film"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/choose_category"/>
+                <TextView
+                    android:id="@+id/episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Episode"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/series_film"/>
+
+                <EditText
+                    android:id="@+id/edt_episode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/episode"/>
+
+                <TextView
+                    android:id="@+id/upload_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload video film"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_episode"/>
+
+                <ImageView
+                    android:id="@+id/img_video"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/addimg"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_video"/>
+
+                <TextView
+                    android:id="@+id/upload_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload image film"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_video"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_episode"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/addimg"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_image" />
+
+                <TextView
+                    android:id="@+id/age_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age limit"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_episode"/>
+
+                <EditText
+                    android:id="@+id/edt_age_limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/age_limit"/>
+
+
+                <TextView
+                    android:id="@+id/lenght_film"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lilm Length"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_age_limit"/>
+
+                <EditText
+                    android:id="@+id/edt_lenght_film"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lenght_film"/>
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_lenght_film"/>
+
+                <EditText
+                    android:id="@+id/edt_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:inputType="number"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/background_input"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/price"/>
+
+                <Button
+                    android:id="@+id/btn_create"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/ln_list_categories" />
+                    android:layout_margin="@dimen/_30sdp"
+                    android:text="Create new film"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_price"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
+    <TextView
+        android:id="@+id/tv_public_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/url_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

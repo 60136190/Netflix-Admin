@@ -57,7 +57,23 @@ public class ListDetailActivity extends AppCompatActivity {
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
-        if(b.get("list").equals("List Director")){
+        if(b.get("manager").equals("0")){
+            tvTitle.setText("List User");
+            getListUser();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setLayoutManager(linearLayoutManager);
+        }
+
+        if(b.get("manager").equals("1")){
+            tvTitle.setText("List Admin");
+            getListAdmin();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setLayoutManager(linearLayoutManager);
+        }
+
+        if(b.get("manager").equals("2")){
             tvTitle.setText("List Director");
             getListDirector();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
@@ -65,15 +81,15 @@ public class ListDetailActivity extends AppCompatActivity {
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
-        if(b.get("list").equals("List Mode of Payment")){
-            tvTitle.setText("List Mode of Payment");
-            getListModeOfPaymet();
+        if (b.get("manager").equals("3")){
+            tvTitle.setText("List Rating");
+            getListRating();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
-        if(b.get("list").equals("List Feedback")){
+        if(b.get("manager").equals("4")){
             btnAdd.setVisibility(View.GONE);
             tvTitle.setText("List Feedback");
             getListFeedback();
@@ -82,31 +98,15 @@ public class ListDetailActivity extends AppCompatActivity {
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
-        if (b.get("list").equals("List Rating")){
-            tvTitle.setText("List Rating");
-            getListRating();
+        if(b.get("manager").equals("5")){
+            tvTitle.setText("List Mode of Payment");
+            getListModeOfPaymet();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
-        if(b.get("list").equals("List Admin")){
-            tvTitle.setText("List Admin");
-            getListAdmin();
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            rcvListDetail.setLayoutManager(linearLayoutManager);
-        }
-
-        if(b.get("list").equals("List User")){
-            tvTitle.setText("List User");
-            getListUser();
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            rcvListDetail.setLayoutManager(linearLayoutManager);
-        }
-
-        if(b.get("list").equals("List Category")){
+        if(b.get("manager").equals("6")){
             tvTitle.setText("List Category");
             getListCategoriesFilm();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
@@ -114,7 +114,7 @@ public class ListDetailActivity extends AppCompatActivity {
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 
-        String value = b.get("list").toString();
+        String value = b.get("manager").toString();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

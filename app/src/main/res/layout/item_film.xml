@@ -23,9 +23,7 @@
                 android:id="@+id/hot_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
-                android:scaleType="fitXY"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:scaleType="fitXY" />
             <TextView
                 android:id="@+id/tv_limit_age"
                 android:layout_width="wrap_content"
@@ -35,6 +33,14 @@
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/white"
                 android:background="@color/red"/>
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/ic_more"
+                android:layout_gravity="end"
+                app:tint="@color/white" />
         </FrameLayout>
         <TextView
             android:id="@+id/tv_title_film"

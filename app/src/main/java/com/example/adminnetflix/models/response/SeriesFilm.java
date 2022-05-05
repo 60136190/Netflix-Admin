@@ -21,9 +21,14 @@ public class SeriesFilm implements Serializable {
     @SerializedName("url_image")
     @Expose
     private String urlImage;
-    @SerializedName("_id")
-    @Expose
-    private String id;
+
+    public SeriesFilm(Integer episode, String publicIdVideo, String urlVideo, String publicIdImage, String urlImage) {
+        this.episode = episode;
+        this.publicIdVideo = publicIdVideo;
+        this.urlVideo = urlVideo;
+        this.publicIdImage = publicIdImage;
+        this.urlImage = urlImage;
+    }
 
     public Integer getEpisode() {
         return episode;
@@ -65,11 +70,4 @@ public class SeriesFilm implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }

@@ -1,18 +1,13 @@
-package com.example.adminnetflix.models.response;
+package com.example.adminnetflix.models.request;
 
+import com.example.adminnetflix.models.response.Image;
+import com.example.adminnetflix.models.response.SeriesFilm;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Film implements Serializable {
-    @SerializedName("image_film")
-    @Expose
-    private Image imageFilm;
-    @SerializedName("_id")
-    @Expose
-    private String id;
+public class FilmRequest {
     @SerializedName("title")
     @Expose
     private String title;
@@ -25,48 +20,40 @@ public class Film implements Serializable {
     @SerializedName("country_production")
     @Expose
     private String countryProduction;
+    @SerializedName("image_film")
+    @Expose
+    private Image imageFilm;
     @SerializedName("director")
     @Expose
-    private List<Director> director = null;
+    private List<String> director = null;
     @SerializedName("category")
     @Expose
-    private List<Category> category = null;
+    private List<String> category = null;
     @SerializedName("seriesFilm")
     @Expose
     private List<SeriesFilm> seriesFilm = null;
-    @SerializedName("price")
+    @SerializedName("ageLimit")
     @Expose
-    private Integer price;
+    private Integer ageLimit;
     @SerializedName("filmLength")
     @Expose
     private String filmLength;
-    @SerializedName("ageLimit")
+    @SerializedName("price")
     @Expose
-    private String ageLimit;
-    @SerializedName("createdAt")
-    @Expose
-    private String createdAt;
-    @SerializedName("updatedAt")
-    @Expose
-    private String updatedAt;
-    @SerializedName("__v")
-    @Expose
-    private Integer v;
+    private Integer price;
 
-    public Image getImageFilm() {
-        return imageFilm;
-    }
-
-    public void setImageFilm(Image imageFilm) {
+    public FilmRequest(String title, String description, String yearProduction, String countryProduction, Image imageFilm, List<String> director, List<String> category, List<SeriesFilm> seriesFilm, Integer ageLimit, String filmLength, Integer price) {
+        this.title = title;
+        this.description = description;
+        this.yearProduction = yearProduction;
+        this.countryProduction = countryProduction;
         this.imageFilm = imageFilm;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.director = director;
+        this.category = category;
+        this.seriesFilm = seriesFilm;
+        this.ageLimit = ageLimit;
+        this.filmLength = filmLength;
+        this.price = price;
     }
 
     public String getTitle() {
@@ -101,19 +88,27 @@ public class Film implements Serializable {
         this.countryProduction = countryProduction;
     }
 
-    public List<Director> getDirector() {
+    public Image getImageFilm() {
+        return imageFilm;
+    }
+
+    public void setImageFilm(Image imageFilm) {
+        this.imageFilm = imageFilm;
+    }
+
+    public List<String> getDirector() {
         return director;
     }
 
-    public void setDirector(List<Director> director) {
+    public void setDirector(List<String> director) {
         this.director = director;
     }
 
-    public List<Category> getCategory() {
+    public List<String> getCategory() {
         return category;
     }
 
-    public void setCategory(List<Category> category) {
+    public void setCategory(List<String> category) {
         this.category = category;
     }
 
@@ -125,12 +120,12 @@ public class Film implements Serializable {
         this.seriesFilm = seriesFilm;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getAgeLimit() {
+        return ageLimit;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setAgeLimit(Integer ageLimit) {
+        this.ageLimit = ageLimit;
     }
 
     public String getFilmLength() {
@@ -141,35 +136,12 @@ public class Film implements Serializable {
         this.filmLength = filmLength;
     }
 
-    public String getAgeLimit() {
-        return ageLimit;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setAgeLimit(String ageLimit) {
-        this.ageLimit = ageLimit;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getV() {
-        return v;
-    }
-
-    public void setV(Integer v) {
-        this.v = v;
-    }
 }

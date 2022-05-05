@@ -3,6 +3,7 @@ package com.example.adminnetflix.api;
 import com.example.adminnetflix.models.request.CategoryRequest;
 import com.example.adminnetflix.models.request.DeleteImageRequest;
 import com.example.adminnetflix.models.request.FeedbackRequest;
+import com.example.adminnetflix.models.request.FilmRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentWithoutImage;
 import com.example.adminnetflix.models.request.UpdateDirectorRequest;
@@ -18,6 +19,7 @@ import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.RatingResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.models.response.UploadImageResponse;
+import com.example.adminnetflix.models.response.UploadVideoResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -38,6 +40,20 @@ public interface Film {
     @GET("api/film/all")
     Call<FilmResponse> getAllFilm(@Header("Authorization") String authorization);
 
+    //upload image film
+    @Multipart
+    @POST("api/uploadImageFilm")
+    Call<UploadImageResponse> uploadImageFilm(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
+
+    // upload video film
+    @Multipart
+    @POST("api/uploadVideoFilm")
+    Call<UploadVideoResponse> uploadVideoFilm(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
+
+    // create  film
+    @POST("api/film/add")
+    Call<ResponseDTO> createFilm(@Header("Authorization") String authorization, @Body FilmRequest filmRequest );
+
     // get detail film
     @GET("api/film/detail/{id}")
     Call<DetailFilmResponse> detailFilm(@Header("Authorization") String authorization, @Path("id") String idFilm);
@@ -50,6 +66,9 @@ public interface Film {
     @GET("api/rating/all")
     Call<RatingResponse> getAllRating(@Header("Authorization") String authorization);
 
+    // delete film
+    @DELETE("api/film/delete/{id}")
+    Call<ResponseDTO> deleteFilm(@Header("Authorization") String authorization, @Path("id") String idFilm);
 
     // create director
     @POST("api/modeOfPayment/add")

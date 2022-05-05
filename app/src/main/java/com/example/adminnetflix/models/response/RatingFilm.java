@@ -8,7 +8,7 @@ import java.util.List;
 public class RatingFilm {
     @SerializedName("image_film")
     @Expose
-    private ImageFilm imageFilm;
+    private Image imageFilm;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -52,11 +52,11 @@ public class RatingFilm {
     @Expose
     private Integer v;
 
-    public ImageFilm getImageFilm() {
+    public Image getImageFilm() {
         return imageFilm;
     }
 
-    public void setImageFilm(ImageFilm imageFilm) {
+    public void setImageFilm(Image imageFilm) {
         this.imageFilm = imageFilm;
     }
 

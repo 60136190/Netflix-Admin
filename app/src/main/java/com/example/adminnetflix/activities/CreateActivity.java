@@ -115,7 +115,7 @@ public class CreateActivity extends AppCompatActivity {
 
 
         // create category film
-        if (b.get("btn").equals("List Category")) {
+        if (b.get("btn").equals("6")) {
             tvCategory.setVisibility(View.VISIBLE);
             edtCategory.setVisibility(View.VISIBLE);
 
@@ -129,18 +129,18 @@ public class CreateActivity extends AppCompatActivity {
         }
 
         // create admin
-        if (b.get("btn").equals("List Admin")) {
+        if (b.get("btn").equals("1")) {
             tvTitleCreate.setText("Create Admin");
 
         }
 
         // create user
-        if (b.get("btn").equals("List User")){
+        if (b.get("btn").equals("0")){
 
         }
 
         // create director
-        if (b.get("btn").equals("List Director")){
+        if (b.get("btn").equals("2")){
             tvDirector.setVisibility(View.VISIBLE);
             tvDescription.setVisibility(View.VISIBLE);
             edtNameOfDirector.setVisibility(View.VISIBLE);
@@ -165,7 +165,7 @@ public class CreateActivity extends AppCompatActivity {
         }
 
         // create mode of payment
-        if (b.get("btn").equals("List Mode of Payment")){
+        if (b.get("btn").equals("5")){
             tvTitleCreate.setText("Create Mode of Payment");
             tvModeOfPayment.setVisibility(View.VISIBLE);
             edtModeOfPayment.setVisibility(View.VISIBLE);

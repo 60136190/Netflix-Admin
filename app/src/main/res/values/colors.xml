@@ -16,7 +16,6 @@
     <color name="dark_green">#354543</color>
     <color name="second_red">#FAD6D8</color>
     <color name="gray_dot">#4b4b4b</color>
-    <color name="gray">#EDEBEB</color>
     <color name="text">#264772</color>
     <color name="blue">#0670eb</color>
     <color name="dark_gray">#2e2e2e</color>
@@ -24,4 +23,15 @@
     <color name="dark_pink">#ed5664</color>
     <color name="purple">#ab5ece</color>
     <color name="gray_search">#323232</color>
+    <color name="gray">#EDEBEB</color>
+
+    <color name="user">#D9FBDA</color>
+    <color name="category">#FFFCDE</color>
+    <color name="admin">#FAECD8</color>
+    <color name="feedback">#C7DDF8</color>
+    <color name="mode_of_payment">#FAD6D8</color>
+    <color name="rating">#EDEBEB</color>
+    <color name="director">#F6CFC2</color>
+
+
 </resources>
