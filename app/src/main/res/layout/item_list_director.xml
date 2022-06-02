@@ -51,6 +51,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_director"
         app:layout_constraintLeft_toRightOf="@+id/img_director"/>
 
+        <CheckBox
+            android:id="@+id/rdb_choose"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -21,9 +21,6 @@
             android:name=".activities.CreateActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddFilmActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.ListDetailActivity"
             android:exported="false" />
         <activity
@@ -33,7 +30,7 @@
             android:name=".activities.DetailUserActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DashboardActivity"
+            android:name=".activities.CreateFilmActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"

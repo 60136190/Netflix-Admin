@@ -45,10 +45,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InformationFragment extends Fragment {
-    private LinearLayout lnLogout;
+public class ProfileFragment extends Fragment {
     private LinearLayout lnViewProfile;
     private ImageView imgUser;
+    private ImageView imgSignOut;
     private TextView tvFullName;
     private TextView tvEmail;
     private View view;
@@ -74,7 +74,7 @@ public class InformationFragment extends Fragment {
             }
         });
 
-        lnLogout.setOnClickListener(new View.OnClickListener() {
+        imgSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logout();
@@ -84,7 +84,7 @@ public class InformationFragment extends Fragment {
     }
 
     private void initUi() {
-        lnLogout = view.findViewById(R.id.ln_logout);
+        imgSignOut = view.findViewById(R.id.img_sigout);
         lnViewProfile = view.findViewById(R.id.ln_view_profile);
         tvFullName = view.findViewById(R.id.tv_fullname);
         tvEmail = view.findViewById(R.id.tv_email);
@@ -123,7 +123,7 @@ public class InformationFragment extends Fragment {
     public void logout(){
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_confirm_delete);
+        dialog.setContentView(R.layout.dialog_confirm);
 
         Window window = dialog.getWindow();
         if (window == null) {

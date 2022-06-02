@@ -5,10 +5,14 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -31,14 +35,17 @@ import com.example.adminnetflix.adapters.ListDirectorAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.request.FilmRequest;
 import com.example.adminnetflix.models.response.Image;
+import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.models.response.SeriesFilm;
 import com.example.adminnetflix.models.response.UploadImageResponse;
 import com.example.adminnetflix.models.response.UploadVideoResponse;
+import com.example.adminnetflix.models.response.VideoFilm;
 import com.example.adminnetflix.realpath.RealPathUtil;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
+import com.example.adminnetflix.utils.TranslateAnimationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +60,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DashboardActivity extends AppCompatActivity {
+public class CreateFilmActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
@@ -61,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
     private Uri mUriVideo;
     RequestBody requestBody;
     RequestBody requestBodyVideo;
-
+    private ListDirectorAdapter listDirectorAdapter;
     private TextView tvPublic_video;
     private TextView tvUrl_video;
     private ImageView imgBack;
@@ -79,7 +86,10 @@ public class DashboardActivity extends AppCompatActivity {
     private Button btnCreate;
     private Spinner spinnerDirector;
     private Spinner spinnerCategory;
-
+    private RecyclerView rcv_choose_director;
+    public static String public_idVideo;
+    public static String url_Video;
+    ArrayList<String> categoryList = new ArrayList<>();
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -130,9 +140,15 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_create_film);
         initUi();
         Spinner();
+        getListDirector();
+        LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(CreateFilmActivity.this);
+        linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+        rcv_choose_director.setLayoutManager(linearLayoutManagera);
+
+//        SpinnerListCategory();
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,9 +174,10 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createFilm();
-//                getVideo();
+//                Toast.makeText(CreateFilmActivity.this,sharedPreferences.getString(Contants.idDirector, ""),Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
     }
@@ -224,15 +241,16 @@ public class DashboardActivity extends AppCompatActivity {
         tvPublic_video = findViewById(R.id.tv_public_video);
         tvUrl_video = findViewById(R.id.url_video);
         spinnerCategory = findViewById(R.id.spn_sort_category);
-        spinnerDirector = findViewById(R.id.spn_sort_director);
+//        spinnerDirector = findViewById(R.id.spn_sort_director);
+        rcv_choose_director = findViewById(R.id.rcv_choose_director);
     }
 
     private void createFilm() {
         getVideo();
+        Toast.makeText(CreateFilmActivity.this,public_idVideo,Toast.LENGTH_SHORT).show();
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
                     public void run() {
-
 
                         // upload new image
                         String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
@@ -241,7 +259,7 @@ public class DashboardActivity extends AppCompatActivity {
                         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBody);
 
                         Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
-                                StoreUtil.get(DashboardActivity.this, Contants.accessToken),
+                                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
                                 multipartBody);
                         responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
                             @Override
@@ -258,26 +276,30 @@ public class DashboardActivity extends AppCompatActivity {
                                     int ageLimit = Integer.parseInt(edtAgeLimit.getText().toString());
                                     int price = Integer.parseInt(edtPrice.getText().toString());
                                     int episode = Integer.parseInt(edtEpisode.getText().toString());
-                                    String lengtFilm = edtLenghtFilm.getText().toString();
+                                    String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
 
                                     SeriesFilm seriesFilm = new SeriesFilm(episode,
-                                            tvPublic_video.getText().toString(),
-                                            tvUrl_video.getText().toString(), public_id, url);
+                                            public_idVideo,url_Video,
+                                            public_id, url);
+
+                                    VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
 
                                     List<String> list = new ArrayList<>();
-                                    list.add("62049b07933677fbeffdc430");
+                                    list.add("62049b51933677fbeffdc436");
+                                    list.add("620a1317b67785835eade8e6");
 
                                     List<String> listCategory = new ArrayList<>();
-                                    list.add("62049dda656d8c7511aaab77");
+                                    listCategory.add("62049dda656d8c7511aaab77");
 
                                     List<SeriesFilm> seriesFilms = new ArrayList<>();
                                     seriesFilms.add(seriesFilm);
 
+
                                     FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
-                                            countryProduction, image, list, listCategory,
+                                            countryProduction, image,image,videoFilm,list, listCategory,
                                             seriesFilms, ageLimit, lengtFilm, price);
                                     Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
-                                            StoreUtil.get(DashboardActivity.this, Contants.accessToken), filmRequest);
+                                            StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
                                     responseFilm.enqueue(new Callback<ResponseDTO>() {
                                         @Override
                                         public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -286,7 +308,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                                         @Override
                                         public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                            Toast.makeText(DashboardActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -295,7 +317,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                                Toast.makeText(DashboardActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -310,19 +332,20 @@ public class DashboardActivity extends AppCompatActivity {
         requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileImage);
         MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBodyVideo);
         Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
-                StoreUtil.get(DashboardActivity.this, Contants.accessToken),
+                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
                 multipartBody);
         responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
             @Override
             public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
-
-                tvPublic_video.setText(response.body().getPublic_id());
-                tvUrl_video.setText(response.body().getUrl());
+                public_idVideo = response.body().getPublic_id();
+                url_Video = response.body().getUrl();
+//                tvPublic_video.setText(response.body().getPublic_id());
+//                tvUrl_video.setText(response.body().getUrl());
             }
 
             @Override
             public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
-                Toast.makeText(DashboardActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -330,22 +353,40 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void Spinner(){
         Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
-                StoreUtil.get(DashboardActivity.this, Contants.accessToken));
+                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
         listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
             @Override
             public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
-                for(int i = 0; i< response.body().getData().size(); i++){
-                    List<String> director = Arrays.asList(String.valueOf(response.body().getData().get(i).getName()));
-                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item,director);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerDirector.setAdapter(adapter);
-                }
-
+                    for (int i = 0; i < response.body().getData().toArray().length; i++) {
+                        String data = response.body().getData().get(i).getId();
+                        categoryList.add(data);
+                        ArrayAdapter adapter = new ArrayAdapter(CreateFilmActivity.this, android.R.layout.simple_spinner_item, categoryList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerCategory.setAdapter(adapter);
+                    }
             }
 
             @Override
             public void onFailure(Call<ListDirectorResponse> call, Throwable t) {
-                Toast.makeText(DashboardActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getListDirector() {
+        Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
+                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
+        listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
+            @Override
+            public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
+                listDirectorAdapter = new ListDirectorAdapter(CreateFilmActivity.this, response.body().getData());
+                rcv_choose_director.setAdapter(listDirectorAdapter);
+                listDirectorAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ListDirectorResponse> call, Throwable t) {
+                Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

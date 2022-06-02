@@ -67,7 +67,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
             public void onClick(View view) {
                 Dialog dialog = new Dialog(view.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_confirm_delete);
+                dialog.setContentView(R.layout.dialog_confirm);
 
                 Window window = dialog.getWindow();
                 if (window == null) {

@@ -25,7 +25,7 @@
             android:layout_weight="8"
             android:text="List all film"
             android:textSize="@dimen/_15ssp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -52,13 +52,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_film"
+        android:id="@+id/btn_to_top"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
         android:layout_margin="@dimen/_20sdp"
         android:background="@drawable/circle_button"
         android:padding="10dp"
-        app:backgroundTint="@color/red"
-        app:icon="@drawable/ic_add"
+        app:backgroundTint="@color/blue"
+        app:icon="@drawable/ic_upward"
         android:layout_gravity="end|bottom"/>
 </FrameLayout>

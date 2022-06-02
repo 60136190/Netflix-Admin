@@ -4,12 +4,11 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/home"
-        android:iconTint="@color/black"
         android:title="Home" />
     <item
         android:id="@+id/movie"
         android:enabled="true"
-        android:icon="@drawable/movie"
+        android:icon="@drawable/icon_film"
         android:title="Movie"
         />
     <item
@@ -19,10 +18,11 @@
         android:id="@+id/user"
         android:enabled="true"
         android:icon="@drawable/people"
-        android:title="Staff" />
+        android:title="Manager" />
     <item
         android:id="@+id/more"
         android:enabled="true"
-        android:icon="@drawable/information"
-        android:title="Information" />
+        android:icon="@drawable/user"
+        android:title="Profile" />
+
 </menu>

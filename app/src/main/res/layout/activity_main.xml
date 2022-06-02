@@ -2,17 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+    android:layout_height="match_parent">
     <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
+        android:layout_height="match_parent">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/background"
             android:id="@+id/framecontainer"/>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="16dp"
-                    app:itemTextColor="@color/black"
+                    app:itemTextColor="@color/red"
                     android:background="@android:color/transparent"
                     app:itemIconTint="@drawable/bottom_navigation_selector"
                     app:menu="@menu/navigation" />
@@ -44,8 +42,9 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_add"
                 app:tint="@android:color/white"
-                app:backgroundTint="@color/black"
+                app:backgroundTint="@color/red"
                 app:layout_anchor="@id/bottomappbar"
+                app:layout_anchorGravity="bottom|end"
                 app:rippleColor="#ECD6D6" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

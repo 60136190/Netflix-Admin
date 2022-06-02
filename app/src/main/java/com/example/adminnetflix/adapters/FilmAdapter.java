@@ -1,10 +1,8 @@
 package com.example.adminnetflix.adapters;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
@@ -81,7 +79,7 @@ public class FilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(view.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_confirm_delete);
+                dialog.setContentView(R.layout.dialog_confirm);
                 Window window = dialog.getWindow();
                 if (window == null) {
                     return;

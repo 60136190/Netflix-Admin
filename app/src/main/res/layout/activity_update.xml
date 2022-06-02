@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ct_header"
@@ -33,7 +34,7 @@
             android:gravity="center"
             android:layout_weight="8"
             android:textSize="@dimen/_15ssp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -50,7 +51,7 @@
         android:text="Name of category"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
 
@@ -59,6 +60,7 @@
         android:layout_width="0dp"
         android:visibility="gone"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:layout_marginRight="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tv_category"
         app:layout_constraintBottom_toBottomOf="@+id/tv_category"
@@ -74,7 +76,7 @@
         android:text="Director"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_category"/>
 
@@ -83,6 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:textColor="@color/white"
         android:layout_marginRight="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tv_director"
         app:layout_constraintBottom_toBottomOf="@+id/tv_director"
@@ -107,7 +110,7 @@
         android:text="Description"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_direction"/>
 
@@ -116,6 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:textColor="@color/white"
         android:layout_marginRight="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tv_description_director"
         app:layout_constraintBottom_toBottomOf="@+id/tv_description_director"
@@ -131,7 +135,7 @@
         android:text="Mode of payment"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_description_director"/>
 
@@ -140,6 +144,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:textColor="@color/white"
         android:layout_marginRight="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tv_mode_of_payment"
         app:layout_constraintBottom_toBottomOf="@+id/tv_mode_of_payment"
@@ -164,7 +169,7 @@
         android:text="Fullname"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_mode_of_payment"/>
 
@@ -176,7 +181,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:visibility="gone"
         android:textSize="@dimen/_12ssp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="@+id/fullname_feedback"
         app:layout_constraintBottom_toBottomOf="@+id/fullname_feedback"
         app:layout_constraintLeft_toRightOf="@+id/fullname_feedback"/>
@@ -190,7 +195,7 @@
         android:text="Email"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullname_feedback"/>
 
@@ -202,7 +207,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:visibility="gone"
         android:textSize="@dimen/_12ssp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="@+id/email_feedback"
         app:layout_constraintBottom_toBottomOf="@+id/email_feedback"
         app:layout_constraintLeft_toRightOf="@+id/email_feedback"/>
@@ -216,7 +221,7 @@
         android:text="Subject"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_feedback"/>
 
@@ -228,7 +233,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:visibility="gone"
         android:textSize="@dimen/_12ssp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="@+id/subject_feedback"
         app:layout_constraintBottom_toBottomOf="@+id/subject_feedback"
         app:layout_constraintLeft_toRightOf="@+id/subject_feedback"/>
@@ -242,7 +247,7 @@
         android:text="Content"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subject_feedback"/>
 
@@ -254,7 +259,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:visibility="gone"
         android:textSize="@dimen/_12ssp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="@+id/content_feedback"
         app:layout_constraintBottom_toBottomOf="@+id/content_feedback"
         app:layout_constraintLeft_toRightOf="@+id/content_feedback"/>
@@ -268,7 +273,7 @@
         android:text="Reply to feedback"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content_feedback"/>
 
@@ -276,6 +281,7 @@
         android:id="@+id/edt_send_feedback"
         android:layout_width="0dp"
         android:visibility="gone"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="@+id/tv_send_feedback"
@@ -288,7 +294,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_30sdp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/blue"
         android:text="Update"
         android:textAllCaps="false"
         android:textColor="@color/white"

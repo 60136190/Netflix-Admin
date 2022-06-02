@@ -11,9 +11,9 @@ import android.view.View;
 
 import com.example.adminnetflix.R;
 import com.example.adminnetflix.fragments.HomeFragment;
-import com.example.adminnetflix.fragments.InformationFragment;
+import com.example.adminnetflix.fragments.ProfileFragment;
 import com.example.adminnetflix.fragments.MovieFragment;
-import com.example.adminnetflix.fragments.UserFragment;
+import com.example.adminnetflix.fragments.ManagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnRevenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(MainActivity.this, CreateFilmActivity.class);
                 startActivity(intent);
             }
         });
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.movie: temp = new MovieFragment();
                         break;
-                    case R.id.user : temp = new UserFragment();
+                    case R.id.user : temp = new ManagerFragment();
                         break;
-                    case R.id.more : temp = new InformationFragment();
+                    case R.id.more : temp = new ProfileFragment();
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.framecontainer,temp).commit();
                 return true;

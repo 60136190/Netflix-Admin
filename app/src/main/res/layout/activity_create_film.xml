@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activities.DashboardActivity">
+    tools:context=".activities.CreateFilmActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ct_header"
@@ -36,7 +36,7 @@
             android:layout_weight="8"
             android:gravity="center"
             android:text="Create film"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title film"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -78,7 +78,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
                     android:inputType="text"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/title_film"/>
                 <TextView
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Country production"
@@ -99,7 +99,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
                     android:inputType="text"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/description_film"/>
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Year production"
@@ -120,8 +120,8 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
-                    android:inputType="text"
-                    android:textColor="@color/black"
+                    android:inputType="date"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/year_production"/>
 
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Description"
@@ -145,7 +145,7 @@
                     android:padding="@dimen/_10sdp"
                     android:background="@drawable/background_input"
                     android:inputType="text"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/country_production"/>
 
@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Choose image film"
@@ -168,39 +168,38 @@
                     android:src="@drawable/addimg"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_choose_img_film"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_choose_img_film" />
 
                 <TextView
                     android:id="@+id/choose_director"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Choose director"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_film"/>
 
-                <Spinner
-                    android:id="@+id/spn_sort_director"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_25sdp"
-                    app:layout_constraintLeft_toRightOf="@+id/choose_director"
-                    app:layout_constraintBottom_toBottomOf="@+id/choose_director"
-                    app:layout_constraintTop_toTopOf="@+id/choose_director"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_choose_director"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_list_director"
+                    app:layout_constraintTop_toBottomOf="@+id/choose_director"/>
 
                 <TextView
                     android:id="@+id/choose_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     android:text="Choose category"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/choose_director"/>
+                    app:layout_constraintTop_toBottomOf="@+id/rcv_choose_director"/>
 
 
                 <Spinner
@@ -213,22 +212,24 @@
 
                 <TextView
                     android:id="@+id/series_film"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp"
                     android:text="Series film"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
-                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/choose_category"/>
+                    app:layout_constraintTop_toBottomOf="@+id/choose_category" />
+
                 <TextView
                     android:id="@+id/episode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Episode"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -240,8 +241,8 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
-                    android:inputType="text"
-                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/episode"/>
 
@@ -251,20 +252,21 @@
                     android:layout_height="wrap_content"
                     android:text="Upload video film"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/edt_episode"/>
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_video"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
                     android:src="@drawable/addimg"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upload_video"/>
+                    app:layout_constraintTop_toBottomOf="@+id/upload_video"
+                    />
 
                 <TextView
                     android:id="@+id/upload_image"
@@ -272,7 +274,7 @@
                     android:layout_height="wrap_content"
                     android:text="Upload image film"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -283,7 +285,7 @@
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
                     android:src="@drawable/addimg"
-                    app:layout_constraintHorizontal_bias="0.501"
+                    app:tint="@color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upload_image" />
@@ -294,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:text="Age limit"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -307,7 +309,7 @@
                     android:inputType="number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/age_limit"/>
 
@@ -318,7 +320,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lilm Length"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -329,8 +331,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:inputType="number"
                     android:background="@drawable/background_input"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/lenght_film"/>
 
@@ -340,7 +343,7 @@
                     android:layout_height="wrap_content"
                     android:text="Price"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -353,7 +356,7 @@
                     android:inputType="number"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/price"/>
 
@@ -366,7 +369,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:backgroundTint="@color/red"
+                    android:backgroundTint="@color/blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/edt_price"/>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,9 @@
 package com.example.adminnetflix.adapters;
 
 import android.app.Dialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,16 +23,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.activities.DetailUserActivity;
+import com.example.adminnetflix.activities.FirstScreenActivity;
 import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
-import com.example.adminnetflix.models.response.Category;
+import com.example.adminnetflix.models.TestModel;
 import com.example.adminnetflix.models.response.Director;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,6 +44,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context mContext1;
     List<Director> mDirectorList;
+    private List<TestModel> taskList;
 
     public ListDirectorAdapter(Context mContext, List<Director> mDirectorList) {
         this.mContext1 = mContext;
@@ -63,6 +65,18 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String title = director.getName();
         String imgDirector = director.getImage().getUrl();
 
+        if (taskList == null)
+            taskList = new ArrayList<>();
+
+       (((ItemViewHolder)holder).rdbChoose).setOnCheckedChangeListener((buttonView, isChecked) -> {
+           if ((((ItemViewHolder)holder).rdbChoose).isChecked()) {
+               TestModel taskModel = new TestModel(director.getId());
+               taskList.add(taskModel);
+               StoreUtil.writeListInPref(mContext1, taskList);
+           }
+       });
+
+
         ((ItemViewHolder) holder).itemNameOfDirector.setText(title);
         Picasso.with(mContext1)
                 .load(imgDirector).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemUrl);
@@ -72,7 +86,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             public void onClick(View view) {
                 Dialog dialog = new Dialog(view.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_confirm_delete);
+                dialog.setContentView(R.layout.dialog_confirm);
 
                 Window window = dialog.getWindow();
                 if (window == null) {
@@ -123,17 +137,19 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((ItemViewHolder) holder).ctListDirector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext1, UpdateActivity.class);
-                intent.putExtra("update","Update Director");
-                intent.putExtra("id_director",director.getId());
-                intent.putExtra("name_director",director.getName());
-                intent.putExtra("public_Id_director",director.getImage().getPublicId());
-                intent.putExtra("url_director",director.getImage().getUrl());
-                mContext1.startActivity(intent);
+//                Intent intent = new Intent(mContext1, UpdateActivity.class);
+//                intent.putExtra("update","Update Director");
+//                intent.putExtra("id_director",director.getId());
+//                intent.putExtra("name_director",director.getName());
+//                intent.putExtra("public_Id_director",director.getImage().getPublicId());
+//                intent.putExtra("url_director",director.getImage().getUrl());
+//                mContext1.startActivity(intent);
+                SharedPreferences sharedPreferences = mContext1.getSharedPreferences("AdminSharedPref", Context.MODE_PRIVATE);
+                ;
+                Toast.makeText(mContext1,sharedPreferences.getString("list", ""),Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
     @Override
     public int getItemCount() {
@@ -149,6 +165,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private TextView itemNameOfDirector;
         private LinearLayout lnDeleteDirector;
         private ConstraintLayout ctListDirector;
+        private CheckBox rdbChoose;
 
 
         public ItemViewHolder( View itemView) {
@@ -157,6 +174,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemNameOfDirector = itemView.findViewById(R.id.tv_name_of_director);
             lnDeleteDirector = itemView.findViewById(R.id.ln_delete);
             ctListDirector = itemView.findViewById(R.id.ct_list_director);
+            rdbChoose = itemView.findViewById(R.id.rdb_choose);
         }
     }
 

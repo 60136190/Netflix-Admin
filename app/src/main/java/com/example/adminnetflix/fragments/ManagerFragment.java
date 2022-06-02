@@ -13,7 +13,7 @@ import com.example.adminnetflix.models.ItemManagerModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFragment extends Fragment {
+public class ManagerFragment extends Fragment {
     private RecyclerView rcvManager;
     ListManagerAdapter listManagerAdapter;
     List<ItemManagerModel> itemManagerModel;

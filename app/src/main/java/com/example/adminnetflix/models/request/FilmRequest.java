@@ -2,6 +2,7 @@ package com.example.adminnetflix.models.request;
 
 import com.example.adminnetflix.models.response.Image;
 import com.example.adminnetflix.models.response.SeriesFilm;
+import com.example.adminnetflix.models.response.VideoFilm;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +24,12 @@ public class FilmRequest {
     @SerializedName("image_film")
     @Expose
     private Image imageFilm;
+    @SerializedName("image_title")
+    @Expose
+    private Image imageTitle;
+    @SerializedName("video_film")
+    @Expose
+    private VideoFilm videoFilm;
     @SerializedName("director")
     @Expose
     private List<String> director = null;
@@ -42,12 +49,14 @@ public class FilmRequest {
     @Expose
     private Integer price;
 
-    public FilmRequest(String title, String description, String yearProduction, String countryProduction, Image imageFilm, List<String> director, List<String> category, List<SeriesFilm> seriesFilm, Integer ageLimit, String filmLength, Integer price) {
+    public FilmRequest(String title, String description, String yearProduction, String countryProduction, Image imageFilm, Image imageTitle, VideoFilm videoFilm, List<String> director, List<String> category, List<SeriesFilm> seriesFilm, Integer ageLimit, String filmLength, Integer price) {
         this.title = title;
         this.description = description;
         this.yearProduction = yearProduction;
         this.countryProduction = countryProduction;
         this.imageFilm = imageFilm;
+        this.imageTitle = imageTitle;
+        this.videoFilm = videoFilm;
         this.director = director;
         this.category = category;
         this.seriesFilm = seriesFilm;
@@ -94,6 +103,22 @@ public class FilmRequest {
 
     public void setImageFilm(Image imageFilm) {
         this.imageFilm = imageFilm;
+    }
+
+    public Image getImageTitle() {
+        return imageTitle;
+    }
+
+    public void setImageTitle(Image imageTitle) {
+        this.imageTitle = imageTitle;
+    }
+
+    public VideoFilm getVideoFilm() {
+        return videoFilm;
+    }
+
+    public void setVideoFilm(VideoFilm videoFilm) {
+        this.videoFilm = videoFilm;
     }
 
     public List<String> getDirector() {

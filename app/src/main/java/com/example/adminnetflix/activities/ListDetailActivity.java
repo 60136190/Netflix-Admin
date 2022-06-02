@@ -30,6 +30,7 @@ import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.RatingResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
+import com.example.adminnetflix.utils.TranslateAnimationUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +63,7 @@ public class ListDetailActivity extends AppCompatActivity {
             getListUser();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 
@@ -70,6 +72,7 @@ public class ListDetailActivity extends AppCompatActivity {
             getListAdmin();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 
@@ -78,6 +81,7 @@ public class ListDetailActivity extends AppCompatActivity {
             getListDirector();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
@@ -86,12 +90,13 @@ public class ListDetailActivity extends AppCompatActivity {
             getListRating();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
         if(b.get("manager").equals("4")){
-            btnAdd.setVisibility(View.GONE);
             tvTitle.setText("List Feedback");
+            btnAdd.setVisibility(View.INVISIBLE);
             getListFeedback();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
@@ -103,14 +108,17 @@ public class ListDetailActivity extends AppCompatActivity {
             getListModeOfPaymet();
             LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManagera);
         }
 
         if(b.get("manager").equals("6")){
             tvTitle.setText("List Category");
+            btnAdd.setVisibility(View.VISIBLE);
             getListCategoriesFilm();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 

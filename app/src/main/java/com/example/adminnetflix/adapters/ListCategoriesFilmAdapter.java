@@ -21,18 +21,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.activities.CreateActivity;
-import com.example.adminnetflix.activities.DetailUserActivity;
-import com.example.adminnetflix.activities.ListDetailActivity;
 import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.Category;
-import com.example.adminnetflix.models.response.DataListUserReponse;
-import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,7 +64,7 @@ public class ListCategoriesFilmAdapter extends RecyclerView.Adapter<RecyclerView
             public void onClick(View view) {
                 Dialog dialog = new Dialog(view.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_confirm_delete);
+                dialog.setContentView(R.layout.dialog_confirm);
 
                 Window window = dialog.getWindow();
                 if (window == null) {
