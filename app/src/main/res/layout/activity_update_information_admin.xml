@@ -152,6 +152,7 @@
                 android:text="Female"
                 android:textColor="@color/white" />
         </RadioGroup>
+
         <TextView
             android:id="@+id/tv_validateSex"
             android:layout_width="wrap_content"

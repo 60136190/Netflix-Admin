@@ -91,8 +91,9 @@ public interface Auth {
     Call<DetailUserResponse> getDetailUser(@Header("Authorization") String authorization,@Path("id_user") String idUser);
 
     // update information user
-    @POST("api/auth/admin/customerAccount/{id_user}/update/info")
-    Call<ResponseDTO> updateInformationUser(@Header("Authorization") String authorization, @Path("id") String idFilm, @Body UpdateAdminRequest updateUserRequest);
+    @PATCH("api/auth/admin/customerAccount/{id}/update/info")
+    Call<ResponseDTO> updateInformationUser(@Header("Authorization") String authorization, @Path("id") String idUser, @Body UpdateAdminRequest updateUserRequest);
+
 
 
 }

@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.adapters.ListCommentFilmAdapter;
 import com.example.adminnetflix.api.ApiClient;
+import com.example.adminnetflix.models.response.CommentResponse;
 import com.example.adminnetflix.models.response.DetailFilmResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
@@ -40,11 +42,10 @@ public class DetailFilmActivity extends AppCompatActivity {
     private TextView tvCategory;
     private TextView tvTimeFilm;
     private TextView tvCountry;
-//    private RatingBar ratingBar;
-    private RecyclerView recyclerViewComment;
+    private RecyclerView rcvComment;
     private RecyclerView rcvSeriesFilm;
-//    private ListCommentFilmAdapter listCommentFilmAdapter;
-//    private SeriesFilmAdapter seriesFilmAdapter;
+    ListCommentFilmAdapter listCommentFilmAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,10 @@ public class DetailFilmActivity extends AppCompatActivity {
                 }
             });
 
+            getListComment(idFilm);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailFilmActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvComment.setLayoutManager(linearLayoutManager);
 
             // get series film
 //            Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
@@ -124,7 +129,23 @@ public class DetailFilmActivity extends AppCompatActivity {
         tvCountry = findViewById(R.id.tv_country);
         imgFilm = findViewById(R.id.img_film);
         tvTimeFilm = findViewById(R.id.tv_time_film);
-        recyclerViewComment = findViewById(R.id.rcv_comment);
+        rcvComment = findViewById(R.id.rcv_comment);
         rcvSeriesFilm = findViewById(R.id.rcv_series_film);
+    }
+
+    private void getListComment(String idFilm) {
+        Call<CommentResponse> listFavoriteFilmResponseCall = ApiClient.getFilmService().getAllCommentFollowFilm(
+                StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
+        listFavoriteFilmResponseCall.enqueue(new Callback<CommentResponse>() {
+            @Override
+            public void onResponse(Call<CommentResponse> call, Response<CommentResponse> response) {
+                listCommentFilmAdapter = new ListCommentFilmAdapter(DetailFilmActivity.this, response.body().getData());
+                rcvComment.setAdapter(listCommentFilmAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<CommentResponse> call, Throwable t) {
+            }
+        });
     }
 }

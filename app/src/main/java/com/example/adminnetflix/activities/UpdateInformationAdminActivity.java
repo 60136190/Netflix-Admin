@@ -62,29 +62,17 @@ public class UpdateInformationAdminActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
-    private Uri mUri;
-    private ImageView imgBack;
-    private EditText edtHoTen;
-    private EditText edtUserName;
-    private EditText edtNgaySinh;
-    private EditText edtDienThoai;
-    private Button btnUpdate;
-
-    private TextInputLayout tilFullName;
-    private TextInputLayout tilUserName;
-    private TextInputLayout tilDateofBirth;
-    private TextInputLayout tilPhoneNumber;
-    private TextView tvValidateSex;
-    private TextView tvEmail;
-    private ImageView imgInfo;
+    Uri mUri;
+    ImageView imgBack, imgInfo;
+    EditText edtHoTen, edtUserName, edtNgaySinh, edtDienThoai;
+    Button btnUpdate;
+    TextInputLayout tilFullName, tilUserName, tilDateofBirth, tilPhoneNumber;
+    TextView tvValidateSex, tvEmail;
     RequestBody requestBody;
-
     int male = 0;
-    private RadioGroup radioGroup;
-    private RadioButton rdbMale;
-    private RadioButton rdbFemale;
-    private ProgressBar progressBar;
-
+    RadioGroup radioGroup;
+    RadioButton rdbMale, rdbFemale;
+    ProgressBar progressBar;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -201,6 +189,7 @@ public class UpdateInformationAdminActivity extends AppCompatActivity {
                 onClickRequestPermission();
             }
         });
+
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

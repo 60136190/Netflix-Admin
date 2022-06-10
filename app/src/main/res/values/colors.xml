@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="text_color">#FFFFFFFF</color>
-    <color name="background">#161e29</color>
+    <color name="background">#FF000000</color>
     <color name="second_background">#56687d</color>
     <color name="item_rating">#f0f3fa</color>
     <color name="item_feedback">#f0f3fa</color>

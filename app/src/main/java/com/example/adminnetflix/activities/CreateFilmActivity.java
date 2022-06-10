@@ -84,12 +84,12 @@ public class CreateFilmActivity extends AppCompatActivity {
     private ImageView imgVideo;
     private ImageView imgEpisode;
     private Button btnCreate;
-    private Spinner spinnerDirector;
     private Spinner spinnerCategory;
     private RecyclerView rcv_choose_director;
     public static String public_idVideo;
     public static String url_Video;
     ArrayList<String> categoryList = new ArrayList<>();
+    List<String> id;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -141,6 +141,8 @@ public class CreateFilmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_film);
+
+        id = StoreUtil.readListFromPref(CreateFilmActivity.this);
         initUi();
         Spinner();
         getListDirector();
@@ -173,8 +175,11 @@ public class CreateFilmActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createFilm();
-//                Toast.makeText(CreateFilmActivity.this,sharedPreferences.getString(Contants.idDirector, ""),Toast.LENGTH_SHORT).show();
+//                createFilm();
+
+                Log.i("hahaha", String.valueOf(id));
+
+                StoreUtil.readListFromPref(CreateFilmActivity.this);
             }
         });
 
@@ -241,7 +246,6 @@ public class CreateFilmActivity extends AppCompatActivity {
         tvPublic_video = findViewById(R.id.tv_public_video);
         tvUrl_video = findViewById(R.id.url_video);
         spinnerCategory = findViewById(R.id.spn_sort_category);
-//        spinnerDirector = findViewById(R.id.spn_sort_director);
         rcv_choose_director = findViewById(R.id.rcv_choose_director);
     }
 
@@ -251,7 +255,6 @@ public class CreateFilmActivity extends AppCompatActivity {
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
                     public void run() {
-
                         // upload new image
                         String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
                         File fileImage = new File(strRealPath);
@@ -289,14 +292,13 @@ public class CreateFilmActivity extends AppCompatActivity {
                                     list.add("620a1317b67785835eade8e6");
 
                                     List<String> listCategory = new ArrayList<>();
-                                    listCategory.add("62049dda656d8c7511aaab77");
 
                                     List<SeriesFilm> seriesFilms = new ArrayList<>();
                                     seriesFilms.add(seriesFilm);
 
 
                                     FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
-                                            countryProduction, image,image,videoFilm,list, listCategory,
+                                            countryProduction, image,image,videoFilm,StoreUtil.readListFromPref(CreateFilmActivity.this), listCategory,
                                             seriesFilms, ageLimit, lengtFilm, price);
                                     Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
                                             StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);

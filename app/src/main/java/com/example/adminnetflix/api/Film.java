@@ -8,11 +8,11 @@ import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentWithoutImage;
 import com.example.adminnetflix.models.request.UpdateDirectorRequest;
 import com.example.adminnetflix.models.request.UpdateDirectorWithoutImage;
-import com.example.adminnetflix.models.response.Category;
+import com.example.adminnetflix.models.response.AllFilmResponse;
+import com.example.adminnetflix.models.response.CommentResponse;
 import com.example.adminnetflix.models.response.DetailDirectorResponse;
 import com.example.adminnetflix.models.response.DetailFilmResponse;
 import com.example.adminnetflix.models.response.FeedbackResponse;
-import com.example.adminnetflix.models.response.FilmResponse;
 import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
@@ -20,6 +20,8 @@ import com.example.adminnetflix.models.response.RatingResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.models.response.UploadImageResponse;
 import com.example.adminnetflix.models.response.UploadVideoResponse;
+import com.example.adminnetflix.models.response.comment.CommentDeletedResponse;
+import com.example.adminnetflix.models.response.favourite.FavouriteResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -36,9 +38,9 @@ import retrofit2.http.Path;
 
 public interface Film {
 
-    //get film follow category
-    @GET("api/film/all")
-    Call<FilmResponse> getAllFilm(@Header("Authorization") String authorization);
+    // get all film
+    @GET("api/film/adult/eachCategory")
+    Call<AllFilmResponse> getAllFilmAdult(@Header("Authorization") String authorization);
 
     //upload image film
     @Multipart
@@ -87,7 +89,7 @@ public interface Film {
     @PATCH("api/modeOfPayment/update/{id}")
     Call<ResponseDTO> updateModeOfPayment(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body ModeOfPaymentRequest modeOfPaymentRequest);
 
-    // update mode of payment withou image
+    // update mode of payment without image
     @PATCH("api/modeOfPayment/update/{id}")
     Call<ResponseDTO> updateModeOfPaymentWithoutImage(@Header("Authorization") String authorization, @Path("id") String idDirector, @Body ModeOfPaymentWithoutImage modeOfPaymentWithoutImage);
 
@@ -157,4 +159,20 @@ public interface Film {
     // delete director
     @DELETE("api/director/delete/{id}")
     Call<ResponseDTO> deleteDirector(@Header("Authorization") String authorization, @Path("id") String idDirector);
+
+    // get all comment film
+    @GET("api/comment/get/{id}")
+    Call<CommentResponse> getAllCommentFollowFilm(@Header("Authorization") String authorization, @Path("id") String idFilm);
+
+    // get all comment deleted
+    @GET("api/comment/all")
+    Call<CommentDeletedResponse> getAllCommentDeleted(@Header("Authorization") String authorization);
+
+    // restore comment
+    @PATCH("api/comment/{id}/restore")
+    Call<ResponseDTO> restoreComment(@Header("Authorization") String authorization, @Path("id") String idComment);
+
+    //get list favourite film
+    @GET("api/favourite/all")
+    Call<FavouriteResponse> getListFavouriteFilm(@Header("Authorization") String authorization);
 }

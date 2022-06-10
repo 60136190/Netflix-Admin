@@ -2,7 +2,6 @@ package com.example.adminnetflix.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,8 +23,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.activities.FirstScreenActivity;
-import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.TestModel;
 import com.example.adminnetflix.models.response.Director;
@@ -41,14 +38,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context mContext1;
     List<Director> mDirectorList;
     private List<TestModel> taskList;
     ArrayList<String> listId = new ArrayList<>();
 
-    public ListDirectorAdapter(Context mContext, List<Director> mDirectorList) {
+    public ListDirectorCreateFilmAdapter(Context mContext, List<Director> mDirectorList) {
         this.mContext1 = mContext;
         this.mDirectorList = mDirectorList;
     }
@@ -57,7 +54,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_list_director,parent,false);
+                .inflate(R.layout.item_list_director_create_film,parent,false);
         return new ItemViewHolder(view);
     }
 
@@ -66,6 +63,21 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Director director = mDirectorList.get(position);
         String title = director.getName();
         String imgDirector = director.getImage().getUrl();
+
+
+       (((ItemViewHolder)holder).rdbChoose).setOnCheckedChangeListener((buttonView, isChecked) -> {
+           if ((((ItemViewHolder)holder).rdbChoose).isChecked()) {
+               listId.add(director.getId());
+               Log.i("ListID",listId.toString());
+               StoreUtil.writeListInPref(mContext1,listId);
+
+           }else{
+               listId.remove(director.getId());
+               Log.i("ListID",listId.toString());
+               StoreUtil.writeListInPref(mContext1,listId);
+           }
+       });
+
 
         ((ItemViewHolder) holder).itemNameOfDirector.setText(title);
         Picasso.with(mContext1)
@@ -127,13 +139,15 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((ItemViewHolder) holder).ctListDirector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext1, UpdateActivity.class);
-                intent.putExtra("update","Update Director");
-                intent.putExtra("id_director",director.getId());
-                intent.putExtra("name_director",director.getName());
-                intent.putExtra("public_Id_director",director.getImage().getPublicId());
-                intent.putExtra("url_director",director.getImage().getUrl());
-                mContext1.startActivity(intent);
+//                Intent intent = new Intent(mContext1, UpdateActivity.class);
+//                intent.putExtra("update","Update Director");
+//                intent.putExtra("id_director",director.getId());
+//                intent.putExtra("name_director",director.getName());
+//                intent.putExtra("public_Id_director",director.getImage().getPublicId());
+//                intent.putExtra("url_director",director.getImage().getUrl());
+//                mContext1.startActivity(intent);
+                SharedPreferences sharedPreferences = mContext1.getSharedPreferences("AdminSharedPref", Context.MODE_PRIVATE);
+                Toast.makeText(mContext1,sharedPreferences.getString("list", ""),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,6 +166,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private TextView itemNameOfDirector;
         private LinearLayout lnDeleteDirector;
         private ConstraintLayout ctListDirector;
+        private CheckBox rdbChoose;
 
 
         public ItemViewHolder( View itemView) {
@@ -160,6 +175,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemNameOfDirector = itemView.findViewById(R.id.tv_name_of_director);
             lnDeleteDirector = itemView.findViewById(R.id.ln_delete);
             ctListDirector = itemView.findViewById(R.id.ct_list_director);
+            rdbChoose = itemView.findViewById(R.id.rdb_choose);
         }
     }
 

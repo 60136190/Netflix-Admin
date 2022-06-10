@@ -3,10 +3,14 @@ package com.example.adminnetflix.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.adminnetflix.models.TestModel;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreUtil {
@@ -25,7 +29,7 @@ public class StoreUtil {
     }
 
     private static final String LIST_KEY = "list";
-    public static void writeListInPref(Context context, List<TestModel> list) {
+    public static void writeListInPref(Context context, List<String> list) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(list);
         SharedPreferences pref = context.getSharedPreferences("AdminSharedPref", Context.MODE_PRIVATE);
@@ -33,15 +37,17 @@ public class StoreUtil {
         editor.putString(LIST_KEY, jsonString);
         editor.apply();
     }
-//
-//    public static List<TestModel> readListFromPref(Context context) {
-//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-//        String jsonString = pref.getString(LIST_KEY, "");
-//
-//        Gson gson = new Gson();
-//        Type type = new TypeToken<ArrayList<TestModel>>() {}.getType();
-//        List<TestModel> list = gson.fromJson(jsonString, type);
-//        return list;
-//    }
+
+    public static List<String> readListFromPref(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String jsonString = pref.getString(LIST_KEY, "");
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        List<String> list = gson.fromJson(jsonString, type);
+        Log.i("do", String.valueOf(list));
+
+        return list;
+    }
 
 }

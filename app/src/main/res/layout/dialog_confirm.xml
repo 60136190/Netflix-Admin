@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_20sdp"
-    android:backgroundTint="@color/background"
+    android:backgroundTint="@color/gray_search"
     android:background="@drawable/border_background_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -52,7 +52,7 @@
             android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:backgroundTint="@color/gray_dot"
+            android:backgroundTint="@color/blue"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_edit_address"/>
 

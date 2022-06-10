@@ -1,6 +1,7 @@
 package com.example.adminnetflix.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +16,9 @@ import android.widget.Toast;
 import com.example.adminnetflix.R;
 import com.example.adminnetflix.adapters.ListAdminAdapter;
 import com.example.adminnetflix.adapters.ListCategoriesFilmAdapter;
+import com.example.adminnetflix.adapters.ListCommentDeletedAdapter;
 import com.example.adminnetflix.adapters.ListDirectorAdapter;
+import com.example.adminnetflix.adapters.ListFavoritelFilmAdapter;
 import com.example.adminnetflix.adapters.ListFeedbackAdapter;
 import com.example.adminnetflix.adapters.ListModeOfPaymentAdapter;
 import com.example.adminnetflix.adapters.ListRatingAdapter;
@@ -28,6 +31,8 @@ import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.RatingResponse;
+import com.example.adminnetflix.models.response.comment.CommentDeletedResponse;
+import com.example.adminnetflix.models.response.favourite.FavouriteResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.example.adminnetflix.utils.TranslateAnimationUtil;
@@ -49,7 +54,8 @@ public class ListDetailActivity extends AppCompatActivity {
     private ListAdminAdapter listAdminAdapter;
     private ListUserAdapter listUserAdapter;
     private ListCategoriesFilmAdapter listCategoriesFilmAdapter;
-
+    private ListCommentDeletedAdapter listCommentDeletedAdapter;
+    private ListFavoritelFilmAdapter listFavoritelFilmAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +128,28 @@ public class ListDetailActivity extends AppCompatActivity {
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
 
+        if (b.get("manager").equals("7")){
+            tvTitle.setText("List comment deleted");
+            btnAdd.setVisibility(View.VISIBLE);
+            getListCommnetDeleted();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
+            rcvListDetail.setLayoutManager(linearLayoutManager);
+        }
+
+        if (b.get("manager").equals("list_favourite")){
+            tvTitle.setText("List favourite film");
+            btnAdd.setVisibility(View.VISIBLE);
+            getListFavouriteFilm();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//            GridLayoutManager gridLayoutManager = new GridLayoutManager(ListDetailActivity.this,3);
+            rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
+            rcvListDetail.setLayoutManager(linearLayoutManager);
+        }
+
+
         String value = b.get("manager").toString();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +168,7 @@ public class ListDetailActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
@@ -271,6 +300,40 @@ public class ListDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ListCategories> call, Throwable t) {
+                Toast.makeText(ListDetailActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getListCommnetDeleted(){
+        Call<CommentDeletedResponse> commentDeletedResponseCall = ApiClient.getFilmService().getAllCommentDeleted(
+                StoreUtil.get(ListDetailActivity.this, Contants.accessToken));
+        commentDeletedResponseCall.enqueue(new Callback<CommentDeletedResponse>() {
+            @Override
+            public void onResponse(Call<CommentDeletedResponse> call, Response<CommentDeletedResponse> response) {
+                listCommentDeletedAdapter = new ListCommentDeletedAdapter(ListDetailActivity.this,response.body().getData());
+                rcvListDetail.setAdapter(listCommentDeletedAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<CommentDeletedResponse> call, Throwable t) {
+                Toast.makeText(ListDetailActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getListFavouriteFilm() {
+        Call<FavouriteResponse> commentDeletedResponseCall = ApiClient.getFilmService().getListFavouriteFilm(
+                StoreUtil.get(ListDetailActivity.this, Contants.accessToken));
+        commentDeletedResponseCall.enqueue(new Callback<FavouriteResponse>() {
+            @Override
+            public void onResponse(Call<FavouriteResponse> call, Response<FavouriteResponse> response) {
+                listFavoritelFilmAdapter = new ListFavoritelFilmAdapter(ListDetailActivity.this,response.body().getData());
+                rcvListDetail.setAdapter(listFavoritelFilmAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<FavouriteResponse> call, Throwable t) {
                 Toast.makeText(ListDetailActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });

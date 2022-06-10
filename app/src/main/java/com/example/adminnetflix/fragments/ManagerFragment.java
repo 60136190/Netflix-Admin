@@ -42,6 +42,8 @@ public class ManagerFragment extends Fragment {
         itemManagerModel.add(new ItemManagerModel("Feedback", "12", R.drawable.feedback, R.color.feedback));
         itemManagerModel.add(new ItemManagerModel("Mode of payment", "12", R.drawable.payment, R.color.mode_of_payment));
         itemManagerModel.add(new ItemManagerModel("Category", "12", R.drawable.category, R.color.category));
+        itemManagerModel.add(new ItemManagerModel("Comment", "12", R.drawable.edit, R.color.yellow));
+        itemManagerModel.add(new ItemManagerModel("Favourite", "12", R.drawable.send, R.color.blue));
         listManagerAdapter = new ListManagerAdapter(getContext(), itemManagerModel);
         rcvManager.setAdapter(listManagerAdapter);
         rcvManager.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));

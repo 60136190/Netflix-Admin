@@ -64,24 +64,16 @@ public class DetailUserActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
     private Uri mUri;
-    private ImageView imgBack;
-    private EditText edtFullName;
-    private EditText edtDateofBirth;
-    private EditText edtPhoneNumber;
-    private Button btnUpdate;
-    private TextInputLayout tilFullName;
-    private TextInputLayout tilDateofBirth;
-    private TextInputLayout tilPhoneNumber;
-    private TextView tvValidateSex;
-    private TextView tvEmail;
-    private ImageView imgInfo;
+    ImageView imgBack, imgInfo, imgListFavouriteFilm;
+    EditText edtFullName, edtDateofBirth, edtPhoneNumber;
+    Button btnUpdate;
+    TextInputLayout tilFullName, tilDateofBirth, tilPhoneNumber;
+    TextView tvValidateSex, tvEmail;
     RequestBody requestBody;
     int male = 0;
-    private RadioGroup radioGroup;
-    private RadioButton rdbMale;
-    private RadioButton rdbFemale;
-    private ProgressBar progressBar;
-
+    RadioGroup radioGroup;
+    RadioButton rdbMale, rdbFemale;
+    ProgressBar progressBar;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -187,6 +179,15 @@ public class DetailUserActivity extends AppCompatActivity {
                 }
             });
 
+            imgListFavouriteFilm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailUserActivity.this, ListDetailActivity.class);
+                    intent.putExtra("manager","list_favourite");
+                    startActivity(intent);
+                }
+            });
+
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -211,7 +212,7 @@ public class DetailUserActivity extends AppCompatActivity {
             btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateImage();
+                    updateImage(idUser);
 
                 }
             });
@@ -230,7 +231,7 @@ public class DetailUserActivity extends AppCompatActivity {
         tilDateofBirth = findViewById(R.id.til_date_of_birth);
         tilPhoneNumber = findViewById(R.id.til_phone_number);
         btnUpdate = findViewById(R.id.btn_update);
-
+        imgListFavouriteFilm = findViewById(R.id.img_favourite_film);
         radioGroup = findViewById(R.id.radioGroup);
         rdbMale = findViewById(R.id.Male);
         rdbFemale = findViewById(R.id.Female);
@@ -249,6 +250,9 @@ public class DetailUserActivity extends AppCompatActivity {
                 String im = response.body().getData().getImage().getUrl();
                 String date_of_birth = response.body().getData().getDateOfBirth();
                 String sdt = response.body().getData().getPhoneNumber();
+                String idUser = response.body().getData().getId();
+
+                StoreUtil.save(DetailUserActivity.this,Contants.idUser,idUser);
 
                 edtFullName.setText(fullName);
                 tvEmail.setText(email);
@@ -262,12 +266,16 @@ public class DetailUserActivity extends AppCompatActivity {
                             .load(im)
                             .into(imgInfo);
                 }
+                if (response.body().getData().getSex() == null){
 
-//                if (response.body().getData().getSex() == 1) {
-//                    rdbMale.setChecked(true);
-//                } else {
-//                    rdbFemale.setChecked(true);
-//                }
+                }else {
+                    if (response.body().getData().getSex() == 1) {
+                        rdbMale.setChecked(true);
+                    } else {
+                        rdbFemale.setChecked(true);
+                    }
+                }
+
 
             }
 
@@ -309,7 +317,7 @@ public class DetailUserActivity extends AppCompatActivity {
     }
 
 
-    public void updateImage() {
+    public void updateImage(String idUser) {
         if (validateFullName() && validateDateofBirth()
                 && validatePhoneNumber() && validateSex()) {
             if (mUri != null) {
@@ -329,11 +337,6 @@ public class DetailUserActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
                         if (response.isSuccessful()) {
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put(Contants.accessToken, StoreUtil.get(DetailUserActivity.this, Contants.accessToken));
-                            hashMap.put(Contants.contentType, "application/json");
-                            hashMap.put(Contants.contentLength, "<calculated when request is sent>");
-
                             String url = response.body().getUrl();
                             String public_id = response.body().getPublic_id();
                             String hoten = edtFullName.getText().toString();
@@ -343,8 +346,8 @@ public class DetailUserActivity extends AppCompatActivity {
                             Image image = new Image(public_id, url);
 
                             UpdateAdminRequest updateUserRequest = new UpdateAdminRequest(hoten, image, sdt, male, ngaySinh);
-                            Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInfo(
-                                    hashMap, updateUserRequest);
+                            Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInformationUser(
+                                    StoreUtil.get(DetailUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
                             loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                                 @Override
                                 public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -367,19 +370,15 @@ public class DetailUserActivity extends AppCompatActivity {
                 });
 
             } else {
-                Call<ProfileResponse> proifileResponseCall = ApiClient.getUserService().getProfile(
-                        StoreUtil.get(DetailUserActivity.this, Contants.accessToken));
-                proifileResponseCall.enqueue(new Callback<ProfileResponse>() {
+                Call<DetailUserResponse> proifileResponseCall = ApiClient.getUserService().getDetailUser(
+                        StoreUtil.get(DetailUserActivity.this, Contants.accessToken),idUser);
+                proifileResponseCall.enqueue(new Callback<DetailUserResponse>() {
                     @Override
-                    public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+                    public void onResponse(Call<DetailUserResponse> call, Response<DetailUserResponse> response) {
                         if (response.isSuccessful()) {
-                            String im = response.body().getUser().getImage().getUrl();
-                            String public_id = response.body().getUser().getImage().getPublicId();
+                            String im = response.body().getData().getImage().getUrl();
+                            String public_id = response.body().getData().getImage().getPublicId();
                             Image image = new Image(public_id, im);
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put(Contants.accessToken, StoreUtil.get(DetailUserActivity.this, Contants.accessToken));
-                            hashMap.put(Contants.contentType, "application/json");
-                            hashMap.put(Contants.contentLength, "<calculated when request is sent>");
 
                             String hoten = edtFullName.getText().toString();
                             String ngaySinh = edtDateofBirth.getText().toString();
@@ -387,8 +386,8 @@ public class DetailUserActivity extends AppCompatActivity {
                             UpdateAdminRequest updateUserRequest = new UpdateAdminRequest(hoten, image, sdt, male, ngaySinh);
 
 
-                            Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInfo(
-                                    hashMap, updateUserRequest);
+                            Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInformationUser(
+                                    StoreUtil.get(DetailUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
                             loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                                 @Override
                                 public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -406,7 +405,7 @@ public class DetailUserActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ProfileResponse> call, Throwable t) {
+                    public void onFailure(Call<DetailUserResponse> call, Throwable t) {
 
                     }
                 });

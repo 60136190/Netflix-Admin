@@ -14,15 +14,17 @@
         android:id="@+id/ln_delete"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/border_right_item"
+        android:backgroundTint="@color/red"
         android:gravity="center"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_margin="@dimen/_3sdp"
-            android:src="@drawable/delete"
-            app:tint="@color/white" />
+        android:background="@drawable/border_right_item"
+        android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:src="@drawable/delete"
+                app:tint="@color/white" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,35 +33,25 @@
         android:layout_height="@dimen/_50sdp">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_director"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_name_of_director"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:textSize="@dimen/_13ssp"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="@+id/img_director"
-        app:layout_constraintBottom_toBottomOf="@+id/img_director"
-        app:layout_constraintLeft_toRightOf="@+id/img_director"/>
-
-        <CheckBox
-            android:id="@+id/rdb_choose"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            app:layout_constraintRight_toRightOf="parent"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_director"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_name_of_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_13ssp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@+id/img_director"
+            app:layout_constraintBottom_toBottomOf="@+id/img_director"
+            app:layout_constraintLeft_toRightOf="@+id/img_director"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </com.chauthai.swipereveallayout.SwipeRevealLayout>
