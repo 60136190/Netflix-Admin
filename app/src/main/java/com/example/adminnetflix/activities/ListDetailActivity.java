@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,6 +57,7 @@ public class ListDetailActivity extends AppCompatActivity {
     private ListCategoriesFilmAdapter listCategoriesFilmAdapter;
     private ListCommentDeletedAdapter listCommentDeletedAdapter;
     private ListFavoritelFilmAdapter listFavoritelFilmAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,9 @@ public class ListDetailActivity extends AppCompatActivity {
         }
 
         if (b.get("manager").equals("7")){
+
             tvTitle.setText("List comment deleted");
+
             btnAdd.setVisibility(View.VISIBLE);
             getListCommnetDeleted();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
@@ -166,8 +170,8 @@ public class ListDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
+
 
 
     private void initUi() {

@@ -2,13 +2,11 @@ package com.example.adminnetflix.models;
 
 public class ItemManagerModel {
     private String title;
-    private String amount;
-    private int image;
+    private String image;
     private int color;
 
-    public ItemManagerModel(String title, String amount, int image, int color) {
+    public ItemManagerModel(String title, String image, int color) {
         this.title = title;
-        this.amount = amount;
         this.image = image;
         this.color = color;
     }
@@ -21,19 +19,12 @@ public class ItemManagerModel {
         this.title = title;
     }
 
-    public String getAmount() {
-        return amount;
-    }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

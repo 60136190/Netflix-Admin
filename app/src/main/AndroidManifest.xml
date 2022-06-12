@@ -15,6 +15,33 @@
         android:theme="@style/Theme.AdminNetflix"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.manage.FavoriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.RatingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.CommentDeletedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.ModeOfPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.DirectorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manage.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.UpdateActivity"
             android:exported="false" />
         <activity

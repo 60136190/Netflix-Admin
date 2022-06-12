@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,12 +41,18 @@ public class ListRatingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Rating rating  = mRatingList.get(position);
-        String a = rating.getUser().getFullname();
-        ((ItemViewHolder) holder).itemNameOfUser.setText(a);
-        ((ItemViewHolder) holder).itemNumRate.setText(String.valueOf(rating.getScore()));
-        ((ItemViewHolder) holder).itemTitleFilm.setText(rating.getFilm().getTitle());
-        Picasso.with(mContext)
-                .load(rating.getUser().getImage().getUrl()).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemImgUser);
+        if ((rating.getUser()!=null) && (rating.getFilm()!=null)){
+            ((ItemViewHolder)holder).cardView.setVisibility(View.VISIBLE);
+            String a = rating.getUser().getFullname();
+            ((ItemViewHolder) holder).itemNameOfUser.setText(a);
+            ((ItemViewHolder) holder).itemNumRate.setText(String.valueOf(rating.getScore()));
+            ((ItemViewHolder) holder).itemTitleFilm.setText(rating.getFilm().getTitle());
+            Picasso.with(mContext)
+                    .load(rating.getUser().getImage().getUrl()).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemImgUser);
+        }else {
+            ((ItemViewHolder)holder).cardView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+
+        }
     }
 
 
@@ -57,12 +64,12 @@ public class ListRatingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return 0;
     }
 
-
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView itemImgUser;
         private TextView itemNameOfUser;
         private TextView itemTitleFilm;
         private TextView itemNumRate;
+        CardView cardView;
 
         public ItemViewHolder( View itemView) {
             super(itemView);
@@ -70,6 +77,7 @@ public class ListRatingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             itemNameOfUser = itemView.findViewById(R.id.tv_name_of_user);
             itemTitleFilm = itemView.findViewById(R.id.tv_title_film);
             itemNumRate = itemView.findViewById(R.id.tv_num_rate);
+            cardView = itemView.findViewById(R.id.cv_rating);
         }
     }
 

@@ -55,7 +55,6 @@ public class CreateActivity extends AppCompatActivity {
     // category
     private EditText edtCategory;
     private TextView tvTitleCreate;
-    private TextView tvCategory;
 
     // director
     private TextView tvDirector;
@@ -65,7 +64,6 @@ public class CreateActivity extends AppCompatActivity {
     private ImageView imgDirctor;
 
     // mode of payment
-    private TextView tvModeOfPayment;
     private EditText edtModeOfPayment;
     private ImageView imgModeOfPayment;
 
@@ -113,10 +111,8 @@ public class CreateActivity extends AppCompatActivity {
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
-
         // create category film
-        if (b.get("btn").equals("6")) {
-            tvCategory.setVisibility(View.VISIBLE);
+        if (b.get("btn").equals("category")) {
             edtCategory.setVisibility(View.VISIBLE);
 
             tvTitleCreate.setText("Create Category");
@@ -140,7 +136,7 @@ public class CreateActivity extends AppCompatActivity {
         }
 
         // create director
-        if (b.get("btn").equals("2")){
+        if (b.get("btn").equals("director")){
             tvDirector.setVisibility(View.VISIBLE);
             tvDescription.setVisibility(View.VISIBLE);
             edtNameOfDirector.setVisibility(View.VISIBLE);
@@ -165,9 +161,8 @@ public class CreateActivity extends AppCompatActivity {
         }
 
         // create mode of payment
-        if (b.get("btn").equals("5")){
+        if (b.get("btn").equals("mode")){
             tvTitleCreate.setText("Create Mode of Payment");
-            tvModeOfPayment.setVisibility(View.VISIBLE);
             edtModeOfPayment.setVisibility(View.VISIBLE);
             imgModeOfPayment.setVisibility(View.VISIBLE);
 
@@ -210,17 +205,13 @@ public class CreateActivity extends AppCompatActivity {
 
     private void initUi() {
         tvTitleCreate = findViewById(R.id.tv_title_create);
-
         edtCategory = findViewById(R.id.edt_name_of_category);
-        tvCategory = findViewById(R.id.tv_name_of_category);
-
         tvDirector = findViewById(R.id.tv_name_of_director);
         tvDescription = findViewById(R.id.tv_description_director);
         edtNameOfDirector = findViewById(R.id.edt_nname_of_director);
         edtDescription = findViewById(R.id.edt_description_director);
         imgDirctor = findViewById(R.id.img_direction);
 
-        tvModeOfPayment = findViewById(R.id.tv_name_of_payment);
         edtModeOfPayment = findViewById(R.id.edt_name_of_payment);
         imgModeOfPayment = findViewById(R.id.img_mode_of_payment);
 
