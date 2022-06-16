@@ -63,7 +63,7 @@ public class CommentDeletedActivity extends AppCompatActivity {
         commentDeletedResponseCall.enqueue(new Callback<CommentDeletedResponse>() {
             @Override
             public void onResponse(Call<CommentDeletedResponse> call, Response<CommentDeletedResponse> response) {
-                listCommentDeletedAdapter = new ListCommentDeletedAdapter(CommentDeletedActivity.this,response.body().getData());
+                listCommentDeletedAdapter = new ListCommentDeletedAdapter(CommentDeletedActivity.this,response.body().getTrash());
                 rcvComment.setAdapter(listCommentDeletedAdapter);
             }
 

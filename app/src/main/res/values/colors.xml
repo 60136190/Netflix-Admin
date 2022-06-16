@@ -34,5 +34,28 @@
     <color name="rating">#EDEBEB</color>
     <color name="director">#F6CFC2</color>
 
+    <color name="active">#4EF354</color>
+    <color name="active_second">#D9FBDA</color>
+
+    <color name="recovered">#FFEB3B</color>
+    <color name="recovered_second">#FFFCDE</color>
+
+    <color name="critical">#CA7D0C</color>
+    <color name="critical_second">#FAECD8</color>
+
+    <color name="second_blue">#C7DDF8</color>
+
+    <color name="main_color">#0e3360</color>
+    <color name="second_color">#264772</color>
+
+    <color name="live_update">#dc545c</color>
+    <color name="live_update_second">#FAD6D8</color>
+
+    <color name="blue_gray">#56687d</color>
+
+    <color name="orange">#fe7543</color>
+    <color name="violet">#b638f1</color>
+
+    <color name="pink">#E66490</color>
 
 </resources>

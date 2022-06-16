@@ -31,7 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.manage.CategoryActivity;
+import com.example.adminnetflix.adapters.ListCategoriesCreateFilmAdapter;
+import com.example.adminnetflix.adapters.ListCategoriesFilmAdapter;
 import com.example.adminnetflix.adapters.ListDirectorAdapter;
+import com.example.adminnetflix.adapters.ListDirectorCreateFilmAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.request.FilmRequest;
 import com.example.adminnetflix.models.response.Image;
@@ -46,12 +50,16 @@ import com.example.adminnetflix.realpath.RealPathUtil;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.example.adminnetflix.utils.TranslateAnimationUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -68,7 +76,8 @@ public class CreateFilmActivity extends AppCompatActivity {
     private Uri mUriVideo;
     RequestBody requestBody;
     RequestBody requestBodyVideo;
-    private ListDirectorAdapter listDirectorAdapter;
+    private ListDirectorCreateFilmAdapter listDirectorAdapter;
+    private ListCategoriesCreateFilmAdapter listCategoriesFilmAdapter;
     private TextView tvPublic_video;
     private TextView tvUrl_video;
     private ImageView imgBack;
@@ -84,12 +93,13 @@ public class CreateFilmActivity extends AppCompatActivity {
     private ImageView imgVideo;
     private ImageView imgEpisode;
     private Button btnCreate;
-    private Spinner spinnerCategory;
-    private RecyclerView rcv_choose_director;
+    private RecyclerView rcv_choose_director, rcv_choose_category;
     public static String public_idVideo;
     public static String url_Video;
     ArrayList<String> categoryList = new ArrayList<>();
-    List<String> id;
+    List<String> listDirector;
+    List<String> listCategory;
+    SharedPreferences sharedPreferences;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -141,14 +151,11 @@ public class CreateFilmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_film);
-
-        id = StoreUtil.readListFromPref(CreateFilmActivity.this);
+        listDirector = new ArrayList<>();
+        listCategory = new ArrayList<>();
         initUi();
-        Spinner();
         getListDirector();
-        LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(CreateFilmActivity.this);
-        linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
-        rcv_choose_director.setLayoutManager(linearLayoutManagera);
+        getListCategory();
 
 //        SpinnerListCategory();
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +182,7 @@ public class CreateFilmActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                createFilm();
-
-                Log.i("hahaha", String.valueOf(id));
-
-                StoreUtil.readListFromPref(CreateFilmActivity.this);
+                createFilm();
             }
         });
 
@@ -245,13 +248,13 @@ public class CreateFilmActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.btn_create);
         tvPublic_video = findViewById(R.id.tv_public_video);
         tvUrl_video = findViewById(R.id.url_video);
-        spinnerCategory = findViewById(R.id.spn_sort_category);
         rcv_choose_director = findViewById(R.id.rcv_choose_director);
+        rcv_choose_category = findViewById(R.id.rcv_choose_category);
     }
 
     private void createFilm() {
         getVideo();
-        Toast.makeText(CreateFilmActivity.this,public_idVideo,Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreateFilmActivity.this,String.valueOf(public_idVideo),Toast.LENGTH_SHORT).show();
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
                     public void run() {
@@ -282,23 +285,28 @@ public class CreateFilmActivity extends AppCompatActivity {
                                     String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
 
                                     SeriesFilm seriesFilm = new SeriesFilm(episode,
-                                            public_idVideo,url_Video,
+                                            public_idVideo
+                                            ,url_Video,
                                             public_id, url);
 
                                     VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
 
-                                    List<String> list = new ArrayList<>();
-                                    list.add("62049b51933677fbeffdc436");
-                                    list.add("620a1317b67785835eade8e6");
+                                    // get list director and category from shared preference
+                                    SharedPreferences sharedPreferences = getSharedPreferences("AdminSharedPref", MODE_PRIVATE);
+                                    Gson gson = new Gson();
+                                    String json = sharedPreferences.getString("list", null);
+                                    String jsonListCategory = sharedPreferences.getString("listCategory", null);
+                                    Type type = new TypeToken<ArrayList<String>>() {}.getType();
+                                    listDirector = gson.fromJson(json, type);
+                                    listCategory = gson.fromJson(jsonListCategory, type);
 
-                                    List<String> listCategory = new ArrayList<>();
+                                    Log.i("hahaha", String.valueOf(listDirector));
 
                                     List<SeriesFilm> seriesFilms = new ArrayList<>();
                                     seriesFilms.add(seriesFilm);
 
-
                                     FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
-                                            countryProduction, image,image,videoFilm,StoreUtil.readListFromPref(CreateFilmActivity.this), listCategory,
+                                            countryProduction, image,image,videoFilm,listDirector, listCategory,
                                             seriesFilms, ageLimit, lengtFilm, price);
                                     Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
                                             StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
@@ -330,9 +338,9 @@ public class CreateFilmActivity extends AppCompatActivity {
     public void getVideo() {
         // upload new image
         String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideo);
-        File fileImage = new File(strRealPath);
-        requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileImage);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBodyVideo);
+        File fileVideo = new File(strRealPath);
+        requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileVideo);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideo);
         Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
                 StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
                 multipartBody);
@@ -341,8 +349,6 @@ public class CreateFilmActivity extends AppCompatActivity {
             public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
                 public_idVideo = response.body().getPublic_id();
                 url_Video = response.body().getUrl();
-//                tvPublic_video.setText(response.body().getPublic_id());
-//                tvUrl_video.setText(response.body().getUrl());
             }
 
             @Override
@@ -353,19 +359,39 @@ public class CreateFilmActivity extends AppCompatActivity {
 
     }
 
-    private void Spinner(){
+//    private void Spinner(){
+//        Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
+//                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
+//        listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
+//            @Override
+//            public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
+//                    for (int i = 0; i < response.body().getData().toArray().length; i++) {
+//                        String data = response.body().getData().get(i).getId();
+//                        categoryList.add(data);
+//                        ArrayAdapter adapter = new ArrayAdapter(CreateFilmActivity.this, android.R.layout.simple_spinner_item, categoryList);
+//                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                        spinnerCategory.setAdapter(adapter);
+//                    }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ListDirectorResponse> call, Throwable t) {
+//                Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+    private void getListDirector() {
         Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
                 StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
         listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
             @Override
             public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
-                    for (int i = 0; i < response.body().getData().toArray().length; i++) {
-                        String data = response.body().getData().get(i).getId();
-                        categoryList.add(data);
-                        ArrayAdapter adapter = new ArrayAdapter(CreateFilmActivity.this, android.R.layout.simple_spinner_item, categoryList);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerCategory.setAdapter(adapter);
-                    }
+                listDirectorAdapter = new ListDirectorCreateFilmAdapter(CreateFilmActivity.this, response.body().getData());
+                rcv_choose_director.setAdapter(listDirectorAdapter);
+                LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(CreateFilmActivity.this);
+                linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+                rcv_choose_director.setLayoutManager(linearLayoutManagera);
             }
 
             @Override
@@ -374,22 +400,23 @@ public class CreateFilmActivity extends AppCompatActivity {
             }
         });
     }
+    private void getListCategory() {
+            Call<ListCategories> listFavoriteFilmResponseCall = ApiClient.getFilmService().getListCategoriesFilm(
+                    StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
+            listFavoriteFilmResponseCall.enqueue(new Callback<ListCategories>() {
+                @Override
+                public void onResponse(Call<ListCategories> call, Response<ListCategories> response) {
+                    listCategoriesFilmAdapter = new ListCategoriesCreateFilmAdapter(CreateFilmActivity.this,response.body().getData());
+                    rcv_choose_category.setAdapter(listCategoriesFilmAdapter);LinearLayoutManager linearLayoutManagera = new LinearLayoutManager(CreateFilmActivity.this);
+                    linearLayoutManagera.setOrientation(LinearLayoutManager.VERTICAL);
+                    rcv_choose_category.setLayoutManager(linearLayoutManagera);
 
-    private void getListDirector() {
-        Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
-                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
-        listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
-            @Override
-            public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
-                listDirectorAdapter = new ListDirectorAdapter(CreateFilmActivity.this, response.body().getData());
-                rcv_choose_director.setAdapter(listDirectorAdapter);
-                listDirectorAdapter.notifyDataSetChanged();
-            }
+                }
 
-            @Override
-            public void onFailure(Call<ListDirectorResponse> call, Throwable t) {
-                Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<ListCategories> call, Throwable t) {
+                    Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 }

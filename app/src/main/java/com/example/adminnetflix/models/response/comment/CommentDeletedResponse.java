@@ -12,12 +12,12 @@ public class CommentDeletedResponse {
     @SerializedName("success")
     @Expose
     private Boolean success;
-    @SerializedName("data")
-    @Expose
-    private List<CommentDeleted> data = null;
     @SerializedName("msg")
     @Expose
     private String msg;
+    @SerializedName("trash")
+    @Expose
+    private List<Trash> trash = null;
 
     public Integer getStatus() {
         return status;
@@ -35,19 +35,19 @@ public class CommentDeletedResponse {
         this.success = success;
     }
 
-    public List<CommentDeleted> getData() {
-        return data;
-    }
-
-    public void setData(List<CommentDeleted> data) {
-        this.data = data;
-    }
-
     public String getMsg() {
         return msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public List<Trash> getTrash() {
+        return trash;
+    }
+
+    public void setTrash(List<Trash> trash) {
+        this.trash = trash;
     }
 }

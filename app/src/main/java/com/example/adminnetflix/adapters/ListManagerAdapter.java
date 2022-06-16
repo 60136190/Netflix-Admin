@@ -17,6 +17,7 @@ import com.example.adminnetflix.R;
 import com.example.adminnetflix.activities.manage.AdminActivity;
 import com.example.adminnetflix.activities.manage.CategoryActivity;
 import com.example.adminnetflix.activities.manage.CommentDeletedActivity;
+import com.example.adminnetflix.activities.manage.CustomerUncheckActivity;
 import com.example.adminnetflix.activities.manage.DirectorActivity;
 import com.example.adminnetflix.activities.manage.FavoriteActivity;
 import com.example.adminnetflix.activities.manage.FeedbackActivity;
@@ -120,6 +121,10 @@ public class ListManagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
                 if (a == 7) {
                     Intent intent = new Intent(mContext,CommentDeletedActivity.class);
+                    mContext.startActivity(intent);
+                }
+                if (a == 8) {
+                    Intent intent = new Intent(mContext, CustomerUncheckActivity.class);
                     mContext.startActivity(intent);
                 }
             }

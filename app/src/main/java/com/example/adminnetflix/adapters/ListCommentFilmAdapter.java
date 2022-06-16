@@ -56,8 +56,9 @@ public class ListCommentFilmAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Comment comment = mCommentList.get(position);
 
         if (comment.getUser() == null) {
-            ((ItemViewHolder)holder).constraintLayout.setVisibility(View.GONE);
+            ((ItemViewHolder)holder).constraintLayout.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         } else {
+            ((ItemViewHolder)holder).constraintLayout.setVisibility(View.VISIBLE);
             String idUser = comment.getUser().getId();
             String strComment = comment.getContent();
             String nameOfUser = comment.getUser().getFullname();
@@ -65,10 +66,12 @@ public class ListCommentFilmAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             String strIdComment = comment.getId();
             String strIdFilm = comment.getFilm();
             String strDate = comment.getCreatedAt();
+            String[] parts = strDate.split("T");
+            String part1 = parts[0]; // 004
 
             ((ItemViewHolder) holder).tvComment.setText(strComment);
             ((ItemViewHolder) holder).tvNameOfUser.setText(nameOfUser);
-            ((ItemViewHolder) holder).tvDate.setText(strDate);
+            ((ItemViewHolder) holder).tvDate.setText(part1);
             Picasso.with(mContext)
                     .load(strImgUser).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).imgUser);
 

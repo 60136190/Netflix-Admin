@@ -4,7 +4,7 @@ import com.example.adminnetflix.models.response.Image;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class UserCommentDeleted {
     @SerializedName("_id")
     @Expose
     private String id;

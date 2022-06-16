@@ -64,36 +64,25 @@ public class UpdateActivity extends AppCompatActivity {
     private Uri mUri;
     RequestBody requestBody;
     // category
-    private TextView tvCategory;
-    private EditText edtCategory;
+    TextView tvCategory, edtCategory;
 
     // director
-    private TextView tvDirector;
-    private TextView tvDescription;
-    private EditText edtDescription;
-    private EditText edtDirector;
-    private CircleImageView imgDirector;
+    TextView tvDirector, tvDescription;
+    EditText edtDescription, edtDirector;
+    CircleImageView imgDirector;
 
     // mode of payment
-    private TextView tvModeOfPayment;
-    private EditText edtModeOfPayment;
-    private ImageView imgModeOfPayment;
+    TextView tvModeOfPayment;
+    EditText edtModeOfPayment;
+    ImageView imgModeOfPayment;
 
     // feedback
-    private TextView fullName;
-    private TextView tvFullname;
-    private TextView email;
-    private TextView tvEmail;
-    private TextView subject;
-    private TextView tvSubject;
-    private TextView content;
-    private TextView tvContent;
-    private TextView tvSendFeedback;
-    private EditText edtSendFeedback;
+    TextView fullName, tvFullname, email, tvEmail, subject, tvSubject, content, tvContent;
+    EditText edtSendFeedback;
 
-    private Button btnUpdate;
-    private TextView tvTitleUpdate;
-    private ImageView imgBack;
+    Button btnUpdate;
+    TextView tvTitleUpdate;
+    ImageView imgBack;
 
     private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -218,7 +207,6 @@ public class UpdateActivity extends AppCompatActivity {
 
         if (b.get("update").equals("Reply to Feedback")) {
             edtSendFeedback.setVisibility(View.VISIBLE);
-            tvSendFeedback.setVisibility(View.VISIBLE);
             fullName.setVisibility(View.VISIBLE);
             tvFullname.setVisibility(View.VISIBLE);
             email.setVisibility(View.VISIBLE);
@@ -298,7 +286,6 @@ public class UpdateActivity extends AppCompatActivity {
         tvSubject = findViewById(R.id.tv_subject_feedback);
         content = findViewById(R.id.content_feedback);
         tvContent = findViewById(R.id.tv_content_feedback);
-        tvSendFeedback = findViewById(R.id.tv_send_feedback);
         edtSendFeedback = findViewById(R.id.edt_send_feedback);
 
         btnUpdate = findViewById(R.id.btn_update);

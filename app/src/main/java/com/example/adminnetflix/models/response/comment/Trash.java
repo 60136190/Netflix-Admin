@@ -1,15 +1,15 @@
 package com.example.adminnetflix.models.response.comment;
-
+import com.example.adminnetflix.models.response.Film;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CommentDeleted {
+public class Trash {
     @SerializedName("_id")
     @Expose
     private String id;
     @SerializedName("user")
     @Expose
-    private User user;
+    private UserCommentDeleted user;
     @SerializedName("film")
     @Expose
     private FilmCommentDeleted film;
@@ -37,11 +37,11 @@ public class CommentDeleted {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserCommentDeleted getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserCommentDeleted user) {
         this.user = user;
     }
 

@@ -77,7 +77,6 @@ public class CategoryActivity extends AppCompatActivity {
             public void onResponse(Call<ListCategories> call, Response<ListCategories> response) {
                 listCategoriesFilmAdapter = new ListCategoriesFilmAdapter(CategoryActivity.this,response.body().getData());
                 rcvCategory.setAdapter(listCategoriesFilmAdapter);
-                listCategoriesFilmAdapter.notifyDataSetChanged();
             }
 
             @Override

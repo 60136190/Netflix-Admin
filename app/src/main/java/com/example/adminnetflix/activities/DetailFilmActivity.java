@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,10 +19,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.adminnetflix.R;
 import com.example.adminnetflix.adapters.ListCommentFilmAdapter;
+import com.example.adminnetflix.adapters.SeriesFilmAdapter;
 import com.example.adminnetflix.api.ApiClient;
+import com.example.adminnetflix.models.response.CheckFilmCanWatch;
 import com.example.adminnetflix.models.response.CommentResponse;
 import com.example.adminnetflix.models.response.DetailFilmResponse;
 import com.example.adminnetflix.utils.Contants;
@@ -34,17 +38,13 @@ import retrofit2.Response;
 
 public class DetailFilmActivity extends AppCompatActivity {
 
-    private ImageView imgFilm;
-    private TextView tvDirector;
-    private TextView tvTitleFilm;
-    private TextView tvStoryLine;
-    private TextView tvDate;
-    private TextView tvCategory;
-    private TextView tvTimeFilm;
-    private TextView tvCountry;
+    private TextView tvDirector, tvStatus, tvTitleFilm,
+            tvStoryLine, tvDate, tvCategory, tvTimeFilm, tvCountry;
+    VideoView vdFilm;
     private RecyclerView rcvComment;
     private RecyclerView rcvSeriesFilm;
     ListCommentFilmAdapter listCommentFilmAdapter;
+    SeriesFilmAdapter seriesFilmAdapter;
 
 
     @Override
@@ -54,36 +54,22 @@ public class DetailFilmActivity extends AppCompatActivity {
         initUi();
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
-
+        String idFilm = (String) b.get("Id_film");
         if (b != null) {
-            String idFilm = (String) b.get("Id_film");
-            Call<DetailFilmResponse> detailFilmResponseCall = ApiClient.getFilmService().detailFilm(
+            getDetailFilm(idFilm);
+            getListComment(idFilm);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailFilmActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvComment.setLayoutManager(linearLayoutManager);
+            // get series film
+            Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
                     StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
-            detailFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
-                @SuppressLint("ResourceType")
+            serieslFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
                 @Override
                 public void onResponse(Call<DetailFilmResponse> call, Response<DetailFilmResponse> response) {
-                    if (response.isSuccessful()) {
-                        tvTitleFilm.setText(response.body().getData().get(0).getTitle());
-                        tvStoryLine.setText(response.body().getData().get(0).getDescription());
-                        String urlVideoFilm = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
-                        for (int i = 0; i < response.body().getData().get(0).getDirector().size(); i++) {
-                            tvDirector.setText(response.body().getData().get(0).getDirector().get(i).getName());
-                        }
-
-                        String strImgFilm = response.body().getData().get(0).getImageFilm().getUrl();
-                        Picasso.with(DetailFilmActivity.this)
-                                .load(strImgFilm).error(R.drawable.backgroundslider).fit().centerInside().into(imgFilm);
-                        String string = response.body().getData().get(0).getYearProduction();
-                        String[] parts = string.split("T");
-                        String part1 = parts[0]; // 004
-
-                        tvDate.setText(part1);
-                        tvCategory.setText(response.body().getData().get(0).getCategory().get(0).getName());
-                        tvTimeFilm.setText(response.body().getData().get(0).getFilmLength());
-                        tvCountry.setText(response.body().getData().get(0).getCountryProduction());
-
-                    }
+                    seriesFilmAdapter = new SeriesFilmAdapter(DetailFilmActivity.this, response.body().getData().get(0).getSeriesFilm());
+                    rcvSeriesFilm.setAdapter(seriesFilmAdapter);
+                    seriesFilmAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -91,32 +77,8 @@ public class DetailFilmActivity extends AppCompatActivity {
 
                 }
             });
-
-            getListComment(idFilm);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailFilmActivity.this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            rcvComment.setLayoutManager(linearLayoutManager);
-
-            // get series film
-//            Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
-//                    StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
-//            serieslFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
-//                @Override
-//                public void onResponse(Call<DetailFilmResponse> call, Response<DetailFilmResponse> response) {
-//                    seriesFilmAdapter = new SeriesFilmAdapter(DetailFilmActivity.this, response.body().getData().get(0).getSeriesFilm());
-//                    rcvSeriesFilm.setAdapter(seriesFilmAdapter);
-//                    seriesFilmAdapter.notifyDataSetChanged();
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<DetailFilmResponse> call, Throwable t) {
-//
-//                }
-//            });
-//            GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailFilmActivity.this, 2);
-//            rcvSeriesFilm.setLayoutManager(gridLayoutManager);
-
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailFilmActivity.this, 2);
+            rcvSeriesFilm.setLayoutManager(gridLayoutManager);
 
         }
     }
@@ -127,10 +89,11 @@ public class DetailFilmActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tv_date_film);
         tvCategory = findViewById(R.id.tv_category);
         tvCountry = findViewById(R.id.tv_country);
-        imgFilm = findViewById(R.id.img_film);
         tvTimeFilm = findViewById(R.id.tv_time_film);
+        tvStatus = findViewById(R.id.tv_status);
         rcvComment = findViewById(R.id.rcv_comment);
         rcvSeriesFilm = findViewById(R.id.rcv_series_film);
+        vdFilm = findViewById(R.id.video_film);
     }
 
     private void getListComment(String idFilm) {
@@ -148,4 +111,47 @@ public class DetailFilmActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getDetailFilm(String idFilm){
+        Call<DetailFilmResponse> detailFilmResponseCall = ApiClient.getFilmService().detailFilm(
+                StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
+        detailFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
+            @Override
+            public void onResponse(Call<DetailFilmResponse> call, Response<DetailFilmResponse> response) {
+                if (response.isSuccessful()) {
+                    tvTitleFilm.setText(response.body().getData().get(0).getTitle());
+                    tvStoryLine.setText(response.body().getData().get(0).getDescription());
+                    String urlVideoFilm = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
+                    for (int i = 0; i < response.body().getData().get(0).getDirector().size(); i++) {
+                        tvDirector.setText(response.body().getData().get(0).getDirector().get(i).getName());
+                    }
+
+                    String path = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
+                    int cost = response.body().getData().get(0).getPrice();
+                    if (cost== 0){
+                        tvStatus.setText("Free");
+                    }else{
+                        tvStatus.setText("Cost");
+                    }
+                    vdFilm.setVideoPath(path);
+                    vdFilm.start();
+                    String string = response.body().getData().get(0).getYearProduction();
+                    String[] parts = string.split("T");
+                    String part1 = parts[0]; // 004
+
+                    tvDate.setText(part1);
+                    tvCategory.setText(response.body().getData().get(0).getCategory().get(0).getName());
+                    tvTimeFilm.setText(response.body().getData().get(0).getFilmLength());
+                    tvCountry.setText(response.body().getData().get(0).getCountryProduction());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailFilmResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

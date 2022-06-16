@@ -1,7 +1,7 @@
 package com.example.adminnetflix.models.response.favourite;
 
 import com.example.adminnetflix.models.response.comment.FilmCommentDeleted;
-import com.example.adminnetflix.models.response.comment.User;
+import com.example.adminnetflix.models.response.comment.UserCommentDeleted;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +11,7 @@ public class Favourite {
     private String id;
     @SerializedName("user")
     @Expose
-    private User user;
+    private UserCommentDeleted user;
     @SerializedName("film")
     @Expose
     private FilmCommentDeleted film;
@@ -33,11 +33,11 @@ public class Favourite {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserCommentDeleted getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserCommentDeleted user) {
         this.user = user;
     }
 

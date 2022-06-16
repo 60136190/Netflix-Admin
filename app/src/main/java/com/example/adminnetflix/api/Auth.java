@@ -8,6 +8,7 @@ import com.example.adminnetflix.models.request.LoginRequest;
 import com.example.adminnetflix.models.request.RefreshTokenResponse;
 import com.example.adminnetflix.models.request.RegisterRequest;
 import com.example.adminnetflix.models.request.UpdateAdminRequest;
+import com.example.adminnetflix.models.response.CustomerUncheckResponse;
 import com.example.adminnetflix.models.response.DetailUserResponse;
 import com.example.adminnetflix.models.response.ListAdminResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
@@ -33,36 +34,44 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface Auth {
-    // register
+    // register admin
     @POST("api/auth/admin/register")
     Call<RegisterResponse> register(@Body RegisterRequest register);
-//
-//    // login
+
+    // register customer
+    @POST("api/auth/customer/register")
+    Call<RegisterResponse> registerCustomer(@Body RegisterRequest register);
+
+    // get list customer uncheck
+    @GET("api/auth/admin/getAllCustomerUncheck")
+    Call<CustomerUncheckResponse> getListCustomerUncheck();
+
+    // login
     @POST("api/auth/admin/login")
     Call<LoginResponse> login(@HeaderMap HashMap<String, String> hashMap, @Body LoginRequest loginRequest);
-//
-//    // logout
+
+    // logout
     @GET("api/auth/admin/logout")
     Call<ResponseDTO> logout(@Header("Cookie") String accessToken);
-//
-//    // forget Password
+
+    // forget Password
     @POST("api/auth/admin/forget")
     Call<ResponseDTO> forgetPassword(@HeaderMap HashMap<String, String> hashMap, @Body ForgetPasswordRequest forgetPasswordRequest);
-//
+
 //    // changePassword
 //    @PATCH("api/auth/customer/changePassword")
 //    Call<ResponseDTO> changePassword(@HeaderMap HashMap<String, String> hashMap, @Body ChangePasswordRequest changePasswordRequest);
 //
-//    // getProfile
+    // getProfile
     @GET("api/auth/admin/profile")
     Call<ProfileResponse> getProfile(@Header("Authorization") String authorization);
-//
-//    // uploadImage
+
+    // uploadImage
     @Multipart
     @POST("api/uploadImageUser")
     Call<UploadImageResponse> uploadImage(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
-//
-//    // update infomation user
+
+    // update infomation user
     @PATCH("api/auth/admin/profile/update")
     Call<ResponseDTO> updateInfo(@HeaderMap HashMap<String, String> hashMap, @Body UpdateAdminRequest updateAdminRequest);
 
@@ -93,7 +102,5 @@ public interface Auth {
     // update information user
     @PATCH("api/auth/admin/customerAccount/{id}/update/info")
     Call<ResponseDTO> updateInformationUser(@Header("Authorization") String authorization, @Path("id") String idUser, @Body UpdateAdminRequest updateUserRequest);
-
-
 
 }

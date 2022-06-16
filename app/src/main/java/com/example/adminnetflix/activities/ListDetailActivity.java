@@ -46,7 +46,6 @@ public class ListDetailActivity extends AppCompatActivity {
     private ImageView imgBack;
     private TextView tvTitle;
     private Button btnAdd;
-
     private RecyclerView rcvListDetail;
     private ListDirectorAdapter listDirectorAdapter;
     private ListModeOfPaymentAdapter listModeOfPaymentAdapter;
@@ -315,7 +314,7 @@ public class ListDetailActivity extends AppCompatActivity {
         commentDeletedResponseCall.enqueue(new Callback<CommentDeletedResponse>() {
             @Override
             public void onResponse(Call<CommentDeletedResponse> call, Response<CommentDeletedResponse> response) {
-                listCommentDeletedAdapter = new ListCommentDeletedAdapter(ListDetailActivity.this,response.body().getData());
+                listCommentDeletedAdapter = new ListCommentDeletedAdapter(ListDetailActivity.this,response.body().getTrash());
                 rcvListDetail.setAdapter(listCommentDeletedAdapter);
             }
 

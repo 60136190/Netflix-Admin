@@ -72,4 +72,10 @@ public class RatingActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tv_name_list);
         rcvRating = findViewById(R.id.rcv_list_rating);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getListRating();
+    }
 }

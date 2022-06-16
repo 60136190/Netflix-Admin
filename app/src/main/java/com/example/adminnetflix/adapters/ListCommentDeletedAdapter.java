@@ -14,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
 
-import com.example.adminnetflix.activities.ListDetailActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.ResponseDTO;
-import com.example.adminnetflix.models.response.comment.CommentDeleted;
-import com.example.adminnetflix.models.response.comment.CommentDeletedResponse;
+import com.example.adminnetflix.models.response.comment.Trash;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
@@ -32,9 +30,9 @@ import retrofit2.Response;
 public class ListCommentDeletedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    List<CommentDeleted> commentDeleteds;
+    List<Trash> commentDeleteds;
 
-    public ListCommentDeletedAdapter(Context mContext, List<CommentDeleted> commentDeleteds) {
+    public ListCommentDeletedAdapter(Context mContext, List<Trash> commentDeleteds) {
         this.mContext = mContext;
         this.commentDeleteds = commentDeleteds;
     }
@@ -49,22 +47,25 @@ public class ListCommentDeletedAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        CommentDeleted commentDeleted = commentDeleteds.get(position);
-        String idComment = commentDeleted.getId();
-        String nameOfUser = commentDeleted.getUser().getFullname();
-        String imgUser = commentDeleted.getUser().getImage().getUrl();
-        String time = commentDeleted.getCreatedAt();
-//        String title = commentDeleted.getFilm().getTitle();
-        String content = commentDeleted.getContent();
+        Trash commentDeleted = commentDeleteds.get(position);
 
+        if ((commentDeleted.getFilm()!=null) && (commentDeleted.getUser()!=null)) {
+            ((ItemViewHolder)holder).constraintLayout.setVisibility(View.VISIBLE);
+            String idComment = commentDeleted.getId();
+            String nameOfUser = commentDeleted.getUser().getFullname();
+            String imgUser = commentDeleted.getUser().getImage().getUrl();
+            String time = commentDeleted.getCreatedAt();
+            String content = commentDeleted.getContent();
             ((ItemViewHolder) holder).tvNameOfUser.setText(nameOfUser);
-            ((ItemViewHolder) holder).tvTime.setText(time.substring(1,10));
+            ((ItemViewHolder) holder).tvTime.setText(time.substring(1, 10));
             ((ItemViewHolder) holder).tvContent.setText(content);
+            ((ItemViewHolder) holder).tvTileFilm.setText(commentDeleted.getFilm().getTitle());
+
             ((ItemViewHolder) holder).imgRestore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Call<ResponseDTO> commentDeletedResponseCall = ApiClient.getFilmService().restoreComment(
-                            StoreUtil.get(mContext, Contants.accessToken),idComment);
+                            StoreUtil.get(mContext, Contants.accessToken), idComment);
                     commentDeletedResponseCall.enqueue(new Callback<ResponseDTO>() {
                         @Override
                         public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -79,11 +80,13 @@ public class ListCommentDeletedAdapter extends RecyclerView.Adapter<RecyclerView
                     });
                 }
             });
-//            ((ItemViewHolder) holder).tvTileFilm.setText(String.valueOf(title));
 
             Picasso.with(mContext)
                     .load(imgUser).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).imgUser);
 
+        }else {
+            ((ItemViewHolder)holder).constraintLayout.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
     }
 
 

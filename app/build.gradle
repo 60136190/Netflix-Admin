@@ -88,4 +88,7 @@ dependencies {
     // delete item recyclerview
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
+    // lib chart
+
+
 }

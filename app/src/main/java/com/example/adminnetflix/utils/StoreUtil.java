@@ -38,6 +38,16 @@ public class StoreUtil {
         editor.apply();
     }
 
+    private static final String LIST_KEY_ID_CATEGORY = "listCategory";
+    public static void writeListCategoryPref(Context context, List<String> list) {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+        SharedPreferences pref = context.getSharedPreferences("AdminSharedPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(LIST_KEY_ID_CATEGORY, jsonString);
+        editor.apply();
+    }
+
     public static List<String> readListFromPref(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String jsonString = pref.getString(LIST_KEY, "");

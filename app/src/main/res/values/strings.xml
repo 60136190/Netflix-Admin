@@ -45,4 +45,8 @@
     <string name="size">Size:</string>
     <string name="duration">Duration:</string>
     <string name="resolution">Resolution:</string>
+    <string name="hello">Hello,</string>
+    <string name="movie_statistics">Movie statistics</string>
+    <string name="film_adult">Film adult</string>
+    <string name="film_kid">Film kid</string>
 </resources>

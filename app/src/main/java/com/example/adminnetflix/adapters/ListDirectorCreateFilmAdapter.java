@@ -83,73 +83,6 @@ public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<Recycler
         Picasso.with(mContext1)
                 .load(imgDirector).error(R.drawable.backgroundslider).fit().centerInside().into(((ItemViewHolder) holder).itemUrl);
 
-        ((ItemViewHolder) holder).lnDeleteDirector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Dialog dialog = new Dialog(view.getContext());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_confirm);
-
-                Window window = dialog.getWindow();
-                if (window == null) {
-                    return;
-                }
-
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams windowAtribute = window.getAttributes();
-                window.setAttributes(windowAtribute);
-
-                Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-                Button btnDelete = dialog.findViewById(R.id.btn_confirm_delete);
-
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                // show dialog
-                dialog.show();
-                btnDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Call<ResponseDTO> listFavoriteFilmResponseCall = ApiClient.getFilmService().deleteDirector(
-                                StoreUtil.get(view.getContext(), Contants.accessToken), director.getId());
-                        listFavoriteFilmResponseCall.enqueue(new Callback<ResponseDTO>() {
-                            @Override
-                            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                                mDirectorList.remove(holder.getAdapterPosition());
-                                notifyItemRemoved(holder.getAdapterPosition());
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                Toast.makeText(view.getContext(), "Maybe is wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                });
-            }
-        });
-
-        ((ItemViewHolder) holder).ctListDirector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(mContext1, UpdateActivity.class);
-//                intent.putExtra("update","Update Director");
-//                intent.putExtra("id_director",director.getId());
-//                intent.putExtra("name_director",director.getName());
-//                intent.putExtra("public_Id_director",director.getImage().getPublicId());
-//                intent.putExtra("url_director",director.getImage().getUrl());
-//                mContext1.startActivity(intent);
-                SharedPreferences sharedPreferences = mContext1.getSharedPreferences("AdminSharedPref", Context.MODE_PRIVATE);
-                Toast.makeText(mContext1,sharedPreferences.getString("list", ""),Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -164,8 +97,6 @@ public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<Recycler
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private ImageView itemUrl;
         private TextView itemNameOfDirector;
-        private LinearLayout lnDeleteDirector;
-        private ConstraintLayout ctListDirector;
         private CheckBox rdbChoose;
 
 
@@ -173,8 +104,6 @@ public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<Recycler
             super(itemView);
             itemUrl = itemView.findViewById(R.id.img_director);
             itemNameOfDirector = itemView.findViewById(R.id.tv_name_of_director);
-            lnDeleteDirector = itemView.findViewById(R.id.ln_delete);
-            ctListDirector = itemView.findViewById(R.id.ct_list_director);
             rdbChoose = itemView.findViewById(R.id.rdb_choose);
         }
     }

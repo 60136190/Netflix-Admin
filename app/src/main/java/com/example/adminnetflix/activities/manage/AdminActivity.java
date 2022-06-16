@@ -85,4 +85,10 @@ public class AdminActivity extends AppCompatActivity {
         rcvAdmin = findViewById(R.id.rcv_list_admin);
         btnAdd = findViewById(R.id.btn_add);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getListAdmin();
+    }
+
 }
