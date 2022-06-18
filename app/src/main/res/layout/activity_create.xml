@@ -65,41 +65,32 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
 
-
-    <TextView
-        android:id="@+id/tv_name_of_director"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="Name of Director"
-        android:textSize="@dimen/_12ssp"
-        android:textStyle="bold"
-        android:textColor="@color/text_color"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_name_of_category"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_direction"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_add"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
 
     <EditText
         android:id="@+id/edt_nname_of_director"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:background="@drawable/background_input"
+        android:hint="Director's name"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
         android:textColor="@color/text_color"
-        app:layout_constraintTop_toTopOf="@+id/tv_name_of_director"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_name_of_director"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_name_of_director"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_direction"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_add"
+        android:textColorHint="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_nname_of_director"/>
+        app:layout_constraintTop_toBottomOf="@+id/img_direction"/>
 
     <TextView
         android:id="@+id/tv_description_director"
@@ -112,19 +103,22 @@
         android:textStyle="bold"
         android:textColor="@color/text_color"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_direction"/>
+        app:layout_constraintTop_toBottomOf="@+id/edt_nname_of_director"/>
 
     <EditText
         android:id="@+id/edt_description_director"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
+        android:background="@drawable/background_input"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
         android:textColor="@color/text_color"
-        android:layout_marginRight="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="@+id/tv_description_director"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_description_director"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_description_director"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description_director"/>
 
     <EditText
         android:id="@+id/edt_name_of_payment"
@@ -149,7 +143,7 @@
         android:layout_height="@dimen/_100sdp"
         android:backgroundTint="@color/white"
         android:visibility="gone"
-        android:src="@drawable/restore"
+        android:src="@drawable/ic_add"
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

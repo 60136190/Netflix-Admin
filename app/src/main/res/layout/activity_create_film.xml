@@ -74,6 +74,7 @@
                 <EditText
                     android:id="@+id/edt_title_film"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
@@ -95,6 +96,7 @@
                 <EditText
                     android:id="@+id/edt_country_production"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
@@ -117,6 +119,7 @@
                 <EditText
                     android:id="@+id/edt_year_production"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
@@ -165,10 +168,32 @@
                     android:id="@+id/img_film"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
-                    android:src="@drawable/addimg"
+                    android:src="@drawable/ic_add"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_choose_img_film" />
+
+                <TextView
+                    android:id="@+id/upload_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload video film"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/text_color"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_film"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_video"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_video"
+                    />
 
                 <TextView
                     android:id="@+id/choose_director"
@@ -180,12 +205,35 @@
                     android:textSize="@dimen/_12ssp"
                     android:text="Choose director"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_film"/>
+                    app:layout_constraintTop_toBottomOf="@+id/img_video"/>
+
+                <ImageView
+                    android:id="@+id/img_change"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:onClick="fadeDirector"
+                    app:srcCompat="@drawable/ic_arrow_drop_down"
+                    app:layout_constraintTop_toTopOf="@+id/choose_director"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_director"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_director"
+                    app:tint="@color/red" />
+                <ImageView
+                    android:id="@+id/img_changed"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:alpha="0"
+                    android:onClick="fadeDirector"
+                    app:tint="@color/red"
+                    app:srcCompat="@drawable/ic_arrow_drop_up"
+                    app:layout_constraintTop_toTopOf="@+id/choose_director"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_director"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_director" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/rcv_choose_director"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_200sdp"
                     tools:listitem="@layout/item_list_director"
                     app:layout_constraintTop_toBottomOf="@+id/choose_director"/>
 
@@ -201,10 +249,33 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rcv_choose_director"/>
 
+                <ImageView
+                    android:id="@+id/img_change_category"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:onClick="fadeCategory"
+                    app:srcCompat="@drawable/ic_arrow_drop_down"
+                    app:layout_constraintTop_toTopOf="@+id/choose_category"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_category"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_category"
+                    app:tint="@color/red" />
+                <ImageView
+                    android:id="@+id/img_changed_category"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:alpha="0"
+                    android:onClick="fadeCategory"
+                    app:tint="@color/red"
+                    app:srcCompat="@drawable/ic_arrow_drop_up"
+                    app:layout_constraintTop_toTopOf="@+id/choose_category"
+                    app:layout_constraintBottom_toBottomOf="@+id/choose_category"
+                    app:layout_constraintLeft_toRightOf="@+id/choose_category" />
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/rcv_choose_category"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_200sdp"
                     tools:listitem="@layout/item_list_director"
                     app:layout_constraintTop_toBottomOf="@+id/choose_category"/>
 
@@ -236,6 +307,7 @@
                 <EditText
                     android:id="@+id/edt_episode"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/background_input"
@@ -245,10 +317,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/episode"/>
 
                 <TextView
-                    android:id="@+id/upload_video"
+                    android:id="@+id/upload_image_series"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upload video film"
+                    android:text="Upload image series film"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColor="@color/text_color"
                     android:textStyle="bold"
@@ -257,36 +329,36 @@
                     app:layout_constraintTop_toBottomOf="@+id/edt_episode"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_video"
+                    android:id="@+id/img_series"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
-                    android:src="@drawable/addimg"
+                    android:src="@drawable/ic_add"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upload_video"
+                    app:layout_constraintTop_toBottomOf="@+id/upload_image_series"
                     />
 
                 <TextView
-                    android:id="@+id/upload_image"
+                    android:id="@+id/upload_video_series"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upload image film"
+                    android:text="Upload video series film"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColor="@color/text_color"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_video"/>
+                    app:layout_constraintTop_toBottomOf="@+id/img_series"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_episode"
+                    android:id="@+id/img_video_series"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
-                    android:src="@drawable/addimg"
+                    android:src="@drawable/ic_add"
                     app:tint="@color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upload_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/upload_video_series" />
 
                 <TextView
                     android:id="@+id/age_limit"
@@ -298,11 +370,12 @@
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_episode"/>
+                    app:layout_constraintTop_toBottomOf="@+id/img_video_series"/>
 
                 <EditText
                     android:id="@+id/edt_age_limit"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:inputType="number"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -327,6 +400,7 @@
                 <EditText
                     android:id="@+id/edt_lenght_film"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:inputType="number"
@@ -350,6 +424,7 @@
                 <EditText
                     android:id="@+id/edt_price"
                     android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:inputType="number"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -373,16 +448,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:id="@+id/tv_public_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
-        android:id="@+id/url_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,7 @@ import com.example.adminnetflix.models.response.UploadVideoResponse;
 import com.example.adminnetflix.models.response.VideoFilm;
 import com.example.adminnetflix.realpath.RealPathUtil;
 import com.example.adminnetflix.utils.Contants;
+import com.example.adminnetflix.utils.HideKeyBoard;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.example.adminnetflix.utils.TranslateAnimationUtil;
 import com.google.gson.Gson;
@@ -74,12 +76,12 @@ public class CreateFilmActivity extends AppCompatActivity {
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
     private Uri mUri;
     private Uri mUriVideo;
+    private Uri mUriVideoSeriesFilm;
     RequestBody requestBody;
     RequestBody requestBodyVideo;
+    RequestBody requestBodyVideoSeriesFilm;
     private ListDirectorCreateFilmAdapter listDirectorAdapter;
     private ListCategoriesCreateFilmAdapter listCategoriesFilmAdapter;
-    private TextView tvPublic_video;
-    private TextView tvUrl_video;
     private ImageView imgBack;
     private EditText edtTitle;
     private EditText edtDescription;
@@ -89,13 +91,12 @@ public class CreateFilmActivity extends AppCompatActivity {
     private EditText edtAgeLimit;
     private EditText edtLenghtFilm;
     private EditText edtPrice;
-    private ImageView imgFilm;
-    private ImageView imgVideo;
-    private ImageView imgEpisode;
+    private ImageView imgFilm, imgSeriesFilm;
+    private ImageView imgVideo,imgVideoSeriesFilm;
     private Button btnCreate;
     private RecyclerView rcv_choose_director, rcv_choose_category;
-    public static String public_idVideo;
-    public static String url_Video;
+    public static String public_idVideo, public_idVideo_Series_Film;
+    public static String url_Video, url_Video_Series_Film;
     ArrayList<String> categoryList = new ArrayList<>();
     List<String> listDirector;
     List<String> listCategory;
@@ -147,10 +148,37 @@ public class CreateFilmActivity extends AppCompatActivity {
                 }
             });
 
+    // get video up series film
+    private ActivityResultLauncher<Intent> mActivityResultLauncherVideoSeriesFilm = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Log.e(TAG, "onActivityResult");
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data == null) {
+                            return;
+                        }
+                        Uri uri = data.getData();
+                        mUriVideoSeriesFilm = uri;
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            imgVideoSeriesFilm.setImageBitmap(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+    boolean barIsShowing = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_film);
+        HideKeyBoard.hide(CreateFilmActivity.this);
         listDirector = new ArrayList<>();
         listCategory = new ArrayList<>();
         initUi();
@@ -179,6 +207,13 @@ public class CreateFilmActivity extends AppCompatActivity {
             }
         });
 
+        imgVideoSeriesFilm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRequestPermissionVideoSeriesFilm();
+            }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,6 +225,7 @@ public class CreateFilmActivity extends AppCompatActivity {
 
     }
 
+    // choose image film
     private void openImageGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -197,6 +233,7 @@ public class CreateFilmActivity extends AppCompatActivity {
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
 
+    // choose vide trailer film
     private void openVideoGallery() {
         Intent intent = new Intent();
         intent.setType("video/*");
@@ -204,7 +241,15 @@ public class CreateFilmActivity extends AppCompatActivity {
         mActivityResultLauncherVideo.launch(Intent.createChooser(intent, "Select video"));
     }
 
+    // choose vide series film
+    private void openVideoSeriesGallery() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivityResultLauncherVideoSeriesFilm.launch(Intent.createChooser(intent, "Select video series film"));
+    }
 
+    // permission choose image
     private void onClickRequestPermissionImage() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             openImageGallery();
@@ -218,6 +263,7 @@ public class CreateFilmActivity extends AppCompatActivity {
         }
     }
 
+    // permission choose video trailer
     private void onClickRequestPermissionVideo() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             openVideoGallery();
@@ -225,6 +271,20 @@ public class CreateFilmActivity extends AppCompatActivity {
         }
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             openVideoGallery();
+        } else {
+            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            requestPermissions(permission, MY_REQUEST_CODE);
+        }
+    }
+
+    // permission choose series film
+    private void onClickRequestPermissionVideoSeriesFilm() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            openVideoSeriesGallery();
+            return;
+        }
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            openVideoSeriesGallery();
         } else {
             String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permission, MY_REQUEST_CODE);
@@ -242,18 +302,20 @@ public class CreateFilmActivity extends AppCompatActivity {
         edtAgeLimit = findViewById(R.id.edt_age_limit);
         edtLenghtFilm = findViewById(R.id.edt_lenght_film);
         edtPrice = findViewById(R.id.edt_price);
+
         imgFilm = findViewById(R.id.img_film);
         imgVideo = findViewById(R.id.img_video);
-        imgEpisode = findViewById(R.id.img_episode);
+        imgSeriesFilm = findViewById(R.id.img_series);
+        imgVideoSeriesFilm = findViewById(R.id.img_video_series);
+
         btnCreate = findViewById(R.id.btn_create);
-        tvPublic_video = findViewById(R.id.tv_public_video);
-        tvUrl_video = findViewById(R.id.url_video);
         rcv_choose_director = findViewById(R.id.rcv_choose_director);
         rcv_choose_category = findViewById(R.id.rcv_choose_category);
     }
 
     private void createFilm() {
         getVideo();
+        getVideoSeriesFilm();
         Toast.makeText(CreateFilmActivity.this,String.valueOf(public_idVideo),Toast.LENGTH_SHORT).show();
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
@@ -285,8 +347,8 @@ public class CreateFilmActivity extends AppCompatActivity {
                                     String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
 
                                     SeriesFilm seriesFilm = new SeriesFilm(episode,
-                                            public_idVideo
-                                            ,url_Video,
+                                            public_idVideo_Series_Film
+                                            ,url_Video_Series_Film,
                                             public_id, url);
 
                                     VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
@@ -359,6 +421,30 @@ public class CreateFilmActivity extends AppCompatActivity {
 
     }
 
+    public void getVideoSeriesFilm() {
+        // upload new image
+        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideoSeriesFilm);
+        File fileVideo = new File(strRealPath);
+        requestBodyVideoSeriesFilm = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideoSeriesFilm)), fileVideo);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideoSeriesFilm);
+        Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
+                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                multipartBody);
+        responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
+            @Override
+            public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
+                public_idVideo_Series_Film = response.body().getPublic_id();
+                url_Video_Series_Film = response.body().getUrl();
+            }
+
+            @Override
+            public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
+                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 //    private void Spinner(){
 //        Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
 //                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
@@ -400,6 +486,7 @@ public class CreateFilmActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getListCategory() {
             Call<ListCategories> listFavoriteFilmResponseCall = ApiClient.getFilmService().getListCategoriesFilm(
                     StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
@@ -418,5 +505,43 @@ public class CreateFilmActivity extends AppCompatActivity {
                     Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
                 }
             });
+    }
+
+    public void fadeDirector(View view){
+        Log.i("Info","selected");
+        ImageView view1 = findViewById(R.id.img_change);
+        ImageView view2 = findViewById(R.id.img_changed);
+        if (barIsShowing){
+            barIsShowing = false;
+            view1.animate().alpha(0).setDuration(500);
+            view2.animate().alpha(1).setDuration(500);
+            rcv_choose_director.setVisibility(View.VISIBLE);
+
+        }else{
+            barIsShowing = true;
+            view1.animate().alpha(1).setDuration(500);
+            view2.animate().alpha(0).setDuration(500);
+            rcv_choose_director.setVisibility(View.GONE);
+
+        }
+    }
+
+    public void fadeCategory(View view){
+        Log.i("Info","selected");
+        ImageView view1 = findViewById(R.id.img_change_category);
+        ImageView view2 = findViewById(R.id.img_changed_category);
+        if (barIsShowing){
+            barIsShowing = false;
+            view1.animate().alpha(0).setDuration(500);
+            view2.animate().alpha(1).setDuration(500);
+            rcv_choose_category.setVisibility(View.VISIBLE);
+
+        }else{
+            barIsShowing = true;
+            view1.animate().alpha(1).setDuration(500);
+            view2.animate().alpha(0).setDuration(500);
+            rcv_choose_category.setVisibility(View.GONE);
+
+        }
     }
 }

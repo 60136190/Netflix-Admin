@@ -2,41 +2,27 @@ package com.example.adminnetflix.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.adminnetflix.R;
 import com.example.adminnetflix.activities.InformationAdminActivity;
-import com.example.adminnetflix.activities.manage.AdminActivity;
-import com.example.adminnetflix.activities.manage.CategoryActivity;
-import com.example.adminnetflix.activities.manage.DirectorActivity;
-import com.example.adminnetflix.activities.manage.FavoriteActivity;
-import com.example.adminnetflix.activities.manage.FeedbackActivity;
-import com.example.adminnetflix.activities.manage.ModeOfPaymentActivity;
-import com.example.adminnetflix.activities.manage.UserActivity;
 import com.example.adminnetflix.adapters.ListAdminAdapter;
 import com.example.adminnetflix.adapters.ListCategoriesFilmAdapter;
 import com.example.adminnetflix.adapters.ListDirectorAdapter;
-import com.example.adminnetflix.adapters.ListFavoritelFilmAdapter;
 import com.example.adminnetflix.adapters.ListFeedbackAdapter;
-import com.example.adminnetflix.adapters.ListManagerAdapter;
 import com.example.adminnetflix.adapters.ListManagerStatisticalAdapter;
 import com.example.adminnetflix.adapters.ListModeOfPaymentAdapter;
 import com.example.adminnetflix.adapters.ListUserAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.ItemManageStatistical;
-import com.example.adminnetflix.models.ItemManagerModel;
 import com.example.adminnetflix.models.response.FeedbackResponse;
 import com.example.adminnetflix.models.response.FilmResponse;
 import com.example.adminnetflix.models.response.ListAdminResponse;
@@ -45,7 +31,6 @@ import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.ProfileResponse;
-import com.example.adminnetflix.models.response.favourite.FavouriteResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 

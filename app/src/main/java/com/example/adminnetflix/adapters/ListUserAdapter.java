@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.activities.DetailUserActivity;
+import com.example.adminnetflix.activities.InformationUserActivity;
 import com.example.adminnetflix.models.response.DataListUserReponse;
 import com.squareup.picasso.Picasso;
 
@@ -52,12 +52,19 @@ public class ListUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((ItemViewHolder) holder).ctListUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, DetailUserActivity.class);
+                Intent i = new Intent(mContext, InformationUserActivity.class);
                 i.putExtra("Id_user", idUser);
                 mContext.startActivity(i);
 
             }
         });
+
+//        ((ItemViewHolder) holder).lnDeleteUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
     }
@@ -84,6 +91,7 @@ public class ListUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemUrl = itemView.findViewById(R.id.img_user);
             itemFullname = itemView.findViewById(R.id.tv_name_of_user);
             ctListUser = itemView.findViewById(R.id.ct_list_user);
+            lnDeleteUser = itemView.findViewById(R.id.ln_delete);
         }
     }
 

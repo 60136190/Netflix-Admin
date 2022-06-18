@@ -1,48 +1,27 @@
 package com.example.adminnetflix.adapters;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.api.ApiClient;
-import com.example.adminnetflix.models.TestModel;
 import com.example.adminnetflix.models.response.Director;
-import com.example.adminnetflix.models.response.ResponseDTO;
-import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context mContext1;
     List<Director> mDirectorList;
-    private List<TestModel> taskList;
     ArrayList<String> listId = new ArrayList<>();
 
     public ListDirectorCreateFilmAdapter(Context mContext, List<Director> mDirectorList) {
@@ -64,13 +43,11 @@ public class ListDirectorCreateFilmAdapter extends RecyclerView.Adapter<Recycler
         String title = director.getName();
         String imgDirector = director.getImage().getUrl();
 
-
        (((ItemViewHolder)holder).rdbChoose).setOnCheckedChangeListener((buttonView, isChecked) -> {
            if ((((ItemViewHolder)holder).rdbChoose).isChecked()) {
                listId.add(director.getId());
                Log.i("ListID",listId.toString());
                StoreUtil.writeListInPref(mContext1,listId);
-
            }else{
                listId.remove(director.getId());
                Log.i("ListID",listId.toString());

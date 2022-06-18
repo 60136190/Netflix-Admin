@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update information user"
+            android:text="Information user"
             android:layout_margin="@dimen/_20sdp"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
@@ -188,6 +188,29 @@
             app:layout_constraintTop_toTopOf="@+id/favourite"
             app:layout_constraintBottom_toBottomOf="@+id/favourite"
             app:layout_constraintLeft_toRightOf="@+id/favourite"/>
+
+        <TextView
+            android:id="@+id/historyBill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Histories bill"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/favourite"/>
+
+        <ImageView
+            android:id="@+id/img_history_bill"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/heart"
+            app:tint="@color/red"
+            app:layout_constraintTop_toTopOf="@+id/historyBill"
+            app:layout_constraintBottom_toBottomOf="@+id/historyBill"
+            app:layout_constraintLeft_toRightOf="@+id/historyBill"/>
 
         <TextView
             android:id="@+id/tv_validateSex"

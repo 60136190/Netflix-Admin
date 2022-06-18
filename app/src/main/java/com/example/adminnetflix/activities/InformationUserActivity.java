@@ -50,7 +50,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -59,12 +58,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailUserActivity extends AppCompatActivity {
+public class InformationUserActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
     private Uri mUri;
-    ImageView imgBack, imgInfo, imgListFavouriteFilm;
+    ImageView imgBack, imgInfo, imgListFavouriteFilm, imgHistoryBill;
     EditText edtFullName, edtDateofBirth, edtPhoneNumber;
     Button btnUpdate;
     TextInputLayout tilFullName, tilDateofBirth, tilPhoneNumber;
@@ -182,8 +181,17 @@ public class DetailUserActivity extends AppCompatActivity {
             imgListFavouriteFilm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(DetailUserActivity.this, ListDetailActivity.class);
+                    Intent intent = new Intent(InformationUserActivity.this, ListDetailActivity.class);
                     intent.putExtra("manager","list_favourite");
+                    startActivity(intent);
+                }
+            });
+
+            imgHistoryBill.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(InformationUserActivity.this, ListDetailActivity.class);
+                    intent.putExtra("manager","history bill");
                     startActivity(intent);
                 }
             });
@@ -232,6 +240,7 @@ public class DetailUserActivity extends AppCompatActivity {
         tilPhoneNumber = findViewById(R.id.til_phone_number);
         btnUpdate = findViewById(R.id.btn_update);
         imgListFavouriteFilm = findViewById(R.id.img_favourite_film);
+        imgHistoryBill = findViewById(R.id.img_history_bill);
         radioGroup = findViewById(R.id.radioGroup);
         rdbMale = findViewById(R.id.Male);
         rdbFemale = findViewById(R.id.Female);
@@ -240,7 +249,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
     public void getDetailUser(String id) {
         Call<DetailUserResponse> proifileResponseCall = ApiClient.getUserService().getDetailUser(
-                StoreUtil.get(DetailUserActivity.this, "Authorization"),id);
+                StoreUtil.get(InformationUserActivity.this, "Authorization"),id);
         proifileResponseCall.enqueue(new Callback<DetailUserResponse>() {
             @Override
             public void onResponse(Call<DetailUserResponse> call, Response<DetailUserResponse> response) {
@@ -252,7 +261,7 @@ public class DetailUserActivity extends AppCompatActivity {
                 String sdt = response.body().getData().getPhoneNumber();
                 String idUser = response.body().getData().getId();
 
-                StoreUtil.save(DetailUserActivity.this,Contants.idUser,idUser);
+                StoreUtil.save(InformationUserActivity.this,Contants.idUser,idUser);
 
                 edtFullName.setText(fullName);
                 tvEmail.setText(email);
@@ -331,7 +340,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
                 // upload new image
                 Call<UploadImageResponse> responseDTOCall = ApiClient.getUserService().uploadImage(
-                        StoreUtil.get(DetailUserActivity.this, Contants.accessToken),
+                        StoreUtil.get(InformationUserActivity.this, Contants.accessToken),
                         multipartBody);
                 responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
                     @Override
@@ -347,7 +356,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
                             UpdateAdminRequest updateUserRequest = new UpdateAdminRequest(hoten, image, sdt, male, ngaySinh);
                             Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInformationUser(
-                                    StoreUtil.get(DetailUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
+                                    StoreUtil.get(InformationUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
                             loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                                 @Override
                                 public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -356,7 +365,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                    Toast.makeText(DetailUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(InformationUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -365,13 +374,13 @@ public class DetailUserActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                        Toast.makeText(DetailUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InformationUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
                     }
                 });
 
             } else {
                 Call<DetailUserResponse> proifileResponseCall = ApiClient.getUserService().getDetailUser(
-                        StoreUtil.get(DetailUserActivity.this, Contants.accessToken),idUser);
+                        StoreUtil.get(InformationUserActivity.this, Contants.accessToken),idUser);
                 proifileResponseCall.enqueue(new Callback<DetailUserResponse>() {
                     @Override
                     public void onResponse(Call<DetailUserResponse> call, Response<DetailUserResponse> response) {
@@ -387,7 +396,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
 
                             Call<ResponseDTO> loginResponeCall = ApiClient.getUserService().updateInformationUser(
-                                    StoreUtil.get(DetailUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
+                                    StoreUtil.get(InformationUserActivity.this,Contants.accessToken),idUser ,updateUserRequest);
                             loginResponeCall.enqueue(new Callback<ResponseDTO>() {
                                 @Override
                                 public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -396,7 +405,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                    Toast.makeText(DetailUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(InformationUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -415,7 +424,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
     private void deleteImage() {
         Call<ProfileResponse> proifileResponseCall = ApiClient.getUserService().getProfile(
-                StoreUtil.get(DetailUserActivity.this, Contants.accessToken));
+                StoreUtil.get(InformationUserActivity.this, Contants.accessToken));
         proifileResponseCall.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
@@ -423,7 +432,7 @@ public class DetailUserActivity extends AppCompatActivity {
                     String public_id = response.body().getUser().getImage().getPublicId();
                     DeleteImageRequest deleteImageRequest = new DeleteImageRequest(public_id);
                     Call<ResponseDTO> responseDTOCall = ApiClient.getUserService().deleteImage(
-                            StoreUtil.get(DetailUserActivity.this, Contants.accessToken),deleteImageRequest);
+                            StoreUtil.get(InformationUserActivity.this, Contants.accessToken),deleteImageRequest);
                     responseDTOCall.enqueue(new Callback<ResponseDTO>() {
                         @Override
                         public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
@@ -432,7 +441,7 @@ public class DetailUserActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                            Toast.makeText(DetailUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InformationUserActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

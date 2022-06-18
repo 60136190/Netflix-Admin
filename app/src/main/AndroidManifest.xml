@@ -60,7 +60,7 @@
             android:name=".activities.DetailFilmActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailUserActivity"
+            android:name=".activities.InformationUserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.CreateFilmActivity"

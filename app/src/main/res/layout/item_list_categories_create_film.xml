@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipereveallayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_50sdp"
+    android:layout_height="@dimen/_40sdp"
     android:layout_margin="@dimen/_5sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/second_background"
@@ -19,11 +19,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/rdb_choose_category"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_10sdp"
+        app:useMaterialThemeColors="false"
+        android:button="@drawable/custom_checkbox"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

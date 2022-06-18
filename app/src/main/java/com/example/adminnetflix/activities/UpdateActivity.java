@@ -64,10 +64,10 @@ public class UpdateActivity extends AppCompatActivity {
     private Uri mUri;
     RequestBody requestBody;
     // category
-    TextView tvCategory, edtCategory;
+    TextView edtCategory;
 
     // director
-    TextView tvDirector, tvDescription;
+    TextView tvDescription;
     EditText edtDescription, edtDirector;
     CircleImageView imgDirector;
 
@@ -119,7 +119,6 @@ public class UpdateActivity extends AppCompatActivity {
 
         if (b.get("update").equals("Update Category")) {
             edtCategory.setVisibility(View.VISIBLE);
-            tvCategory.setVisibility(View.VISIBLE);
             String id = b.get("id_category").toString();
             String name = b.get("name_category").toString();
             edtCategory.setText(name);
@@ -133,7 +132,6 @@ public class UpdateActivity extends AppCompatActivity {
         }
 
         if (b.get("update").equals("Update Director")) {
-            tvDirector.setVisibility(View.VISIBLE);
             tvDescription.setVisibility(View.VISIBLE);
             edtDirector.setVisibility(View.VISIBLE);
             edtDescription.setVisibility(View.VISIBLE);
@@ -231,6 +229,13 @@ public class UpdateActivity extends AppCompatActivity {
             });
         }
 
+        if (b.get("update").equals("historybill")){
+            tvTitleUpdate.setText("History bill");
+//            String a = b.getString("update","Id_user");
+            Log.i("xemthu", String.valueOf(b.get("update")));
+
+        }
+
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,10 +268,8 @@ public class UpdateActivity extends AppCompatActivity {
     private void initUi() {
         // category
         edtCategory = findViewById(R.id.edt_category);
-        tvCategory = findViewById(R.id.tv_category);
 
         // director
-        tvDirector = findViewById(R.id.tv_director);
         tvDescription = findViewById(R.id.tv_description_director);
         edtDirector = findViewById(R.id.edt_director);
         edtDescription = findViewById(R.id.edt_description_director);

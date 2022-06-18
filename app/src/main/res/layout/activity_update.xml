@@ -42,55 +42,22 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tv_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="Name of category"
-        android:textSize="@dimen/_12ssp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
-
     <EditText
         android:id="@+id/edt_category"
-        android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginRight="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="@+id/tv_category"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_category"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_category"/>
-
-    <TextView
-        android:id="@+id/tv_director"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
         android:layout_margin="@dimen/_10sdp"
-        android:text="Director"
-        android:textSize="@dimen/_12ssp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_category"/>
-
-    <EditText
-        android:id="@+id/edt_director"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
-        android:textColor="@color/white"
-        android:layout_marginRight="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="@+id/tv_director"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_director"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_director"/>
+        android:background="@drawable/background_input"
+        android:hint="Category's name"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_direction"
@@ -99,7 +66,24 @@
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_director"/>
+        app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
+
+    <EditText
+        android:id="@+id/edt_director"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:background="@drawable/background_input"
+        android:hint="Director's name"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_direction"/>
 
     <TextView
         android:id="@+id/tv_description_director"
@@ -112,19 +96,22 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_direction"/>
+        app:layout_constraintTop_toBottomOf="@+id/edt_director"/>
 
     <EditText
         android:id="@+id/edt_description_director"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
-        android:textColor="@color/white"
-        android:layout_marginRight="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="@+id/tv_description_director"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_description_director"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_description_director"/>
+        android:background="@drawable/background_input"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/text_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description_director"/>
 
     <TextView
         android:id="@+id/tv_mode_of_payment"
@@ -141,15 +128,18 @@
 
     <EditText
         android:id="@+id/edt_mode_of_payment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
-        android:textColor="@color/white"
-        android:layout_marginRight="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="@+id/tv_mode_of_payment"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_mode_of_payment"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_mode_of_payment"/>
+        android:background="@drawable/background_input"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/text_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ct_header"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_mode_of_payment"

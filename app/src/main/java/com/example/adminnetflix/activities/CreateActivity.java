@@ -70,7 +70,7 @@ public class CreateActivity extends AppCompatActivity {
     private TextView tvTitleCreate;
 
     // director
-    private TextView tvDirector, tvDescription;
+    private TextView tvDescription;
     private EditText edtNameOfDirector, edtDescription;
     private ImageView imgDirctor;
 
@@ -316,7 +316,6 @@ public class CreateActivity extends AppCompatActivity {
 
         // create director
         if (b.get("btn").equals("director")){
-            tvDirector.setVisibility(View.VISIBLE);
             tvDescription.setVisibility(View.VISIBLE);
             edtNameOfDirector.setVisibility(View.VISIBLE);
             edtDescription.setVisibility(View.VISIBLE);
@@ -385,7 +384,6 @@ public class CreateActivity extends AppCompatActivity {
     private void initUi() {
         tvTitleCreate = findViewById(R.id.tv_title_create);
         edtCategory = findViewById(R.id.edt_name_of_category);
-        tvDirector = findViewById(R.id.tv_name_of_director);
         tvDescription = findViewById(R.id.tv_description_director);
         edtNameOfDirector = findViewById(R.id.edt_nname_of_director);
         edtDescription = findViewById(R.id.edt_description_director);

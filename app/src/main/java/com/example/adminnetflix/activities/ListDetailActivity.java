@@ -147,10 +147,15 @@ public class ListDetailActivity extends AppCompatActivity {
             getListFavouriteFilm();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//            GridLayoutManager gridLayoutManager = new GridLayoutManager(ListDetailActivity.this,3);
             rcvListDetail.setOnTouchListener(new TranslateAnimationUtil(this,btnAdd));
             rcvListDetail.setLayoutManager(linearLayoutManager);
         }
+
+        if (b.get("manager").equals("history bill")){
+            tvTitle.setText("List history bill");
+
+        }
+
 
 
         String value = b.get("manager").toString();
