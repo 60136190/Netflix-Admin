@@ -21,11 +21,13 @@ import com.example.adminnetflix.adapters.ListCommentDeletedAdapter;
 import com.example.adminnetflix.adapters.ListDirectorAdapter;
 import com.example.adminnetflix.adapters.ListFavoritelFilmAdapter;
 import com.example.adminnetflix.adapters.ListFeedbackAdapter;
+import com.example.adminnetflix.adapters.ListHistoryBillAdapter;
 import com.example.adminnetflix.adapters.ListModeOfPaymentAdapter;
 import com.example.adminnetflix.adapters.ListRatingAdapter;
 import com.example.adminnetflix.adapters.ListUserAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.FeedbackResponse;
+import com.example.adminnetflix.models.response.HistoryBillResponse;
 import com.example.adminnetflix.models.response.ListAdminResponse;
 import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ListDirectorResponse;
@@ -56,6 +58,7 @@ public class ListDetailActivity extends AppCompatActivity {
     private ListCategoriesFilmAdapter listCategoriesFilmAdapter;
     private ListCommentDeletedAdapter listCommentDeletedAdapter;
     private ListFavoritelFilmAdapter listFavoritelFilmAdapter;
+     ListHistoryBillAdapter listHistoryBillAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,9 +156,12 @@ public class ListDetailActivity extends AppCompatActivity {
 
         if (b.get("manager").equals("history bill")){
             tvTitle.setText("List history bill");
-
+            String idUser = String.valueOf(b.get("idUser"));
+            getHistoryBill(idUser);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ListDetailActivity.this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rcvListDetail.setLayoutManager(linearLayoutManager);
         }
-
 
 
         String value = b.get("manager").toString();
@@ -175,8 +181,6 @@ public class ListDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void initUi() {
         imgBack = findViewById(R.id.img_back);
@@ -342,6 +346,23 @@ public class ListDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<FavouriteResponse> call, Throwable t) {
+                Toast.makeText(ListDetailActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getHistoryBill(String idUser) {
+        Call<HistoryBillResponse> commentDeletedResponseCall = ApiClient.getFilmService().getListBillFollowIdUser(
+                StoreUtil.get(ListDetailActivity.this, Contants.accessToken), idUser);
+        commentDeletedResponseCall.enqueue(new Callback<HistoryBillResponse>() {
+            @Override
+            public void onResponse(Call<HistoryBillResponse> call, Response<HistoryBillResponse> response) {
+                listHistoryBillAdapter = new ListHistoryBillAdapter(ListDetailActivity.this,response.body().getData());
+                rcvListDetail.setAdapter(listHistoryBillAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<HistoryBillResponse> call, Throwable t) {
                 Toast.makeText(ListDetailActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });

@@ -75,9 +75,11 @@ public class CreateFilmActivity extends AppCompatActivity {
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
     private Uri mUri;
+    private Uri mUriImageSeries;
     private Uri mUriVideo;
     private Uri mUriVideoSeriesFilm;
     RequestBody requestBody;
+    RequestBody requestBodyImageSeries;
     RequestBody requestBodyVideo;
     RequestBody requestBodyVideoSeriesFilm;
     private ListDirectorCreateFilmAdapter listDirectorAdapter;
@@ -97,6 +99,7 @@ public class CreateFilmActivity extends AppCompatActivity {
     private RecyclerView rcv_choose_director, rcv_choose_category;
     public static String public_idVideo, public_idVideo_Series_Film;
     public static String url_Video, url_Video_Series_Film;
+    public static String url_ImageSeriesFilm, public_Id_ImageSeries;
     ArrayList<String> categoryList = new ArrayList<>();
     List<String> listDirector;
     List<String> listCategory;
@@ -124,6 +127,30 @@ public class CreateFilmActivity extends AppCompatActivity {
                     }
                 }
             });
+
+    private ActivityResultLauncher<Intent> mActivityResultLauncherImageSeries = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Log.e(TAG, "onActivityResult");
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data == null) {
+                            return;
+                        }
+                        Uri uri = data.getData();
+                        mUriImageSeries = uri;
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                            imgSeriesFilm.setImageBitmap(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
 
     private ActivityResultLauncher<Intent> mActivityResultLauncherVideo = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -214,6 +241,13 @@ public class CreateFilmActivity extends AppCompatActivity {
             }
         });
 
+        imgSeriesFilm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRequestPermissionImageSeries();
+            }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,6 +265,14 @@ public class CreateFilmActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
+    }
+
+    // choose image series
+    private void openImageSeriesGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivityResultLauncherImageSeries.launch(Intent.createChooser(intent, "Select picture"));
     }
 
     // choose vide trailer film
@@ -257,6 +299,20 @@ public class CreateFilmActivity extends AppCompatActivity {
         }
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             openImageGallery();
+        } else {
+            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            requestPermissions(permission, MY_REQUEST_CODE);
+        }
+    }
+
+    // permission choose image
+    private void onClickRequestPermissionImageSeries() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            openImageSeriesGallery();
+            return;
+        }
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            openImageSeriesGallery();
         } else {
             String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permission, MY_REQUEST_CODE);
@@ -316,6 +372,7 @@ public class CreateFilmActivity extends AppCompatActivity {
     private void createFilm() {
         getVideo();
         getVideoSeriesFilm();
+        getImageSeriesFilm();
         Toast.makeText(CreateFilmActivity.this,String.valueOf(public_idVideo),Toast.LENGTH_SHORT).show();
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
@@ -349,7 +406,7 @@ public class CreateFilmActivity extends AppCompatActivity {
                                     SeriesFilm seriesFilm = new SeriesFilm(episode,
                                             public_idVideo_Series_Film
                                             ,url_Video_Series_Film,
-                                            public_id, url);
+                                            public_Id_ImageSeries, url_ImageSeriesFilm);
 
                                     VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
 
@@ -397,8 +454,32 @@ public class CreateFilmActivity extends AppCompatActivity {
                 3000);
     }
 
-    public void getVideo() {
+    public void getImageSeriesFilm() {
         // upload new image
+        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriImageSeries);
+        File fileImage = new File(strRealPath);
+        requestBodyImageSeries = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriImageSeries)), fileImage);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBodyImageSeries);
+        Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
+                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                multipartBody);
+        responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                public_Id_ImageSeries = response.body().getPublic_id();
+                url_ImageSeriesFilm = response.body().getUrl();
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void getVideo() {
+        // upload new video
         String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideo);
         File fileVideo = new File(strRealPath);
         requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileVideo);

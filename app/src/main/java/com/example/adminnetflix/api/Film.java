@@ -15,6 +15,7 @@ import com.example.adminnetflix.models.response.DetailDirectorResponse;
 import com.example.adminnetflix.models.response.DetailFilmResponse;
 import com.example.adminnetflix.models.response.FeedbackResponse;
 import com.example.adminnetflix.models.response.FilmResponse;
+import com.example.adminnetflix.models.response.HistoryBillResponse;
 import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
@@ -186,4 +187,7 @@ public interface Film {
     @GET("api/film/kid")
     Call<FilmResponse> getFilmKid(@Header("Authorization") String authorization);
 
+    // get bill follow id user
+    @GET("api/bill/{id}/listBill")
+    Call<HistoryBillResponse> getListBillFollowIdUser(@Header("Authorization") String authorization, @Path("id") String idUser);
 }

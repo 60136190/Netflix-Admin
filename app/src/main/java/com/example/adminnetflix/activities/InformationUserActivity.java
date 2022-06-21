@@ -192,6 +192,7 @@ public class InformationUserActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(InformationUserActivity.this, ListDetailActivity.class);
                     intent.putExtra("manager","history bill");
+                    intent.putExtra("idUser",idUser);
                     startActivity(intent);
                 }
             });

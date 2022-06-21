@@ -84,6 +84,9 @@
             android:name=".activities.UpdateInformationAdminActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.DetailBillActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.FirstScreenActivity"
             android:exported="true">
             <intent-filter>
