@@ -14,6 +14,7 @@ import com.example.adminnetflix.models.response.ListAdminResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.LoginGoogleResponse;
 import com.example.adminnetflix.models.response.LoginResponse;
+import com.example.adminnetflix.models.response.MonthlyRevenueResponse;
 import com.example.adminnetflix.models.response.ProfileResponse;
 import com.example.adminnetflix.models.response.RegisterResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
@@ -103,4 +104,7 @@ public interface Auth {
     @PATCH("api/auth/admin/customerAccount/{id}/update/info")
     Call<ResponseDTO> updateInformationUser(@Header("Authorization") String authorization, @Path("id") String idUser, @Body UpdateAdminRequest updateUserRequest);
 
+    // get monthly revenue
+    @GET("api/statistics/revenue/monthly")
+    Call<MonthlyRevenueResponse> getMonthlyRevenue(@Header("Authorization") String authorization);
 }

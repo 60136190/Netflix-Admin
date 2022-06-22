@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.DetailRevenueActivity;
 import com.example.adminnetflix.activities.InformationAdminActivity;
 import com.example.adminnetflix.adapters.ListAdminAdapter;
 import com.example.adminnetflix.adapters.ListCategoriesFilmAdapter;
@@ -30,6 +31,7 @@ import com.example.adminnetflix.models.response.ListCategories;
 import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
+import com.example.adminnetflix.models.response.MonthlyRevenueResponse;
 import com.example.adminnetflix.models.response.ProfileResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
@@ -55,6 +57,7 @@ public class HomeFragment extends Fragment {
     TextView tv_name_of_admin;
     TextView tvTotalUser, tvTotalAdmin, tvTotalDirector, tvUserUncheck;
     TextView tvTotalFilmKid, tvTotalFilmAdult;
+    TextView tvSeemore;
     private ListCategoriesFilmAdapter listCategoriesFilmAdapter;
     private ListAdminAdapter listAdminAdapter;
     private ListUserAdapter listUserAdapter;
@@ -77,6 +80,8 @@ public class HomeFragment extends Fragment {
     int modePayment;
     int filmKid;
     int filmAdult;
+    public static float a,b,c,d,e,f,g,h,n,k,l,m;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +114,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        tvSeemore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DetailRevenueActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -124,6 +136,7 @@ public class HomeFragment extends Fragment {
         rcvManage = view.findViewById(R.id.rcv_manage);
         tvTotalFilmKid = view.findViewById(R.id.tv_total_film_kid);
         tvTotalFilmAdult = view.findViewById(R.id.tv_total_film_adult);
+        tvSeemore = view.findViewById(R.id.tv_see_more);
     }
 
     private void getProfile() {
@@ -321,21 +334,80 @@ public class HomeFragment extends Fragment {
     }
 
     private void setDataOnLineChart(){
-        series = new ValueLineSeries();
-        series.setColor(0xFF47daf0);
-        series.addPoint(new ValueLinePoint("0", 0));
-        series.addPoint(new ValueLinePoint("Jan", (float) Long.parseLong(String.valueOf(category))));
-        series.addPoint(new ValueLinePoint("Feb", 20));
-        series.addPoint(new ValueLinePoint("Mar", 9));
-        series.addPoint(new ValueLinePoint("Apr", 20));
-        series.addPoint(new ValueLinePoint("May", 39));
-        series.addPoint(new ValueLinePoint("Jun", 58));
-        series.addPoint(new ValueLinePoint("Jul", 100));
-        series.addPoint(new ValueLinePoint("Aug", 1));
-        series.addPoint(new ValueLinePoint("Sep", 28));
-        series.addPoint(new ValueLinePoint("0", 0));
-        valueLineChartRevenue.addSeries(series);
-        valueLineChartRevenue.startAnimation();
+        Call<MonthlyRevenueResponse> responseDTOCall = ApiClient.getUserService().getMonthlyRevenue(
+                StoreUtil.get(getContext(), Contants.accessToken));
+        responseDTOCall.enqueue(new Callback<MonthlyRevenueResponse>() {
+            @Override
+            public void onResponse(Call<MonthlyRevenueResponse> call, Response<MonthlyRevenueResponse> response) {
+                for (int i=0;i<response.body().getData().size();i++){
+
+                    switch (response.body().getData().get(i).getId()){
+                        case 1:
+                            a = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 2:
+                            b = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 3:
+                            c = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 4:
+                            d = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 5:
+                            e = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 6:
+                            f = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 7:
+                            g = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 8:
+                            h = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 9:
+                            n = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 10:
+                            k = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 11:
+                            l = response.body().getData().get(i).getRevenue();
+                            break;
+                        case 12:
+                            m = response.body().getData().get(i).getRevenue();
+                            break;
+                    }
+                    series = new ValueLineSeries();
+                    series.setColor(0xFF47daf0);
+                    series.addPoint(new ValueLinePoint("1", 0));
+                    series.addPoint(new ValueLinePoint("1", a));
+                    series.addPoint(new ValueLinePoint("2", b));
+                    series.addPoint(new ValueLinePoint("3", c));
+                    series.addPoint(new ValueLinePoint("4", d));
+                    series.addPoint(new ValueLinePoint("5", e));
+                    series.addPoint(new ValueLinePoint("6", f));
+                    series.addPoint(new ValueLinePoint("7", g));
+                    series.addPoint(new ValueLinePoint("8", h));
+                    series.addPoint(new ValueLinePoint("9", n));
+                    series.addPoint(new ValueLinePoint("10", k));
+                    series.addPoint(new ValueLinePoint("11", l));
+                    series.addPoint(new ValueLinePoint("12", m));
+                    series.addPoint(new ValueLinePoint("12", 0));
+
+                    valueLineChartRevenue.addSeries(series);
+                    valueLineChartRevenue.startAnimation();
+             }
+            }
+
+            @Override
+            public void onFailure(Call<MonthlyRevenueResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
     }
 
     private void setDataOnLineChartUserSub(){
