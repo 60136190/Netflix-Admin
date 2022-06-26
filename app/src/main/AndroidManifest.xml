@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AdminNetflix"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.AddSeriesFilmActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DetailRevenueActivity"
             android:exported="false" />
         <activity

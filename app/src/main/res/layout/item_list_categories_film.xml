@@ -21,8 +21,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_3sdp"
-            android:src="@drawable/delete"
-            app:tint="@color/white" />
+            android:src="@drawable/delete" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

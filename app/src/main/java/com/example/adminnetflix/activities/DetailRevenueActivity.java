@@ -109,7 +109,7 @@ public class DetailRevenueActivity extends AppCompatActivity {
                             break;
                     }
                     series = new ValueLineSeries();
-                    series.setColor(0xFF47daf0);
+                    series.setColor(0xFFf37869);
                     series.addPoint(new ValueLinePoint("1", 0));
                     series.addPoint(new ValueLinePoint("1", a));
                     series.addPoint(new ValueLinePoint("2", b));

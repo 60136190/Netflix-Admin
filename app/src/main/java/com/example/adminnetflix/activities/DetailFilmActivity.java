@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -45,6 +46,7 @@ public class DetailFilmActivity extends AppCompatActivity {
     private RecyclerView rcvSeriesFilm;
     ListCommentFilmAdapter listCommentFilmAdapter;
     SeriesFilmAdapter seriesFilmAdapter;
+    Button btnCreateSeriesFilm;
 
 
     @Override
@@ -80,6 +82,13 @@ public class DetailFilmActivity extends AppCompatActivity {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailFilmActivity.this, 2);
             rcvSeriesFilm.setLayoutManager(gridLayoutManager);
 
+            btnCreateSeriesFilm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailFilmActivity.this,AddSeriesFilmActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
     private void initUi() {
@@ -94,6 +103,7 @@ public class DetailFilmActivity extends AppCompatActivity {
         rcvComment = findViewById(R.id.rcv_comment);
         rcvSeriesFilm = findViewById(R.id.rcv_series_film);
         vdFilm = findViewById(R.id.video_film);
+        btnCreateSeriesFilm = findViewById(R.id.btn_add_series_film);
     }
 
     private void getListComment(String idFilm) {
@@ -121,9 +131,39 @@ public class DetailFilmActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     tvTitleFilm.setText(response.body().getData().get(0).getTitle());
                     tvStoryLine.setText(response.body().getData().get(0).getDescription());
-                    String urlVideoFilm = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
-                    for (int i = 0; i < response.body().getData().get(0).getDirector().size(); i++) {
-                        tvDirector.setText(response.body().getData().get(0).getDirector().get(i).getName());
+
+                    if (response.body().getData().get(0).getDirector().isEmpty()) {
+                        tvDirector.setText("");
+                    } else {
+                        String delim = " •";
+                        int i = 0;
+                        StringBuilder str = new StringBuilder();
+                        while (i < response.body().getData().get(0).getDirector().size()-1) {
+                            str.append(response.body().getData().get(0).getDirector().get(i).getName());
+                            str.append(delim);
+                            i++;
+                        }
+                        str.append(response.body().getData().get(0).getDirector().get(i).getName());
+                        String directors = str.toString();
+                        tvDirector.setText(directors);
+                    }
+
+                    if (response.body().getData().get(0).getCategory().isEmpty()) {
+                        tvCategory.setText("");
+                    } else {
+                        String delim = " •";
+
+                        int i = 0;
+                        StringBuilder str = new StringBuilder();
+                        while (i < response.body().getData().get(0).getCategory().size()-1) {
+                            str.append(response.body().getData().get(0).getCategory().get(i).getName());
+                            str.append(delim);
+                            i++;
+                        }
+                        str.append(response.body().getData().get(0).getCategory().get(i).getName());
+                        String categorys = str.toString();
+                        tvCategory.setText(categorys);
+
                     }
 
                     String path = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
@@ -140,7 +180,6 @@ public class DetailFilmActivity extends AppCompatActivity {
                     String part1 = parts[0]; // 004
 
                     tvDate.setText(part1);
-                    tvCategory.setText(response.body().getData().get(0).getCategory().get(0).getName());
                     tvTimeFilm.setText(response.body().getData().get(0).getFilmLength());
                     tvCountry.setText(response.body().getData().get(0).getCountryProduction());
 
@@ -154,4 +193,12 @@ public class DetailFilmActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        String idFilm = (String) b.get("Id_film");
+        getDetailFilm(idFilm);
+    }
 }

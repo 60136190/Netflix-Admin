@@ -34,7 +34,17 @@
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/white"
-                android:background="@color/red"/>
+                android:backgroundTint="@color/red"
+                android:background="@drawable/border_background_10sdp"/>
+            <ImageView
+                android:id="@+id/img_delete_film"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/delete"
+                android:layout_gravity="end" />
+
+
         </FrameLayout>
         <TextView
             android:id="@+id/tv_title_film"

@@ -54,6 +54,7 @@
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/drawable/user.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/drawable/white_round.xml" value="0.18611111111111112" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/activity_add_film.xml" value="0.17282051282051283" />
+        <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/activity_add_series_film.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/activity_admin.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/activity_category.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/activity_comment.xml" value="0.17552083333333332" />
@@ -116,6 +117,7 @@
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_list_director_create_film.xml" value="0.17282051282051283" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_list_favorite.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_list_user.xml" value="0.17282051282051283" />
+        <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_list_user_sub_recently.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_manage_statistical.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_manager.xml" value="0.17552083333333332" />
         <entry key="..\:/AndroidStudio/AdminNetflix/app/src/main/res/layout/item_mode_of_payment.xml" value="0.17552083333333332" />

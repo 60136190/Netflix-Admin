@@ -19,6 +19,7 @@ import com.example.adminnetflix.models.response.ProfileResponse;
 import com.example.adminnetflix.models.response.RegisterResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.models.response.UploadImageResponse;
+import com.example.adminnetflix.models.response.UserSubRecentlyResponse;
 
 import java.util.HashMap;
 
@@ -107,4 +108,8 @@ public interface Auth {
     // get monthly revenue
     @GET("api/statistics/revenue/monthly")
     Call<MonthlyRevenueResponse> getMonthlyRevenue(@Header("Authorization") String authorization);
+
+    // get user sub recently
+    @GET("api/statistics/registeredUser/recently")
+    Call<UserSubRecentlyResponse> getUserSubRecently(@Header("Authorization") String authorization);
 }

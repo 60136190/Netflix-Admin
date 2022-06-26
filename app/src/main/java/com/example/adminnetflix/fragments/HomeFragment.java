@@ -22,6 +22,7 @@ import com.example.adminnetflix.adapters.ListFeedbackAdapter;
 import com.example.adminnetflix.adapters.ListManagerStatisticalAdapter;
 import com.example.adminnetflix.adapters.ListModeOfPaymentAdapter;
 import com.example.adminnetflix.adapters.ListUserAdapter;
+import com.example.adminnetflix.adapters.ListUserSubRecentlyAdapter;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.ItemManageStatistical;
 import com.example.adminnetflix.models.response.FeedbackResponse;
@@ -33,6 +34,7 @@ import com.example.adminnetflix.models.response.ListUserResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.MonthlyRevenueResponse;
 import com.example.adminnetflix.models.response.ProfileResponse;
+import com.example.adminnetflix.models.response.UserSubRecentlyResponse;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
 
@@ -64,14 +66,13 @@ public class HomeFragment extends Fragment {
     private ListDirectorAdapter listDirectorAdapter;
     private ListFeedbackAdapter listFeedbackAdapter;
     private ListModeOfPaymentAdapter listModeOfPaymentAdapter;
+    private ListUserSubRecentlyAdapter listUserSubRecentlyAdapter;
     private ValueLineSeries series;
-    private ValueLineSeries userSub;
     private PieChart mPieChart;
     private ValueLineChart valueLineChartRevenue;
-    private ValueLineChart valueLineChartUserSub;
     List<ItemManageStatistical> itemManageStatisticalList;
     private ListManagerStatisticalAdapter listManagerStatisticalAdapter;
-    RecyclerView rcvManage;
+    RecyclerView rcvManage, rcvUserSubRecently;
     int category;
     int feedback;
     int director;
@@ -90,7 +91,6 @@ public class HomeFragment extends Fragment {
         itemManageStatisticalList = new ArrayList<>();
         initUi();
         setDataOnLineChart();
-        setDataOnLineChartUserSub();
         getProfile();
         getListCategory();
         getListFeedback();
@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
         getListDirector();
         getFilmAdult();
         getFilmKid();
+        getListUserSubRecently();
 
         // config layout of manage list
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -126,7 +127,6 @@ public class HomeFragment extends Fragment {
 
     private void initUi() {
         valueLineChartRevenue= view.findViewById(R.id.chart_line);
-        valueLineChartUserSub = view.findViewById(R.id.chart_line_user_sub);
         img_admin = view.findViewById(R.id.img_admin);
         tv_name_of_admin = view.findViewById(R.id.tv_name_of_admin);
         mPieChart = view.findViewById(R.id.chart);
@@ -134,6 +134,7 @@ public class HomeFragment extends Fragment {
         tvTotalAdmin = view.findViewById(R.id.tv_total_admin);
         tvTotalDirector = view.findViewById(R.id.tv_total_director);
         rcvManage = view.findViewById(R.id.rcv_manage);
+        rcvUserSubRecently = view.findViewById(R.id.rcv_user_sub_recently);
         tvTotalFilmKid = view.findViewById(R.id.tv_total_film_kid);
         tvTotalFilmAdult = view.findViewById(R.id.tv_total_film_adult);
         tvSeemore = view.findViewById(R.id.tv_see_more);
@@ -380,7 +381,7 @@ public class HomeFragment extends Fragment {
                             break;
                     }
                     series = new ValueLineSeries();
-                    series.setColor(0xFF47daf0);
+                    series.setColor(0xFFf37869);
                     series.addPoint(new ValueLinePoint("1", 0));
                     series.addPoint(new ValueLinePoint("1", a));
                     series.addPoint(new ValueLinePoint("2", b));
@@ -410,22 +411,29 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setDataOnLineChartUserSub(){
-        userSub = new ValueLineSeries();
-        userSub.setColor(0xFFf37869);
-        userSub.addPoint(new ValueLinePoint("0", 0));
-        userSub.addPoint(new ValueLinePoint("Jan", (float) Long.parseLong(String.valueOf(category))));
-        userSub.addPoint(new ValueLinePoint("Feb", 90));
-        userSub.addPoint(new ValueLinePoint("Mar", 9));
-        userSub.addPoint(new ValueLinePoint("Apr", 1));
-        userSub.addPoint(new ValueLinePoint("May", 39));
-        userSub.addPoint(new ValueLinePoint("Jun", 58));
-        userSub.addPoint(new ValueLinePoint("Jul", 20));
-        userSub.addPoint(new ValueLinePoint("Aug", 100));
-        userSub.addPoint(new ValueLinePoint("Sep", 32));
-        userSub.addPoint(new ValueLinePoint("0", 0));
-        valueLineChartUserSub.addSeries(userSub);
-        valueLineChartUserSub.startAnimation();
+    private void getListUserSubRecently() {
+        Call<UserSubRecentlyResponse> responseDTOCall = ApiClient.getUserService().getUserSubRecently(
+                StoreUtil.get(getContext(), Contants.accessToken));
+        responseDTOCall.enqueue(new Callback<UserSubRecentlyResponse>() {
+            @Override
+            public void onResponse(Call<UserSubRecentlyResponse> call, Response<UserSubRecentlyResponse> response) {
+                listUserSubRecentlyAdapter = new ListUserSubRecentlyAdapter(getContext(), response.body().getData());
+                rcvUserSubRecently.setAdapter(listUserSubRecentlyAdapter);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                rcvUserSubRecently.setLayoutManager(linearLayoutManager);
+            }
+
+            @Override
+            public void onFailure(Call<UserSubRecentlyResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProfile();
+    }
 }

@@ -93,4 +93,10 @@ public class InformationAdminActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getProfile();
+    }
 }

@@ -14,12 +14,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ import com.example.adminnetflix.models.response.UploadImageResponse;
 import com.example.adminnetflix.realpath.RealPathUtil;
 import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.StoreUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Circle;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +67,7 @@ public class UpdateActivity extends AppCompatActivity {
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
     private Uri mUri;
     RequestBody requestBody;
+
     // category
     TextView edtCategory;
 
@@ -75,6 +80,8 @@ public class UpdateActivity extends AppCompatActivity {
     TextView tvModeOfPayment;
     EditText edtModeOfPayment;
     ImageView imgModeOfPayment;
+
+    ProgressBar progressBar;
 
     // feedback
     TextView fullName, tvFullname, email, tvEmail, subject, tvSubject, content, tvContent;
@@ -275,6 +282,8 @@ public class UpdateActivity extends AppCompatActivity {
         edtDescription = findViewById(R.id.edt_description_director);
         imgDirector = findViewById(R.id.img_direction);
 
+        progressBar = (ProgressBar) findViewById(R.id.spin_kit);
+
         // mode of payment
         tvModeOfPayment = findViewById(R.id.tv_mode_of_payment);
         edtModeOfPayment = findViewById(R.id.edt_mode_of_payment);
@@ -303,7 +312,9 @@ public class UpdateActivity extends AppCompatActivity {
         listDirectorResponseCall.enqueue(new Callback<ResponseDTO>() {
             @Override
             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                if (response.isSuccessful()){
+                    setProgressBar();
+                }
             }
 
             @Override
@@ -343,7 +354,7 @@ public class UpdateActivity extends AppCompatActivity {
                         updateDirectorRequestCall.enqueue(new Callback<ResponseDTO>() {
                             @Override
                             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                                setProgressBar();
                             }
 
                             @Override
@@ -409,7 +420,9 @@ public class UpdateActivity extends AppCompatActivity {
                         updateDirectorRequestCall.enqueue(new Callback<ResponseDTO>() {
                             @Override
                             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                                if (response.isSuccessful()){
+                                    setProgressBar();
+                                }
                             }
 
                             @Override
@@ -496,6 +509,32 @@ public class UpdateActivity extends AppCompatActivity {
                 Toast.makeText(UpdateActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setProgressBar(){
+        btnUpdate.setVisibility(View.INVISIBLE);
+        Sprite cubeGrid = new Circle();
+        progressBar.setIndeterminateDrawable(cubeGrid);
+        progressBar.setVisibility(View.VISIBLE);
+
+        CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int current = progressBar.getProgress();
+                if (current >= progressBar.getMax()) {
+                    current = 0;
+                }
+                progressBar.setProgress(current + 10);
+            }
+
+            @Override
+            public void onFinish() {
+                progressBar.setVisibility(View.INVISIBLE);
+                finish();
+            }
+
+        };
+        countDownTimer.start();
     }
 
 }

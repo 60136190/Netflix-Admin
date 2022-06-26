@@ -427,7 +427,9 @@ public class CreateActivity extends AppCompatActivity {
             listFavoriteFilmResponseCall.enqueue(new Callback<ResponseDTO>() {
                 @Override
                 public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                    edtCategory.setText("");
+                    if (response.body().isSuccess()){
+                        setProgressBar();
+                    }
                 }
 
                 @Override
@@ -439,8 +441,8 @@ public class CreateActivity extends AppCompatActivity {
     }
 
     private void createDirector() {
-        if (edtNameOfDirector.getText() == null && edtDescription.getText()==null && mUri == null) {
-            Toast.makeText(CreateActivity.this, "Director is not null", Toast.LENGTH_SHORT).show();
+        if (edtNameOfDirector.getText() == null || mUri == null) {
+            Toast.makeText(CreateActivity.this, "Name or image is null!", Toast.LENGTH_SHORT).show();
         } else {
             // upload new image
             String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
@@ -464,7 +466,9 @@ public class CreateActivity extends AppCompatActivity {
                         updateDirectorRequestCall.enqueue(new Callback<ResponseDTO>() {
                             @Override
                             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                                if (response.body().isSuccess()){
+                                    setProgressBar();
+                                }
                             }
 
                             @Override
@@ -511,7 +515,9 @@ public class CreateActivity extends AppCompatActivity {
                         updateDirectorRequestCall.enqueue(new Callback<ResponseDTO>() {
                             @Override
                             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
+                                if (response.body().isSuccess()){
+                                    setProgressBar();
+                                }
                             }
 
                             @Override
@@ -745,5 +751,7 @@ public class CreateActivity extends AppCompatActivity {
             return false;
         }
     }
+
+
 
 }

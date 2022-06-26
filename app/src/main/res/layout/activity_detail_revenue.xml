@@ -20,7 +20,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:text="Detail monthly revenue"
-        android:textSize="@dimen/_13ssp"
+        android:textSize="@dimen/_14ssp"
         android:textColor="@color/white" />
 
     <org.eazegraph.lib.charts.ValueLineChart
@@ -38,7 +38,7 @@
         app:egShowLegendBeneathIndicator="true"
         app:egShowValueIndicator="true"
         app:egUseCubic="true"
-        app:egUseOverlapFill="true" />
+        app:egUseOverlapFill="false" />
 
     <TextView
         android:id="@+id/revenue"
@@ -54,7 +54,7 @@
         android:id="@+id/ln_jan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7">
         <TextView
@@ -78,7 +78,7 @@
         android:id="@+id/ln_jeb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_jan">
@@ -103,7 +103,7 @@
         android:id="@+id/ln_mar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_jeb">
@@ -128,7 +128,7 @@
         android:id="@+id/ln_apr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_mar">
@@ -153,7 +153,7 @@
         android:id="@+id/ln_may"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_apr">
@@ -178,7 +178,7 @@
         android:id="@+id/ln_jun"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_may">
@@ -203,7 +203,7 @@
         android:id="@+id/ln_july"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_jun">
@@ -228,7 +228,7 @@
         android:id="@+id/ln_aug"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_july">
@@ -253,7 +253,7 @@
         android:id="@+id/ln_sep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_aug">
@@ -278,7 +278,7 @@
         android:id="@+id/ln_oct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_sep">
@@ -303,7 +303,7 @@
         android:id="@+id/ln_nov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_oct">
@@ -328,7 +328,7 @@
         android:id="@+id/ln_dec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintTop_toBottomOf="@+id/ln_nov">

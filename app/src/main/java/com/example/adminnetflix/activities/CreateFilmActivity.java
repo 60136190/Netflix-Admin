@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,8 @@ import com.example.adminnetflix.utils.Contants;
 import com.example.adminnetflix.utils.HideKeyBoard;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.example.adminnetflix.utils.TranslateAnimationUtil;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Circle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -74,29 +78,24 @@ public class CreateFilmActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 23;
     public static final String TAG = UpdateInformationAdminActivity.class.getName();
-    private Uri mUri;
-    private Uri mUriImageSeries;
-    private Uri mUriVideo;
-    private Uri mUriVideoSeriesFilm;
+    Uri mUri;
+    Uri mUriImageSeries;
+    Uri mUriVideo;
+    Uri mUriVideoSeriesFilm;
     RequestBody requestBody;
     RequestBody requestBodyImageSeries;
     RequestBody requestBodyVideo;
     RequestBody requestBodyVideoSeriesFilm;
     private ListDirectorCreateFilmAdapter listDirectorAdapter;
     private ListCategoriesCreateFilmAdapter listCategoriesFilmAdapter;
-    private ImageView imgBack;
-    private EditText edtTitle;
-    private EditText edtDescription;
-    private EditText edtYearProduction;
-    private EditText edtCountryProduction;
-    private EditText edtEpisode;
-    private EditText edtAgeLimit;
-    private EditText edtLenghtFilm;
-    private EditText edtPrice;
-    private ImageView imgFilm, imgSeriesFilm;
-    private ImageView imgVideo,imgVideoSeriesFilm;
-    private Button btnCreate;
-    private RecyclerView rcv_choose_director, rcv_choose_category;
+    ImageView imgBack;
+    EditText edtTitle,edtDescription, edtYearProduction, edtCountryProduction, edtEpisode
+            ,edtAgeLimit, edtLenghtFilm, edtPrice;
+    ProgressBar progressBar;
+    ImageView imgFilm, imgSeriesFilm;
+    ImageView imgVideo,imgVideoSeriesFilm;
+    Button btnCreate;
+    RecyclerView rcv_choose_director, rcv_choose_category;
     public static String public_idVideo, public_idVideo_Series_Film;
     public static String url_Video, url_Video_Series_Film;
     public static String url_ImageSeriesFilm, public_Id_ImageSeries;
@@ -359,6 +358,8 @@ public class CreateFilmActivity extends AppCompatActivity {
         edtLenghtFilm = findViewById(R.id.edt_lenght_film);
         edtPrice = findViewById(R.id.edt_price);
 
+        progressBar = (ProgressBar) findViewById(R.id.spin_kit);
+
         imgFilm = findViewById(R.id.img_film);
         imgVideo = findViewById(R.id.img_video);
         imgSeriesFilm = findViewById(R.id.img_series);
@@ -373,85 +374,102 @@ public class CreateFilmActivity extends AppCompatActivity {
         getVideo();
         getVideoSeriesFilm();
         getImageSeriesFilm();
-        Toast.makeText(CreateFilmActivity.this,String.valueOf(public_idVideo),Toast.LENGTH_SHORT).show();
-        new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // upload new image
-                        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
-                        File fileImage = new File(strRealPath);
-                        requestBody = RequestBody.create(MediaType.parse(getContentResolver().getType(mUri)), fileImage);
-                        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBody);
 
-                        Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
-                                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
-                                multipartBody);
-                        responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
-                            @Override
-                            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-                                if (response.isSuccessful()) {
-                                    String url = response.body().getUrl();
-                                    String public_id = response.body().getPublic_id();
-                                    Image image = new Image(public_id, url);
+        btnCreate.setVisibility(View.INVISIBLE);
+        Sprite cubeGrid = new Circle();
+        progressBar.setIndeterminateDrawable(cubeGrid);
+        progressBar.setVisibility(View.VISIBLE);
 
-                                    String title = edtTitle.getText().toString();
-                                    String description = edtDescription.getText().toString();
-                                    String yearProduct = edtYearProduction.getText().toString();
-                                    String countryProduction = edtCountryProduction.getText().toString();
-                                    int ageLimit = Integer.parseInt(edtAgeLimit.getText().toString());
-                                    int price = Integer.parseInt(edtPrice.getText().toString());
-                                    int episode = Integer.parseInt(edtEpisode.getText().toString());
-                                    String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
+        CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int current = progressBar.getProgress();
+                if (current >= progressBar.getMax()) {
+                    current = 0;
+                }
+                progressBar.setProgress(current + 10);
+            }
 
-                                    SeriesFilm seriesFilm = new SeriesFilm(episode,
-                                            public_idVideo_Series_Film
-                                            ,url_Video_Series_Film,
-                                            public_Id_ImageSeries, url_ImageSeriesFilm);
+            @Override
+            public void onFinish() {
+                // upload new image
+                String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
+                File fileImage = new File(strRealPath);
+                requestBody = RequestBody.create(MediaType.parse(getContentResolver().getType(mUri)), fileImage);
+                MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBody);
 
-                                    VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
+                Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
+                        StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                        multipartBody);
+                responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
+                    @Override
+                    public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                        if (response.isSuccessful()) {
+                            String url = response.body().getUrl();
+                            String public_id = response.body().getPublic_id();
+                            Image image = new Image(public_id, url);
 
-                                    // get list director and category from shared preference
-                                    SharedPreferences sharedPreferences = getSharedPreferences("AdminSharedPref", MODE_PRIVATE);
-                                    Gson gson = new Gson();
-                                    String json = sharedPreferences.getString("list", null);
-                                    String jsonListCategory = sharedPreferences.getString("listCategory", null);
-                                    Type type = new TypeToken<ArrayList<String>>() {}.getType();
-                                    listDirector = gson.fromJson(json, type);
-                                    listCategory = gson.fromJson(jsonListCategory, type);
+                            String title = edtTitle.getText().toString();
+                            String description = edtDescription.getText().toString();
+                            String yearProduct = edtYearProduction.getText().toString();
+                            String countryProduction = edtCountryProduction.getText().toString();
+                            int ageLimit = Integer.parseInt(edtAgeLimit.getText().toString());
+                            int price = Integer.parseInt(edtPrice.getText().toString());
+                            int episode = Integer.parseInt(edtEpisode.getText().toString());
+                            String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
 
-                                    Log.i("hahaha", String.valueOf(listDirector));
+                            SeriesFilm seriesFilm = new SeriesFilm(episode,
+                                    public_idVideo_Series_Film
+                                    ,url_Video_Series_Film,
+                                    public_Id_ImageSeries, url_ImageSeriesFilm);
 
-                                    List<SeriesFilm> seriesFilms = new ArrayList<>();
-                                    seriesFilms.add(seriesFilm);
+                            VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
 
-                                    FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
-                                            countryProduction, image,image,videoFilm,listDirector, listCategory,
-                                            seriesFilms, ageLimit, lengtFilm, price);
-                                    Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
-                                            StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
-                                    responseFilm.enqueue(new Callback<ResponseDTO>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+                            // get list director and category from shared preference
+                            SharedPreferences sharedPreferences = getSharedPreferences("AdminSharedPref", MODE_PRIVATE);
+                            Gson gson = new Gson();
+                            String json = sharedPreferences.getString("list", null);
+                            String jsonListCategory = sharedPreferences.getString("listCategory", null);
+                            Type type = new TypeToken<ArrayList<String>>() {}.getType();
+                            listDirector = gson.fromJson(json, type);
+                            listCategory = gson.fromJson(jsonListCategory, type);
 
-                                        }
+                            Log.i("hahaha", String.valueOf(listDirector));
 
-                                        @Override
-                                        public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                            Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                            List<SeriesFilm> seriesFilms = new ArrayList<>();
+                            seriesFilms.add(seriesFilm);
+
+                            FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
+                                    countryProduction, image,image,videoFilm,listDirector, listCategory,
+                                    seriesFilms, ageLimit, lengtFilm, price);
+                            Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
+                                    StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
+                            responseFilm.enqueue(new Callback<ResponseDTO>() {
+                                @Override
+                                public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
 
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                                    Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
                     }
-                },
-                3000);
+
+                    @Override
+                    public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                        Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                progressBar.setVisibility(View.INVISIBLE);
+                onBackPressed();
+            }
+
+        };
+        countDownTimer.start();
     }
 
     public void getImageSeriesFilm() {
@@ -624,5 +642,31 @@ public class CreateFilmActivity extends AppCompatActivity {
             rcv_choose_category.setVisibility(View.GONE);
 
         }
+
+    }
+    public void setProgressBar(){
+        btnCreate.setVisibility(View.INVISIBLE);
+        Sprite cubeGrid = new Circle();
+        progressBar.setIndeterminateDrawable(cubeGrid);
+        progressBar.setVisibility(View.VISIBLE);
+
+        CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int current = progressBar.getProgress();
+                if (current >= progressBar.getMax()) {
+                    current = 0;
+                }
+                progressBar.setProgress(current + 10);
+            }
+
+            @Override
+            public void onFinish() {
+                progressBar.setVisibility(View.INVISIBLE);
+                finish();
+            }
+
+        };
+        countDownTimer.start();
     }
 }

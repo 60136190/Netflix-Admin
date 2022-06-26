@@ -75,6 +75,10 @@ public interface Film {
     @DELETE("api/film/delete/{id}")
     Call<ResponseDTO> deleteFilm(@Header("Authorization") String authorization, @Path("id") String idFilm);
 
+    // delete mode of payment image
+    @POST("api/destroyImageFilm")
+    Call<ResponseDTO> deleteImageFilm(@Header("Authorization") String authorization, @Body DeleteImageRequest deleteImageRequest);
+
     // create director
     @POST("api/modeOfPayment/add")
     Call<ResponseDTO> createModeOfPayment(@Header("Authorization") String authorization, @Body ModeOfPaymentRequest modeOfPaymentRequest);

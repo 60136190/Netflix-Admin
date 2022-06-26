@@ -3,17 +3,14 @@ package com.example.adminnetflix.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +21,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
-import com.example.adminnetflix.activities.FirstScreenActivity;
+import com.example.adminnetflix.utils.DeleteImage;
 import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.TestModel;
@@ -111,6 +108,7 @@ public class ListDirectorAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                 mDirectorList.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
                                 dialog.dismiss();
+                                DeleteImage.deleteImageDirector(director.getImage().getPublicId(), mContext1);
                             }
 
                             @Override

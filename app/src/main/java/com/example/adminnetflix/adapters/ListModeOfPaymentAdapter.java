@@ -22,6 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.utils.DeleteImage;
 import com.example.adminnetflix.activities.UpdateActivity;
 import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.ModeOfPayment;
@@ -82,7 +83,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
 
                 ProgressBar progressBar = dialog.findViewById(R.id.spin_kit);
                 Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-                Button btnLogout = dialog.findViewById(R.id.btn_confirm_delete);
+                Button btnDelete = dialog.findViewById(R.id.btn_confirm_delete);
 
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -92,7 +93,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
                 });
                 // show dialog
                 dialog.show();
-                btnLogout.setOnClickListener(new View.OnClickListener() {
+                btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Call<ResponseDTO> listFavoriteFilmResponseCall = ApiClient.getFilmService().deleteModeOfPayment(
@@ -103,6 +104,7 @@ public class ListModeOfPaymentAdapter extends RecyclerView.Adapter<RecyclerView.
                                 mModeOfPaymentList.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
                                 dialog.dismiss();
+                                DeleteImage.deleteImageModeofPayment(modeOfPayment.getImage().getPublicId(), mContext);
                             }
 
                             @Override
