@@ -10,12 +10,15 @@ public class Film implements Serializable {
     @SerializedName("image_film")
     @Expose
     private Image imageFilm;
+
     @SerializedName("image_title")
     @Expose
     private Image imageTitle;
+
     @SerializedName("video_film")
     @Expose
     private Video videoFilm;
+
     @SerializedName("_id")
     @Expose
     private String id;

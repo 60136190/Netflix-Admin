@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminnetflix.R;
+import com.example.adminnetflix.activities.AddSeriesFilmActivity;
 import com.example.adminnetflix.activities.CreateFilmActivity;
 import com.example.adminnetflix.activities.DetailVideoActivity;
 import com.example.adminnetflix.api.ApiClient;
@@ -76,6 +77,13 @@ public class SeriesFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 i.putExtra("video", urlVideo);
                 i.putExtra("episode", episode);
                 mContext.startActivity(i);
+            }
+        });
+        ((ItemViewHolder) holder).imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              Intent intent = new Intent(mContext, AddSeriesFilmActivity.class);
+              mContext.startActivity(intent);
             }
         });
         ((ItemViewHolder) holder).imgDeleteSeriesFilm.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +178,7 @@ public class SeriesFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgFilm, imgPlay, imgDeleteSeriesFilm;
+        ImageView imgFilm, imgPlay, imgDeleteSeriesFilm, imgEdit;
         TextView tvSeries;
 
         public ItemViewHolder(View itemView) {
@@ -179,6 +187,7 @@ public class SeriesFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvSeries = itemView.findViewById(R.id.tv_series_film);
             imgPlay = itemView.findViewById(R.id.img_play);
             imgDeleteSeriesFilm = itemView.findViewById(R.id.img_delete_series);
+            imgEdit = itemView.findViewById(R.id.img_edit_series);
         }
     }
 

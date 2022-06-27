@@ -66,7 +66,7 @@ public class AddSeriesFilmActivity extends AppCompatActivity {
     public static String url_ImageSeriesFilm, public_Id_ImageSeries;
     EditText edtEpisode;
     ProgressBar progressBar;
-    ImageView imgImageSeries, imgVideoSeriesFilm;
+    ImageView imgImageSeries, imgVideoSeriesFilm, imgBack;
     Button btnCreateSeriesFilm;
     Uri mUriImageSeries;
     Uri mUriVideoSeriesFilm;
@@ -137,11 +137,22 @@ public class AddSeriesFilmActivity extends AppCompatActivity {
             }
         });
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         btnCreateSeriesFilm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                createSeriesFilm(idFilm);
-                createSeriesFilm(idFilm);
+                if (edtEpisode.getText()==null || mUriVideoSeriesFilm==null || mUriImageSeries ==null){
+                    Toast.makeText(AddSeriesFilmActivity.this, "Is empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    createSeriesFilm(idFilm);
+
+                }
             }
         });
     }
@@ -196,6 +207,7 @@ public class AddSeriesFilmActivity extends AppCompatActivity {
         imgVideoSeriesFilm = findViewById(R.id.img_video_series);
         btnCreateSeriesFilm = findViewById(R.id.btn_create);
         progressBar = (ProgressBar) findViewById(R.id.spin_kit);
+        imgBack = findViewById(R.id.img_back);
     }
 
 
