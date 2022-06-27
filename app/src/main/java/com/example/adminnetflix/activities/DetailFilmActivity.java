@@ -54,31 +54,14 @@ public class DetailFilmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_film);
         initUi();
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-        String idFilm = (String) b.get("Id_film");
-        if (b != null) {
+        String idFilm = StoreUtil.get(DetailFilmActivity.this,Contants.idFilm);
             getDetailFilm(idFilm);
             getListComment(idFilm);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailFilmActivity.this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             rcvComment.setLayoutManager(linearLayoutManager);
             // get series film
-            Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
-                    StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
-            serieslFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
-                @Override
-                public void onResponse(Call<DetailFilmResponse> call, Response<DetailFilmResponse> response) {
-                    seriesFilmAdapter = new SeriesFilmAdapter(DetailFilmActivity.this, response.body().getData().get(0).getSeriesFilm());
-                    rcvSeriesFilm.setAdapter(seriesFilmAdapter);
-                    seriesFilmAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<DetailFilmResponse> call, Throwable t) {
-
-                }
-            });
+            getSeriesFilm(idFilm);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(DetailFilmActivity.this, 2);
             rcvSeriesFilm.setLayoutManager(gridLayoutManager);
 
@@ -89,8 +72,11 @@ public class DetailFilmActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
+
     }
+
+
+
     private void initUi() {
         tvDirector = findViewById(R.id.tv_director);
         tvTitleFilm = findViewById(R.id.tv_title_film);
@@ -104,6 +90,27 @@ public class DetailFilmActivity extends AppCompatActivity {
         rcvSeriesFilm = findViewById(R.id.rcv_series_film);
         vdFilm = findViewById(R.id.video_film);
         btnCreateSeriesFilm = findViewById(R.id.btn_add_series_film);
+    }
+
+    private void getSeriesFilm(String idFilm) {
+        Call<DetailFilmResponse> serieslFilmResponseCall = ApiClient.getFilmService().getSeries(
+                StoreUtil.get(DetailFilmActivity.this, Contants.accessToken), idFilm);
+        serieslFilmResponseCall.enqueue(new Callback<DetailFilmResponse>() {
+            @Override
+            public void onResponse(Call<DetailFilmResponse> call, Response<DetailFilmResponse> response) {
+                if (response.body().getData()!= null){
+                    seriesFilmAdapter = new SeriesFilmAdapter(DetailFilmActivity.this, response.body().getData().get(0).getSeriesFilm());
+                    rcvSeriesFilm.setAdapter(seriesFilmAdapter);
+                }else{
+                    Toast.makeText(DetailFilmActivity.this, "Series film is empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailFilmResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getListComment(String idFilm) {
@@ -166,7 +173,7 @@ public class DetailFilmActivity extends AppCompatActivity {
 
                     }
 
-                    String path = response.body().getData().get(0).getSeriesFilm().get(0).getUrlVideo();
+                    String path = response.body().getData().get(0).getVideoFilm().getUrl();
                     int cost = response.body().getData().get(0).getPrice();
                     if (cost== 0){
                         tvStatus.setText("Free");
@@ -196,9 +203,8 @@ public class DetailFilmActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-        String idFilm = (String) b.get("Id_film");
+        String idFilm = StoreUtil.get(DetailFilmActivity.this,Contants.idFilm);
         getDetailFilm(idFilm);
+        getSeriesFilm(idFilm);
     }
 }

@@ -370,110 +370,13 @@ public class CreateFilmActivity extends AppCompatActivity {
         rcv_choose_category = findViewById(R.id.rcv_choose_category);
     }
 
-    private void createFilm() {
-        getVideo();
-        getVideoSeriesFilm();
-        getImageSeriesFilm();
-
+    public void createFilm() {
         btnCreate.setVisibility(View.INVISIBLE);
         Sprite cubeGrid = new Circle();
         progressBar.setIndeterminateDrawable(cubeGrid);
         progressBar.setVisibility(View.VISIBLE);
 
-        CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int current = progressBar.getProgress();
-                if (current >= progressBar.getMax()) {
-                    current = 0;
-                }
-                progressBar.setProgress(current + 10);
-            }
-
-            @Override
-            public void onFinish() {
-                // upload new image
-                String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
-                File fileImage = new File(strRealPath);
-                requestBody = RequestBody.create(MediaType.parse(getContentResolver().getType(mUri)), fileImage);
-                MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBody);
-
-                Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
-                        StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
-                        multipartBody);
-                responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
-                    @Override
-                    public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-                        if (response.isSuccessful()) {
-                            String url = response.body().getUrl();
-                            String public_id = response.body().getPublic_id();
-                            Image image = new Image(public_id, url);
-
-                            String title = edtTitle.getText().toString();
-                            String description = edtDescription.getText().toString();
-                            String yearProduct = edtYearProduction.getText().toString();
-                            String countryProduction = edtCountryProduction.getText().toString();
-                            int ageLimit = Integer.parseInt(edtAgeLimit.getText().toString());
-                            int price = Integer.parseInt(edtPrice.getText().toString());
-                            int episode = Integer.parseInt(edtEpisode.getText().toString());
-                            String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
-
-                            SeriesFilm seriesFilm = new SeriesFilm(episode,
-                                    public_idVideo_Series_Film
-                                    ,url_Video_Series_Film,
-                                    public_Id_ImageSeries, url_ImageSeriesFilm);
-
-                            VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
-
-                            // get list director and category from shared preference
-                            SharedPreferences sharedPreferences = getSharedPreferences("AdminSharedPref", MODE_PRIVATE);
-                            Gson gson = new Gson();
-                            String json = sharedPreferences.getString("list", null);
-                            String jsonListCategory = sharedPreferences.getString("listCategory", null);
-                            Type type = new TypeToken<ArrayList<String>>() {}.getType();
-                            listDirector = gson.fromJson(json, type);
-                            listCategory = gson.fromJson(jsonListCategory, type);
-
-                            Log.i("hahaha", String.valueOf(listDirector));
-
-                            List<SeriesFilm> seriesFilms = new ArrayList<>();
-                            seriesFilms.add(seriesFilm);
-
-                            FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
-                                    countryProduction, image,image,videoFilm,listDirector, listCategory,
-                                    seriesFilms, ageLimit, lengtFilm, price);
-                            Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
-                                    StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
-                            responseFilm.enqueue(new Callback<ResponseDTO>() {
-                                @Override
-                                public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-
-                                }
-
-                                @Override
-                                public void onFailure(Call<ResponseDTO> call, Throwable t) {
-                                    Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                        Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                progressBar.setVisibility(View.INVISIBLE);
-                onBackPressed();
-            }
-
-        };
-        countDownTimer.start();
-    }
-
-    public void getImageSeriesFilm() {
-        // upload new image
+        // upload image series film
         String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriImageSeries);
         File fileImage = new File(strRealPath);
         requestBodyImageSeries = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriImageSeries)), fileImage);
@@ -486,85 +389,134 @@ public class CreateFilmActivity extends AppCompatActivity {
             public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
                 public_Id_ImageSeries = response.body().getPublic_id();
                 url_ImageSeriesFilm = response.body().getUrl();
+
+                // upload video series film
+                String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideoSeriesFilm);
+                File fileVideo = new File(strRealPath);
+                requestBodyVideoSeriesFilm = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideoSeriesFilm)), fileVideo);
+                MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideoSeriesFilm);
+                Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
+                        StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                        multipartBody);
+                responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
+                    @Override
+                    public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
+                        public_idVideo_Series_Film = response.body().getPublic_id();
+                        url_Video_Series_Film = response.body().getUrl();
+
+                        // upload new video film
+                        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideo);
+                        File fileVideo = new File(strRealPath);
+                        requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileVideo);
+                        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideo);
+                        Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
+                                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                                multipartBody);
+                        responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
+                            @Override
+                            public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
+                                public_idVideo = response.body().getPublic_id();
+                                url_Video = response.body().getUrl();
+
+                                // upload image film
+                                String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUri);
+                                File fileImage = new File(strRealPath);
+                                requestBody = RequestBody.create(MediaType.parse(getContentResolver().getType(mUri)), fileImage);
+                                MultipartBody.Part imageFilm = MultipartBody.Part.createFormData("file", fileImage.getName(), requestBodyImageSeries);
+                                Call<UploadImageResponse> responseDTOCall = ApiClient.getFilmService().uploadImageFilm(
+                                        StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
+                                        imageFilm);
+                                responseDTOCall.enqueue(new Callback<UploadImageResponse>() {
+                                    @Override
+                                    public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            String url = response.body().getUrl();
+                                            String public_id = response.body().getPublic_id();
+                                            Image image = new Image(public_id, url);
+
+                                            String title = edtTitle.getText().toString();
+                                            String description = edtDescription.getText().toString();
+                                            String yearProduct = edtYearProduction.getText().toString();
+                                            String countryProduction = edtCountryProduction.getText().toString();
+                                            int ageLimit = Integer.parseInt(edtAgeLimit.getText().toString());
+                                            int price = Integer.parseInt(edtPrice.getText().toString());
+                                            int episode = Integer.parseInt(edtEpisode.getText().toString());
+                                            String lengtFilm = edtLenghtFilm.getText().toString() + " minutes";
+
+                                            SeriesFilm seriesFilm = new SeriesFilm(episode,
+                                                    public_idVideo_Series_Film
+                                                    ,url_Video_Series_Film,
+                                                    public_Id_ImageSeries, url_ImageSeriesFilm);
+
+                                            VideoFilm videoFilm = new VideoFilm(public_idVideo,url_Video);
+
+                                            // get list director and category from shared preference
+                                            SharedPreferences sharedPreferences = getSharedPreferences("AdminSharedPref", MODE_PRIVATE);
+                                            Gson gson = new Gson();
+                                            String json = sharedPreferences.getString("list", null);
+                                            String jsonListCategory = sharedPreferences.getString("listCategory", null);
+                                            Type type = new TypeToken<ArrayList<String>>() {}.getType();
+                                            listDirector = gson.fromJson(json, type);
+                                            listCategory = gson.fromJson(jsonListCategory, type);
+
+                                            List<SeriesFilm> seriesFilms = new ArrayList<>();
+                                            seriesFilms.add(seriesFilm);
+
+                                            FilmRequest filmRequest = new FilmRequest(title, description, yearProduct,
+                                                    countryProduction, image,image,videoFilm,listDirector, listCategory,
+                                                    seriesFilms, ageLimit, lengtFilm, price);
+                                            Call<ResponseDTO> responseFilm = ApiClient.getFilmService().createFilm(
+                                                    StoreUtil.get(CreateFilmActivity.this, Contants.accessToken), filmRequest);
+                                            responseFilm.enqueue(new Callback<ResponseDTO>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                    onBackPressed();
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                                                    Toast.makeText(CreateFilmActivity.this, "Maybe is wrong create film", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                        }
+                                        else {
+                                            Toast.makeText(CreateFilmActivity.this, response.message(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                                        Toast.makeText(CreateFilmActivity.this, "Upload image is wrong image film", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
+                                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
+                        Toast.makeText(CreateFilmActivity.this, "Upload image is wrong video series", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
             @Override
             public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong series", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
-    public void getVideo() {
-        // upload new video
-        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideo);
-        File fileVideo = new File(strRealPath);
-        requestBodyVideo = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideo)), fileVideo);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideo);
-        Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
-                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
-                multipartBody);
-        responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
-            @Override
-            public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
-                public_idVideo = response.body().getPublic_id();
-                url_Video = response.body().getUrl();
-            }
-
-            @Override
-            public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
-                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    public void getVideoSeriesFilm() {
-        // upload new image
-        String strRealPath = RealPathUtil.getRealPath(getApplicationContext(), mUriVideoSeriesFilm);
-        File fileVideo = new File(strRealPath);
-        requestBodyVideoSeriesFilm = RequestBody.create(MediaType.parse(getContentResolver().getType(mUriVideoSeriesFilm)), fileVideo);
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("file", fileVideo.getName(), requestBodyVideoSeriesFilm);
-        Call<UploadVideoResponse> responseDTOCall = ApiClient.getFilmService().uploadVideoFilm(
-                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken),
-                multipartBody);
-        responseDTOCall.enqueue(new Callback<UploadVideoResponse>() {
-            @Override
-            public void onResponse(Call<UploadVideoResponse> call, Response<UploadVideoResponse> response) {
-                public_idVideo_Series_Film = response.body().getPublic_id();
-                url_Video_Series_Film = response.body().getUrl();
-            }
-
-            @Override
-            public void onFailure(Call<UploadVideoResponse> call, Throwable t) {
-                Toast.makeText(CreateFilmActivity.this, "Upload image is wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-//    private void Spinner(){
-//        Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(
-//                StoreUtil.get(CreateFilmActivity.this, Contants.accessToken));
-//        listDirectorResponseCall.enqueue(new Callback<ListDirectorResponse>() {
-//            @Override
-//            public void onResponse(Call<ListDirectorResponse> call, Response<ListDirectorResponse> response) {
-//                    for (int i = 0; i < response.body().getData().toArray().length; i++) {
-//                        String data = response.body().getData().get(i).getId();
-//                        categoryList.add(data);
-//                        ArrayAdapter adapter = new ArrayAdapter(CreateFilmActivity.this, android.R.layout.simple_spinner_item, categoryList);
-//                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                        spinnerCategory.setAdapter(adapter);
-//                    }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ListDirectorResponse> call, Throwable t) {
-//                Toast.makeText(CreateFilmActivity.this, "Maybe is wrong", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     private void getListDirector() {
         Call<ListDirectorResponse> listDirectorResponseCall = ApiClient.getFilmService().getListDirector(

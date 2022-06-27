@@ -108,4 +108,9 @@ public class MovieFragment extends Fragment {
         countDownTimer.start();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDataAllFilm();
+    }
 }

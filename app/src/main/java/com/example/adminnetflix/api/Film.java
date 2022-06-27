@@ -2,6 +2,7 @@ package com.example.adminnetflix.api;
 
 import com.example.adminnetflix.models.request.CategoryRequest;
 import com.example.adminnetflix.models.request.DeleteImageRequest;
+import com.example.adminnetflix.models.request.DeleteVideoRequest;
 import com.example.adminnetflix.models.request.FeedbackRequest;
 import com.example.adminnetflix.models.request.FilmRequest;
 import com.example.adminnetflix.models.request.ModeOfPaymentRequest;
@@ -21,6 +22,7 @@ import com.example.adminnetflix.models.response.ListDirectorResponse;
 import com.example.adminnetflix.models.response.ModeOfPaymentResponse;
 import com.example.adminnetflix.models.response.RatingResponse;
 import com.example.adminnetflix.models.response.ResponseDTO;
+import com.example.adminnetflix.models.response.SeriesFilm;
 import com.example.adminnetflix.models.response.UploadImageResponse;
 import com.example.adminnetflix.models.response.UploadVideoResponse;
 import com.example.adminnetflix.models.response.comment.CommentDeletedResponse;
@@ -55,17 +57,33 @@ public interface Film {
     @POST("api/uploadVideoFilm")
     Call<UploadVideoResponse> uploadVideoFilm(@Header("Authorization") String authorization, @Part MultipartBody.Part file);
 
+    // delete video film
+    @POST("api/destroyVideoFilm")
+    Call<ResponseDTO> deleteVideoFilm(@Header("Authorization") String authorization, @Body DeleteVideoRequest deleteVideoRequest);
+
     // create  film
     @POST("api/film/add")
-    Call<ResponseDTO> createFilm(@Header("Authorization") String authorization, @Body FilmRequest filmRequest );
+    Call<ResponseDTO> createFilm(@Header("Authorization") String authorization, @Body FilmRequest filmRequest);
 
     // get detail film
     @GET("api/film/detail/{id}")
     Call<DetailFilmResponse> detailFilm(@Header("Authorization") String authorization, @Path("id") String idFilm);
 
+    // create series film
+    @POST("api/film/{id}/addEpisode")
+    Call<ResponseDTO> createSeriesFilm(@Header("Authorization") String authorization
+            , @Path("id") String idFilm
+            , @Body SeriesFilm seriesFilm);
+
     // get series film
     @GET("api/film/detail/{id}")
     Call<DetailFilmResponse> getSeries(@Header("Authorization") String authorization, @Path("id") String idFilm);
+
+    // delete series film
+    @DELETE("api/film/delete/{id_film}/deleteEpisode/{id_episode}")
+    Call<ResponseDTO> deleteSeriesFilm(@Header("Authorization") String authorization
+            , @Path("id_film") String idFilm
+            , @Path("id_episode") String idEpisode);
 
     // get rating film
     @GET("api/rating/all")
@@ -132,7 +150,7 @@ public interface Film {
 
     // update category
     @PUT("api/category/update/{id}")
-    Call<ResponseDTO> updateCategory(@Header("Authorization") String authorization, @Path("id") String idCategory, @Body CategoryRequest categoryRequest );
+    Call<ResponseDTO> updateCategory(@Header("Authorization") String authorization, @Path("id") String idCategory, @Body CategoryRequest categoryRequest);
 
     // create director
     @POST("api/director/add")

@@ -11,6 +11,9 @@ public class DataAllFilm {
     @SerializedName("image_title")
     @Expose
     private Image imageTitle;
+    @SerializedName("video_film")
+    @Expose
+    private Video videoFilm;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -68,6 +71,14 @@ public class DataAllFilm {
 
     public void setImageTitle(Image imageTitle) {
         this.imageTitle = imageTitle;
+    }
+
+    public Video getVideoFilm() {
+        return videoFilm;
+    }
+
+    public void setVideoFilm(Video videoFilm) {
+        this.videoFilm = videoFilm;
     }
 
     public String getId() {

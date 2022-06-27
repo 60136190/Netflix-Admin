@@ -27,6 +27,7 @@ import com.example.adminnetflix.api.ApiClient;
 import com.example.adminnetflix.models.response.DataAllFilm;
 import com.example.adminnetflix.models.response.ResponseDTO;
 import com.example.adminnetflix.utils.Contants;
+import com.example.adminnetflix.utils.DeleteVideo;
 import com.example.adminnetflix.utils.StoreUtil;
 import com.github.ybq.android.spinkit.style.Circle;
 import com.squareup.picasso.Picasso;
@@ -69,8 +70,7 @@ public class DetailFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, DetailFilmActivity.class);
-                String strName = dataAllFilm.getId();
-                i.putExtra("Id_film", strName);
+                StoreUtil.save(mContext,Contants.idFilm,dataAllFilm.getId());
                 mContext.startActivity(i);
 
             }
@@ -115,6 +115,7 @@ public class DetailFilmAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             public void onResponse(Call<ResponseDTO> call, retrofit2.Response<ResponseDTO> response) {
                                 if (response.isSuccessful()) {
                                     DeleteImage.deleteImageFilm(dataAllFilm.getImageFilm().getPublicId(),mContext);
+                                    DeleteVideo.deleteVideoFilm(dataAllFilm.getVideoFilm().getPublicId(),mContext);
                                     Circle foldingCube = new Circle();
                                     progressBar.setIndeterminateDrawable(foldingCube);
                                     progressBar.setVisibility(View.VISIBLE);
